@@ -1,0 +1,15 @@
+<div fxLayout="column">
+  <form [formGroup]="deleteForm" fxLayout="column" fxLayoutAlign="start">
+    <mat-card-title>Delete Account</mat-card-title>
+    <mat-card-subtitle>This is PERMANENT</mat-card-subtitle>
+    <mat-card-subtitle>Password needed to continue</mat-card-subtitle>
+    <mat-form-field>
+      <input matInput formControlName="password" placeholder="Password" type="password" required>
+    </mat-form-field>
+  </form>
+  <div fxLayout="row" fxFlex="100%" fxLayoutAlign="space-between">
+    <button mat-raised-button color="warn" (click)="delete()" *ngIf="!loading">Delete</button>
+    <button mat-raised-button color="primary" *ngIf="loading" disabled>Please Wait</button>
+    <button mat-raised-button color="accent" (click)="close()">Cancel</button>
+  </div>
+</div>

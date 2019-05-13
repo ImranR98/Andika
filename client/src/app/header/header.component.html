@@ -1,0 +1,23 @@
+<mat-card>
+    <div fxLayout="column" fxLayoutAlign.lt-sm="center center">
+        <mat-card-title>Andika</mat-card-title>
+        <mat-card-subtitle>Simple Note taking App</mat-card-subtitle>
+    </div>
+    <mat-card-content fxLayout="row" fxLayout.lt-sm="column" fxLayoutAlign.lt-sm="center center" fxLayoutGap="1em">
+        <div fxLayout.lt-xs="column" fxLayoutGap="1em">
+                <button mat-raised-button color="primary" routerLinkActive="active" routerLink="/home"
+                *ngIf="!loggedIn">Login / Register</button>
+            <button mat-raised-button color="primary" routerLinkActive="active" routerLink="/home"
+            *ngIf="loggedIn">Home</button>
+            <button mat-raised-button color="primary" routerLinkActive="active" routerLink="/dashboard"
+            *ngIf="loggedIn">Dashboard</button>
+        </div>
+        <div fxLayout.lt-xs="column" fxLayoutGap="1em">
+            <button mat-raised-button color="accent" routerLinkActive="activeAccent" routerLink="/about">About</button>
+        </div>
+        <div fxLayout.lt-xs="column" fxLayoutGap="1em" *ngIf="loggedIn">
+            <button mat-raised-button color="accent" (click)="logout()">Log Out</button>
+        </div>
+
+    </mat-card-content>
+</mat-card>
