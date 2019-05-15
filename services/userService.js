@@ -138,6 +138,8 @@ module.exports.deleteAccount = (deleteFormInput) => {
                         } else {
                             reject('Incorrect Password');
                         }
+                    }).catch((err) => {
+                        reject(err);
                     })
                 } else {
                     reject(`No registered account found for ${deleteFormInput.email}`);
@@ -148,5 +150,22 @@ module.exports.deleteAccount = (deleteFormInput) => {
         } else {
             reject('Form Input is not valid');
         }
+    })
+}
+
+module.exports.getuserId = (email) => {
+    return new Promise((resolve, reject) => {
+        dbService.runQueryWithParams({
+            query: 'SELECT ID FROM USERS WHERE EMAIL=$1::text',
+            params: [email]
+        }).then((results) => {
+            if (results.rows.length > 0) {
+                resolve(results.rows[0].id)
+            } else {
+                reject(`No registered account found for ${deleteFormInput.email}`);
+            }
+        }).catch((err) => {
+            reject(err);
+        })
     })
 }
