@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { ActivatedRouteSnapshot, RouterStateSnapshot, Router } from '@angular/router';
-import { IUser, IUserLogin } from '../models';
+import { IUser, ILoginUser, IRegisterUser } from '../models';
 import * as moment from 'moment';
 
 @Injectable({
@@ -29,7 +29,7 @@ export class UserService implements OnInit {
     this.userSource.next(user);
   }
 
-  registerUser(registerFormInput) {
+  registerUser(registerFormInput: IRegisterUser) {
     return this.http.post(environment.hostUrl + '/register', registerFormInput, this.httpOptions).toPromise();
   }
 
@@ -37,7 +37,7 @@ export class UserService implements OnInit {
     return this.http.post(environment.hostUrl + '/completeRegistration', { key: key }, this.httpOptions).toPromise();
   }
 
-  login(loginFormInput: IUserLogin): any {
+  login(loginFormInput: ILoginUser): any {
     return new Promise((resolve, reject) => {
       this.http.post(environment.hostUrl + '/login', loginFormInput, this.httpOptions).toPromise().then((response: any) => {
         if (response.expiresIn && response.idToken && response.user) {
@@ -53,7 +53,7 @@ export class UserService implements OnInit {
     })
   }
 
-  deleteAccount(deleteAccountFormInput): any {
+  deleteAccount(deleteAccountFormInput: ILoginUser): any {
     return this.http.post(environment.hostUrl + '/deleteAccount', deleteAccountFormInput, this.httpOptions).toPromise();
   }
 

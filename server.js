@@ -10,6 +10,7 @@ const clientDir = __dirname + '/client';
 
 const dbService = require('./services/dbService');
 const userService = require('./services/userService');
+const noteService = require('./services/notesService');
 
 //Set folder where compiled client App is located
 app.use(express.static(clientDir + '/dist/client'));
@@ -50,7 +51,7 @@ checkIfAuthenticated = expressJwt({
 //======================================
 app.post('/register', (req, res) => {
     userService.registerUser(req.body).then(() => {
-        res.status(200).send();
+        res.send();
     }).catch((err) => {
         console.log(err);
         res.status(500).send(err);
@@ -59,7 +60,7 @@ app.post('/register', (req, res) => {
 
 app.post('/completeRegistration', (req, res) => {
     userService.completeRegistration(req.body).then(() => {
-        res.status(200).send();
+        res.send();
     }).catch((err) => {
         console.log(err);
         res.status(500).send(err);
@@ -73,7 +74,7 @@ app.post('/login', (req, res) => {
             expiresIn: parseInt(process.env.EXPIRES_IN),
             subject: user.email
         });
-        res.status(200).json({
+        res.json({
             idToken: jwtBearerToken,
             expiresIn: process.env.EXPIRES_IN,
             user: user
@@ -84,9 +85,45 @@ app.post('/login', (req, res) => {
     })
 })
 
-app.post('/deleteAccount', (req, res) => {
+app.post('/deleteAccount', checkIfAuthenticated, (req, res) => {
     userService.deleteAccount(req.body).then(() => {
-        res.status(200).send();
+        res.send();
+    }).catch((err) => {
+        console.log(err);
+        res.status(500).send(err);
+    })
+})
+
+app.post('/getNotes', (req, res) => {
+    noteService.getNotes(req.body).then((notes) => {
+        res.send(notes);
+    }).catch((err) => {
+        console.log(err);
+        res.status(500).send(err);
+    })
+})
+
+app.post('/addNote', (req, res) => {
+    noteService.addNote(req.body).then((note) => {
+        res.send(note);
+    }).catch((err) => {
+        console.log(err);
+        res.status(500).send(err);
+    })
+})
+
+app.post('/updateNote', (req, res) => {
+    noteService.updateNote(req.body).then((note) => {
+        res.send(note);
+    }).catch((err) => {
+        console.log(err);
+        res.status(500).send(err);
+    })
+})
+
+app.post('/deleteNote', (req, res) => {
+    noteService.deleteNote(req.body).then(() => {
+        res.send();
     }).catch((err) => {
         console.log(err);
         res.status(500).send(err);

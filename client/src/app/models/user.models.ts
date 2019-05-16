@@ -4,14 +4,14 @@ export interface IUser {
     lastName: string
 }
 
-export interface IUserRegister {
+export interface IRegisterUser {
     email: string,
     firstName: string,
     lastName: string,
     password: string
 }
 
-export interface IUserLogin {
+export interface ILoginUser {
     email: string,
     password: string
 }

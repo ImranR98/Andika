@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { ErrorService } from '../services/error.service';
 import { UserService } from '../services/user.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { IUserLogin, IUserRegister, IUser } from '../models';
+import { ILoginUser, IRegisterUser, IUser } from '../models';
 
 @Component({
   selector: 'app-home',
@@ -51,7 +51,7 @@ export class HomeComponent implements OnInit {
   }
 
   login() {
-    let loginUserData: IUserLogin = {
+    let loginUserData: ILoginUser = {
       email: this.loginForm.controls['email'].value,
       password: this.loginForm.controls['password'].value
     }
@@ -66,7 +66,7 @@ export class HomeComponent implements OnInit {
 
   register() {
     if (this.registerForm.controls['password'].value == this.registerForm.controls['passwordConfirm'].value) {
-      let registerUserData: IUserRegister = {
+      let registerUserData: IRegisterUser = {
         email: this.registerForm.controls['email'].value,
         firstName: this.registerForm.controls['firstName'].value,
         lastName: this.registerForm.controls['lastName'].value,
