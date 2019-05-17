@@ -1,11 +1,9 @@
-<mat-card *ngIf="note else progressBar;">
-  <div fxLayout="column">
-    <p>{{note.title}}</p>
-    <p>{{note.note}}</p>
-    <div fxLayout="row" fxFlex="100%" fxLayoutAlign="space-between">
-      <button mat-raised-button color="primary" (click)="updateNote()" [disabled]="waiting">Save</button>
-      <button mat-raised-button color="accent" (click)="deleteNote()" [disabled]="waiting">Delete</button>
-    </div>
+<mat-card *ngIf="note else progressBar;" fxLayout="column">
+  <mat-card-title>{{note.title}}</mat-card-title>
+  <mat-card-subtitle style="max-height: 5em; overflow: hidden;">{{note.note}}</mat-card-subtitle>
+  <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap="1em" fxFlex="100%" fxLayoutAlign="space-between">
+    <button mat-raised-button color="primary" (click)="updateNote()" [disabled]="waiting">Save</button>
+    <button mat-raised-button color="accent" (click)="deleteNote()" [disabled]="waiting">Delete</button>
   </div>
 </mat-card>
 

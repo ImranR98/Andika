@@ -94,7 +94,7 @@ app.post('/deleteAccount', checkIfAuthenticated, (req, res) => {
     })
 })
 
-app.post('/getNotes', (req, res) => {
+app.post('/getNotes', (req, res) => { //TODO: Add auth to these
     noteService.getNotes(req.body).then((notes) => {
         res.send(notes);
     }).catch((err) => {

@@ -4,16 +4,18 @@
   </mat-card>
 
   <div fxLayout="column" fxLayoutGap="1em" *ngIf="!loading else progressBar;">
-    <div *ngFor="let note of notes">
-      <app-note [note]="note"></app-note>
+    <div *ngFor="let notes of notesBy2" fxLayout="row" fxLayoutGap="1em">
+      <div *ngFor="let note of notes" fxFlex="50%">
+        <app-note [note]="note"></app-note>
+      </div>
     </div>
   </div>
 </div>
 
 <ng-template #progressBar>
-    <mat-card>
-      <div>
-        <mat-progress-bar mode="indeterminate"></mat-progress-bar>
-      </div>
-    </mat-card>
-  </ng-template>
+  <mat-card>
+    <div>
+      <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+    </div>
+  </mat-card>
+</ng-template>

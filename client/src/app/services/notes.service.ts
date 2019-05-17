@@ -43,11 +43,32 @@ export class NotesService {
   }
 
   getNotes() {
-    return this.http.post(environment.hostUrl + '/getNotes', { email: this.userService.getUser().email }, this.httpOptions).toPromise();
+    return new Promise((resolve, reject) => {
+      this.http.post(environment.hostUrl + '/getNotes', { email: this.userService.getUser().email }, this.httpOptions).toPromise().then((notes) => {
+        this.updateNotes(notes);
+        resolve();
+      }).catch((err) => {
+        reject(err);
+      })
+    })
   }
 
   deleteNote(id) {
-    return this.http.post(environment.hostUrl + '/deleteNote', { id: id }, this.httpOptions).toPromise();
+    return new Promise((resolve, reject) => {
+      this.http.post(environment.hostUrl + '/deleteNote', { id: id }, this.httpOptions).toPromise().then(() => {
+        let temp = this.getCurrentNotes();
+        let temp2 = [];
+        for (let i = 0; i < temp.length; i++) {
+          if (temp[i].id != id) {
+            temp2.push(temp[i]);
+          }
+        }
+        this.updateNotes(temp2);
+        resolve();
+      }).catch((err) => {
+        reject(err);
+      });
+    })
   }
 
 }

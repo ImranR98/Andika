@@ -15,15 +15,16 @@ export class NotesComponent implements OnInit {
 
   notes: INote[];
 
+  notesBy2: INote[][] = [[]];
+
   loading: boolean = false;
 
   ngOnInit() {
     this.userService.isLoggedIn();
     if (!this.notesService.ifNotes()) {
       this.loading = true;
-      this.notesService.getNotes().then((notes) => {
+      this.notesService.getNotes().then(() => {
         this.loading = false;
-        this.notesService.updateNotes(notes);
       }).catch((err) => {
         this.errorService.showError(err);
         this.loading = false;
@@ -35,6 +36,16 @@ export class NotesComponent implements OnInit {
   subscribeToNotes() {
     this.notesService.notes.subscribe((notes) => {
       this.notes = notes;
+      if (this.notes) {
+        for (let i = 0; i < this.notes.length; i++) {
+          if (((i + 1) % 2) == 0) {
+            this.notesBy2[this.notesBy2.length - 1].push(this.notes[i]);
+            this.notesBy2.push([]);
+          } else {
+            this.notesBy2[this.notesBy2.length - 1].push(this.notes[i]);
+          }
+        }
+      }
     })
   }
 
