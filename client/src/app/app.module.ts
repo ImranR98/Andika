@@ -47,6 +47,8 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { AuthInterceptor } from './httpInterceptor';
 import { DeleteAccountDialogComponent } from './dashboard/delete-account-dialog/delete-account-dialog.component';
 import { NotesComponent } from './notes/notes.component';
+import { NoteComponent } from './note/note.component';
+import { NoteDialogComponent } from './note/note-dialog/note-dialog.component';
 
 @NgModule({
   declarations: [
@@ -57,7 +59,9 @@ import { NotesComponent } from './notes/notes.component';
     AboutComponent,
     DashboardComponent,
     DeleteAccountDialogComponent,
-    NotesComponent
+    NotesComponent,
+    NoteComponent,
+    NoteDialogComponent
   ],
   imports: [
     BrowserModule,
