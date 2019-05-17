@@ -13,10 +13,18 @@ export class NoteComponent implements OnInit {
   @Input() note: INote;
 
   waiting: boolean = false;
+  viewText = '';
+  viewLength = 200;
 
   constructor(private noteService: NotesService, private errorService: ErrorService) { }
 
   ngOnInit() {
+    if (this.note.note.length > 50) {
+      this.viewText = this.note.note.substr(0, this.viewLength - 3);
+      this.viewText += '...';
+    } else {
+      this.viewText = this.note.note;
+    }
   }
 
   deleteNote() {

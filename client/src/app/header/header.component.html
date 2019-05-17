@@ -5,16 +5,16 @@
     </div>
     <mat-card-content fxLayout="row" fxLayout.lt-sm="column" fxLayoutAlign.lt-sm="center center" fxLayoutGap="1em">
         <div fxLayout.lt-xs="column" fxLayoutGap="1em">
-                <button mat-raised-button color="primary" routerLinkActive="active" routerLink="/home"
+            <button mat-raised-button color="primary" routerLinkActive="active" routerLink="/home"
                 *ngIf="!loggedIn">Login / Register</button>
             <button mat-raised-button color="primary" routerLinkActive="active" routerLink="/home"
-            *ngIf="loggedIn">Home</button>
+                *ngIf="loggedIn">Home</button>
             <button mat-raised-button color="primary" routerLinkActive="active" routerLink="/notes"
-            *ngIf="loggedIn">Notes</button>
-            <button mat-raised-button color="primary" routerLinkActive="active" routerLink="/dashboard"
-            *ngIf="loggedIn">Dashboard</button>
+                *ngIf="loggedIn">Notes</button>
         </div>
         <div fxLayout.lt-xs="column" fxLayoutGap="1em">
+            <button mat-raised-button color="primary" routerLinkActive="active" routerLink="/dashboard"
+                *ngIf="loggedIn">Dashboard</button>
             <button mat-raised-button color="accent" routerLinkActive="activeAccent" routerLink="/about">About</button>
         </div>
         <div fxLayout.lt-xs="column" fxLayoutGap="1em" *ngIf="loggedIn">

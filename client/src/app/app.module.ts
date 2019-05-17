@@ -36,6 +36,7 @@ import {
   MatListModule,
   MatTabsModule,
   MatDialogModule,
+  MatChipsModule,
 } from '@angular/material';
 
 import { HomeComponent } from './home/home.component';
@@ -92,7 +93,8 @@ import { NoteDialogComponent } from './note/note-dialog/note-dialog.component';
     MatTabsModule,
     MatDialogModule,
     ReactiveFormsModule,
-    CommonModule
+    CommonModule,
+    MatChipsModule
   ],
   providers: [{ provide: UserService, useClass: UserService },
   {
