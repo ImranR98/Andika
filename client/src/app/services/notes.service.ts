@@ -29,10 +29,6 @@ export class NotesService {
     return this.notesSource.value;
   }
 
-  getNotes() {
-    return this.http.post(environment.hostUrl + '/getNotes', { email: this.userService.getUser().email }, this.httpOptions).toPromise();
-  }
-
   ifNotes() {
     let temp = this.getCurrentNotes();
     let valid = false;
@@ -45,4 +41,13 @@ export class NotesService {
     }
     return valid;
   }
+
+  getNotes() {
+    return this.http.post(environment.hostUrl + '/getNotes', { email: this.userService.getUser().email }, this.httpOptions).toPromise();
+  }
+
+  deleteNote(id) {
+    return this.http.post(environment.hostUrl + '/deleteNote', { id: id }, this.httpOptions).toPromise();
+  }
+
 }

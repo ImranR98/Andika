@@ -1,11 +1,19 @@
 <div fxLayout="column" fxLayoutGap="1em">
   <mat-card>
-      <mat-card-title>Notes</mat-card-title>
+    <mat-card-title>Notes</mat-card-title>
   </mat-card>
 
-  <mat-card>
-      <div fxLayout.lt-sm="column" fxLayoutGap="1em">
-        Content
-      </div>      
-  </mat-card>
+  <div fxLayout="column" fxLayoutGap="1em" *ngIf="!loading else progressBar;">
+    <div *ngFor="let note of notes">
+      <app-note [note]="note"></app-note>
+    </div>
+  </div>
 </div>
+
+<ng-template #progressBar>
+    <mat-card>
+      <div>
+        <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+      </div>
+    </mat-card>
+  </ng-template>
