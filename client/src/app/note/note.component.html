@@ -4,15 +4,24 @@
   </mat-card-title>
   <mat-card-subtitle>{{viewText}}</mat-card-subtitle>
   <div fxLayout="row" fxLayoutGap="1em" fxFlex="100%" fxLayoutAlign="end end">
-    <button mat-icon-button (click)="deleteNote()" [disabled]="waiting">
+    <div fxLayout="row" fxFlex="100%">
+      <mat-chip-list *ngIf="note.tags.length > 0 || note.archived">
+        <mat-chip color="primary" selected disabled *ngIf="note.archived">Archived</mat-chip>
+        <mat-chip color="accent" selected disabled *ngFor="let tag of note.tags">{{tag}}</mat-chip>
+      </mat-chip-list>
+    </div>
+    <button mat-icon-button (click)="deleteNote()" [disabled]="waiting" matTooltip="Delete"
+      aria-label="Button that deletes this Note">
       <mat-icon>delete</mat-icon>
     </button>
-    <button mat-icon-button (click)="updateNote()" [disabled]="waiting">
+    <button mat-icon-button (click)="archiveNote()" [disabled]="waiting" *ngIf="!note.archived" matTooltip="Archive"
+      aria-label="Button that archives this Note">
       <mat-icon>archive</mat-icon>
     </button>
-  </div>
-  <div *ngIf="note.tags.length > 0">
-    <small selected disabled *ngFor="let tag of note.tags">{{tag}}, </small>
+    <button mat-icon-button (click)="unArchiveNote()" [disabled]="waiting" *ngIf="note.archived" matTooltip="Unarchive"
+      aria-label="Button that unarchives this Note">
+      <mat-icon>unarchive</mat-icon>
+    </button>
   </div>
 </mat-card>
 

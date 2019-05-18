@@ -14,7 +14,7 @@
 
     <div fxLayout="column" fxLayoutGap="1em" fxHide fxShow.md="true">
       <div fxLayout="row" fxLayoutGap="1em" *ngFor="let row of notesBy3">
-        <div *ngFor="let note of row" fxFlex="32.5%">
+        <div *ngFor="let note of row" fxFlex="32.3%">
           <app-note [note]="note"></app-note>
         </div>
       </div>
@@ -22,7 +22,7 @@
 
     <div fxLayout="column" fxLayoutGap="1em" fxHide fxShow.sm="true">
       <div fxLayout="row" fxLayoutGap="1em" *ngFor="let row of notesBy2">
-        <div *ngFor="let note of notes" fxFlex="50%">
+        <div *ngFor="let note of row" fxFlex="49%">
           <app-note [note]="note"></app-note>
         </div>
       </div>

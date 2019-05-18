@@ -71,4 +71,38 @@ export class NotesService {
     })
   }
 
+  archiveNote(id) {
+    return new Promise((resolve, reject) => {
+      this.http.post(environment.hostUrl + '/archiveNote', { id: id }, this.httpOptions).toPromise().then(() => {
+        let temp = this.getCurrentNotes();
+        for (let i = 0; i < temp.length; i++) {
+          if (temp[i].id === id) {
+            temp[i].archived = true;
+          }
+        }
+        this.updateNotes(temp);
+        resolve();
+      }).catch((err) => {
+        reject(err);
+      });
+    })
+  }
+
+  unArchiveNote(id) {
+    return new Promise((resolve, reject) => {
+      this.http.post(environment.hostUrl + '/unArchiveNote', { id: id }, this.httpOptions).toPromise().then(() => {
+        let temp = this.getCurrentNotes();
+        for (let i = 0; i < temp.length; i++) {
+          if (temp[i].id === id) {
+            temp[i].archived = false;
+          }
+        }
+        this.updateNotes(temp);
+        resolve();
+      }).catch((err) => {
+        reject(err);
+      });
+    })
+  }
+
 }

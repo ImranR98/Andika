@@ -38,14 +38,15 @@ export class NotesComponent implements OnInit {
   subscribeToNotes() {
     this.notesService.notes.subscribe((notes) => {
       this.notes = notes;
-      if (this.notes) {
-        this.fillDisplayObjects();
-      }
+      this.fillDisplayObjects();
     })
   }
 
   fillDisplayObjects() {
     if (this.notes) {
+      this.notesBy2 = [[]];
+      this.notesBy3 = [[]];
+      this.notesBy4 = [[]];
       for (let i = 0; i < this.notes.length; i++) {
         if (((i + 1) % 2) == 0) {
           this.notesBy2[this.notesBy2.length - 1].push(this.notes[i]);

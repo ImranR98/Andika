@@ -37,4 +37,24 @@ export class NoteComponent implements OnInit {
     });
   }
 
+  archiveNote() {
+    this.waiting = true;
+    this.noteService.archiveNote(this.note.id).then(() => {
+      this.waiting = false;
+    }).catch((err) => {
+      this.errorService.showError(err);
+      this.waiting = false;
+    });
+  }
+
+  unArchiveNote() {
+    this.waiting = true;
+    this.noteService.unArchiveNote(this.note.id).then(() => {
+      this.waiting = false;
+    }).catch((err) => {
+      this.errorService.showError(err);
+      this.waiting = false;
+    });
+  }
+
 }

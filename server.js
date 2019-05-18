@@ -129,6 +129,24 @@ app.post('/deleteNote', (req, res) => {
         res.status(500).send(err);
     })
 })
+
+app.post('/archiveNote', (req, res) => {
+    noteService.archiveNote(req.body).then(() => {
+        res.send();
+    }).catch((err) => {
+        console.log(err);
+        res.status(500).send(err);
+    })
+})
+
+app.post('/unArchiveNote', (req, res) => {
+    noteService.unArchiveNote(req.body).then(() => {
+        res.send();
+    }).catch((err) => {
+        console.log(err);
+        res.status(500).send(err);
+    })
+})
 //======================================
 
 //All other routes are handled by the Angular App which is served here

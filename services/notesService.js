@@ -2,11 +2,15 @@ let userService = require('./userService');
 let dbService = require('./dbService');
 
 convertDbNoteToAppNote = (dbNote) => {
+    let tags = dbNote.tags.split(', ');
+    if (tags[0] === 'undefined') {
+        tags = [];
+    }
     return {
         id: dbNote.id,
         title: dbNote.title,
         note: dbNote.note,
-        tags: dbNote.tags.split(', '),
+        tags: tags,
         archived: dbNote.archived,
         createdDate: dbNote.created_date,
         modifiedDate: dbNote.modified_date
@@ -95,6 +99,32 @@ module.exports.deleteNote = (noteId) => {
     return new Promise((resolve, reject) => {
         dbService.runQueryWithParams({
             query: 'DELETE FROM NOTES WHERE (ID=$1::int)',
+            params: [noteId.id]
+        }).then(() => {
+            resolve();
+        }).catch((err) => {
+            reject(err);
+        })
+    });
+}
+
+module.exports.archiveNote = (noteId) => {
+    return new Promise((resolve, reject) => {
+        dbService.runQueryWithParams({
+            query: 'UPDATE NOTES SET ARCHIVED=true WHERE (ID=$1::int)',
+            params: [noteId.id]
+        }).then(() => {
+            resolve();
+        }).catch((err) => {
+            reject(err);
+        })
+    });
+}
+
+module.exports.unArchiveNote = (noteId) => {
+    return new Promise((resolve, reject) => {
+        dbService.runQueryWithParams({
+            query: 'UPDATE NOTES SET ARCHIVED=false WHERE (ID=$1::int)',
             params: [noteId.id]
         }).then(() => {
             resolve();
