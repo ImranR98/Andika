@@ -1,7 +1,7 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, Inject } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { INote } from 'src/app/models/notes.models';
-import { MatDialogRef } from '@angular/material';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { NotesService } from 'src/app/services/notes.service';
 import { ErrorService } from 'src/app/services/error.service';
 import { CdkTextareaAutosize } from '@angular/cdk/text-field';
@@ -13,13 +13,11 @@ import { CdkTextareaAutosize } from '@angular/cdk/text-field';
 })
 export class NoteDialogComponent implements OnInit {
 
-  constructor(private dialogRef: MatDialogRef<NoteDialogComponent>, private noteService: NotesService, private errorService: ErrorService) { }
+  constructor(private dialogRef: MatDialogRef<NoteDialogComponent>, private noteService: NotesService, private errorService: ErrorService, @Inject(MAT_DIALOG_DATA) public note: INote) { }
   
   @ViewChild('autosize') autosize: CdkTextareaAutosize;
 
-  note: INote;
-
-  NoteForm = new FormGroup({
+  noteForm = new FormGroup({
     title: new FormControl('', Validators.required),
     note: new FormControl('')
   });

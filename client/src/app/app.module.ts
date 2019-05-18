@@ -105,6 +105,6 @@ import { NoteDialogComponent } from './note/note-dialog/note-dialog.component';
   }
   ],
   bootstrap: [AppComponent],
-  entryComponents: [DeleteAccountDialogComponent]
+  entryComponents: [DeleteAccountDialogComponent, NoteDialogComponent]
 })
 export class AppModule { }

@@ -2,6 +2,8 @@ import { Component, OnInit, Input } from '@angular/core';
 import { INote } from '../models/notes.models';
 import { NotesService } from '../services/notes.service';
 import { ErrorService } from '../services/error.service';
+import { MatDialog } from '@angular/material';
+import { NoteDialogComponent } from './note-dialog/note-dialog.component';
 
 @Component({
   selector: 'app-note',
@@ -16,7 +18,7 @@ export class NoteComponent implements OnInit {
   viewText = '';
   viewLength = 200;
 
-  constructor(private noteService: NotesService, private errorService: ErrorService) { }
+  constructor(private noteService: NotesService, private errorService: ErrorService, private dialog: MatDialog) { }
 
   ngOnInit() {
     if (this.note.note.length > 50) {
@@ -54,6 +56,16 @@ export class NoteComponent implements OnInit {
     }).catch((err) => {
       this.errorService.showError(err);
       this.waiting = false;
+    });
+  }
+
+  openEditor() {
+    let dialogRef = this.dialog.open(NoteDialogComponent, {
+      data: { note: this.note },
+      height: '100vh',
+      width: '100vw',
+      maxHeight: '100vh',
+      maxWidth: '100vw',
     });
   }
 

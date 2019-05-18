@@ -1,21 +1,22 @@
-<div fxLayout="column" *ngIf="!loading else progressBar;">
-    <form [formGroup]="deleteForm" fxLayout="column" fxLayoutAlign="start">
-      <mat-form-field>
-        <input matInput formControlName="title" placeholder="Title" type="text" required>
-      </mat-form-field>
-      <textarea matInput cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="5"
-        cdkAutosizeMaxRows="10" formControlName="note" placeholder="Note" type="text"></textarea>
-    </form>
-    <div fxLayout="row" fxFlex="100%" fxLayoutAlign="space-between">
-      <button mat-raised-button color="primary" (click)="updateNote()">Save</button>
-      <button mat-raised-button color="accent" (click)="deleteNote()">Delete</button>
-    </div>
+<form [formGroup]="noteForm" fxLayout="column" *ngIf="!loading else progressBar;" fxFlex="100%">
+  <div mat-dialog-title fxLayout="column">
+    <mat-form-field>
+      <input matInput formControlName="title" placeholder="Title" type="text" required>
+    </mat-form-field>
   </div>
-  
-  <ng-template #progressBar>
-    <mat-card>
-      <div>
-        <mat-progress-bar mode="indeterminate"></mat-progress-bar>
-      </div>
-    </mat-card>
-  </ng-template>
+  <mat-dialog-content fxLayout="column">
+    <textarea matInput cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="5" formControlName="note"
+      placeholder="Note" type="text"></textarea>
+  </mat-dialog-content>
+  <mat-dialog-actions>
+    <button mat-raised-button color="primary" (click)="updateNote()">Save</button>
+  </mat-dialog-actions>
+</form>
+
+<ng-template #progressBar>
+  <mat-card>
+    <div>
+      <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+    </div>
+  </mat-card>
+</ng-template>
