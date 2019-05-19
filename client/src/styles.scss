@@ -21,8 +21,8 @@ $custom-typography: mat-typography-config($font-family: "'Raleway', sans-serif;"
 // Define the palettes for your theme using the Material Design palettes available in palette.scss
 // (imported above). For each palette, you can optionally specify a default, lighter, and darker
 // hue. Available color palettes: https://material.io/design/color/
-$app-primary: mat-palette($mat-blue-gray);
-$app-accent:  mat-palette($mat-pink, A200, A100, A400);
+$app-primary:  mat-palette($mat-green, A200, A100, A400);
+$app-accent: mat-palette($mat-blue-gray);
 $app-warn: mat-palette($mat-red);
 
 // Create the theme object (a Sass map containing all of the palettes).
@@ -34,11 +34,11 @@ $app-theme: mat-dark-theme($app-primary, $app-accent);
 @include angular-material-theme($app-theme);
 
 .active {
-  color: #102027 !important;
+  color: #095340 !important;
 }
 
 .activeAccent {
-  color: #530922 !important;
+  color: #102027 !important;
 }
 
 mat-card {
