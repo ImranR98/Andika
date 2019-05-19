@@ -32,7 +32,9 @@ export class NoteDialogComponent implements OnInit {
   ngOnInit() {
     this.noteForm.controls['title'].setValue(this.note.title);
     this.noteForm.controls['note'].setValue(this.note.note);
-    this.tags = this.note.tags;
+    for (let i = 0; i < this.note.tags.length; i++) {
+      this.tags.push(this.note.tags[i]);
+    }
   }
 
   addTag(event: MatChipInputEvent): void {
