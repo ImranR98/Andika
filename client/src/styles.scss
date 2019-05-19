@@ -34,11 +34,8 @@ $app-theme: mat-dark-theme($app-primary, $app-accent);
 @include angular-material-theme($app-theme);
 
 .active {
+  background-color: #69F0AE !important;
   color: #095340 !important;
-}
-
-.activeAccent {
-  color: #102027 !important;
 }
 
 mat-card {

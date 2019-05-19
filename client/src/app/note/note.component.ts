@@ -60,13 +60,15 @@ export class NoteComponent implements OnInit {
   }
 
   openEditor() {
-    let dialogRef = this.dialog.open(NoteDialogComponent, {
-      data: this.note,
-      height: '100vh',
-      width: '100vw',
-      maxHeight: '100vh',
-      maxWidth: '100vw',
-    });
+    if (!this.waiting) {
+      let dialogRef = this.dialog.open(NoteDialogComponent, {
+        data: this.note,
+        height: '100vh',
+        width: '100vw',
+        maxHeight: '100vh',
+        maxWidth: '100vw',
+      });
+    }
   }
 
 }

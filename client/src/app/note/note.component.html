@@ -1,8 +1,8 @@
-<mat-card *ngIf="note else progressBar;" fxLayout="column" fxFill>
+<mat-card *ngIf="note else progressBar;" fxLayout="column" fxFill (click)="openEditor()">
   <mat-card-title>
     <div style="overflow: hidden;  white-space: nowrap;  text-overflow: ellipsis;">{{note.title}}</div>
   </mat-card-title>
-  <mat-card-subtitle (click)="openEditor()">{{viewText}}</mat-card-subtitle>
+  <mat-card-subtitle>{{viewText}}</mat-card-subtitle>
   <div fxLayout="row" fxLayoutGap="1em" fxFlex="100%" fxLayoutAlign="end end">
     <div fxLayout="row" fxFlex="100%">
       <mat-chip-list *ngIf="note.tags.length > 0 || note.archived">

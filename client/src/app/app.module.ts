@@ -50,6 +50,7 @@ import { DeleteAccountDialogComponent } from './dashboard/delete-account-dialog/
 import { NotesComponent } from './notes/notes.component';
 import { NoteComponent } from './note/note.component';
 import { NoteDialogComponent } from './note/note-dialog/note-dialog.component';
+import { TagComponent } from './tag/tag.component';
 
 @NgModule({
   declarations: [
@@ -62,7 +63,8 @@ import { NoteDialogComponent } from './note/note-dialog/note-dialog.component';
     DeleteAccountDialogComponent,
     NotesComponent,
     NoteComponent,
-    NoteDialogComponent
+    NoteDialogComponent,
+    TagComponent
   ],
   imports: [
     BrowserModule,

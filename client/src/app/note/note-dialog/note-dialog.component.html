@@ -29,9 +29,13 @@
     </div>
 
   </div>
-  <mat-dialog-content fxLayout="column">
+  <mat-dialog-content fxLayout="column" fxLayoutGap="1em">
     <textarea matInput cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="5" formControlName="note"
       placeholder="Note" type="text"></textarea>
+      <div *ngIf="note.tags.length > 0 || note.archived" fxLayout="row wrap">
+        <span *ngIf="note.archived">Archived, </span>
+        <span *ngFor="let tag of note.tags">{{tag}}, </span>
+      </div>
   </mat-dialog-content>
   <small>&nbsp;</small>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="1em" fxHide fxShow.lt-sm>
