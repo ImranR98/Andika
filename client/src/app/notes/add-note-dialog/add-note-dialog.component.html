@@ -1,0 +1,45 @@
+<form [formGroup]="noteForm" fxLayout="column" fxFlex="100%">
+  <div fxLayout="column">
+    <div fxLayout="row" fxLayoutGap="3em">
+      <mat-form-field fxFlex="100%">
+        <input matInput formControlName="title" placeholder="Title" type="text" required>
+      </mat-form-field>
+      <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="1em" fxHide fxShow.sm fxShow.gt-sm>
+        <button mat-icon-button (click)="addNote()" [disabled]="waiting" matTooltip="Save"
+          aria-label="Button that saves changes to this Note">
+          <mat-icon>save</mat-icon>
+        </button>
+        <button mat-icon-button (click)="close()" [disabled]="waiting" matTooltip="Close"
+          aria-label="Button that closed this Note without saving changes">
+          <mat-icon>close</mat-icon>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div mat-dialog-content fxLayout="column" fxLayoutGap="1em" fxFlex="100%">
+    <textarea matInput cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="5" formControlName="note"
+      placeholder="Note" type="text"></textarea>
+    <mat-form-field>
+      <mat-chip-list #chipList>
+        <mat-chip *ngFor="let tag of tags" [selectable]="true" [removable]="true" (removed)="removeTag(tag)">
+          {{tag}}
+          <mat-icon matChipRemove>cancel</mat-icon>
+        </mat-chip>
+        <input placeholder="Tags" [matChipInputFor]="chipList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+          [matChipInputAddOnBlur]="true" (matChipInputTokenEnd)="addTag($event)">
+      </mat-chip-list>
+    </mat-form-field>
+  </div>
+
+  <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="1em" fxHide fxShow.lt-sm>
+    <button mat-icon-button (click)="addNote()" [disabled]="waiting" matTooltip="Save"
+      aria-label="Button that saves changes to this Note">
+      <mat-icon>save</mat-icon>
+    </button>
+    <button mat-icon-button (click)="close()" [disabled]="waiting" matTooltip="Close"
+      aria-label="Button that closed this Note without saving changes">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+</form>

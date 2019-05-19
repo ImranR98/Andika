@@ -71,6 +71,19 @@ export class NotesService {
     })
   }
 
+  addNote(noteData: IAddNote) {
+    return new Promise((resolve, reject) => {
+      this.http.post(environment.hostUrl + '/addNote', noteData, this.httpOptions).toPromise().then((newNote: INote) => {
+        let temp = this.getCurrentNotes();
+        temp.push(newNote);
+        this.updateNotes(temp);
+        resolve();
+      }).catch((err) => {
+        reject(err);
+      });
+    })
+  }
+
   deleteNote(id) {
     return new Promise((resolve, reject) => {
       this.http.post(environment.hostUrl + '/deleteNote', { id: id }, this.httpOptions).toPromise().then(() => {

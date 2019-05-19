@@ -67,7 +67,7 @@ export class NoteComponent implements OnInit {
 
   openEditor() {
     if (!this.waiting) {
-      let dialogRef = this.dialog.open(NoteDialogComponent, {
+      this.dialog.open(NoteDialogComponent, {
         data: this.note,
         height: '100vh',
         width: '100vw',

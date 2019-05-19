@@ -3,6 +3,8 @@ import { UserService } from '../services/user.service';
 import { NotesService } from '../services/notes.service';
 import { INote } from '../models/notes.models';
 import { ErrorService } from '../services/error.service';
+import { MatDialog } from '@angular/material';
+import { AddNoteDialogComponent } from './add-note-dialog/add-note-dialog.component';
 
 @Component({
   selector: 'app-notes',
@@ -11,7 +13,7 @@ import { ErrorService } from '../services/error.service';
 })
 export class NotesComponent implements OnInit {
 
-  constructor(private userService: UserService, private notesService: NotesService, private errorService: ErrorService) { }
+  constructor(private userService: UserService, private notesService: NotesService, private errorService: ErrorService, private dialog: MatDialog) { }
 
   notes: INote[];
 
@@ -81,6 +83,17 @@ export class NotesComponent implements OnInit {
           this.notesBy4.splice(i, 1);
         }
       }
+    }
+  }
+
+  addNote() {
+    if (!this.loading) {
+      this.dialog.open(AddNoteDialogComponent, {
+        height: '100vh',
+        width: '100vw',
+        maxHeight: '100vh',
+        maxWidth: '100vw',
+      });
     }
   }
 
