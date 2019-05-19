@@ -36,12 +36,7 @@
   </div>
 
   <button *ngIf="!loading" mat-fab color="primary" style="position: fixed; bottom: 1em; right: 1em;" matTooltip="Add"
-    aria-label="Button that adds a new Note" (click)="addNote()" fxHide fxShow.sm fxShow.gt-sm>
-    <mat-icon>add</mat-icon>
-  </button>
-
-  <button *ngIf="!loading" mat-mini-fab color="primary" style="position: fixed; bottom: 1em; right: 1em;" matTooltip="Add"
-    aria-label="Button that adds a new Note" (click)="addNote()" fxHide fxShow.lt-sm>
+    aria-label="Button that adds a new Note" (click)="addNote()">
     <mat-icon>add</mat-icon>
   </button>
 

@@ -32,18 +32,18 @@
   <div mat-dialog-content fxLayout="column" fxLayoutGap="1em" fxFlex="100%">
     <textarea matInput cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="5" formControlName="note"
       placeholder="Note" type="text"></textarea>
-      <mat-form-field>
-        <mat-chip-list #chipList>
-          <mat-chip *ngIf="note.archived" [selectable]="true" [removable]="false">Archived</mat-chip>
-          <mat-chip *ngFor="let tag of tags" [selectable]="true" [removable]="true" (removed)="removeTag(tag)">
-            {{tag}}
-            <mat-icon matChipRemove>cancel</mat-icon>
-          </mat-chip>
-          <input placeholder="Tags" [matChipInputFor]="chipList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-            [matChipInputAddOnBlur]="true" (matChipInputTokenEnd)="addTag($event)">
-        </mat-chip-list>
-      </mat-form-field>
-  </div> 
+    <mat-form-field>
+      <mat-chip-list #chipList>
+        <mat-chip *ngIf="note.archived" [selectable]="true" [removable]="false">Archived</mat-chip>
+        <mat-chip *ngFor="let tag of tags" [selectable]="true" [removable]="true" (removed)="removeTag(tag)">
+          {{tag}}
+          <mat-icon matChipRemove>cancel</mat-icon>
+        </mat-chip>
+        <input placeholder="Tags" [matChipInputFor]="chipList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+          [matChipInputAddOnBlur]="true" (matChipInputTokenEnd)="addTag($event)">
+      </mat-chip-list>
+    </mat-form-field>
+  </div>
 
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="1em" fxHide fxShow.lt-sm>
     <button mat-icon-button (click)="updateNote()" [disabled]="waiting" matTooltip="Save"
