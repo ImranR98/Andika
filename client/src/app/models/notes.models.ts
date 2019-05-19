@@ -21,7 +21,6 @@ export interface IUpdateNote {
     title: string;
     note: string;
     tags: string[];
-    archived: boolean;
 }
 
 export interface IDeleteNote {

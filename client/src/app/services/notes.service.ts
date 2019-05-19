@@ -4,7 +4,7 @@ import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { BehaviorSubject } from 'rxjs';
 import { UserService } from './user.service';
 import { environment } from 'src/environments/environment';
-import { IAddNote, INote } from '../models/notes.models';
+import { IAddNote, INote, IUpdateNote } from '../models/notes.models';
 
 @Injectable({
   providedIn: 'root'
@@ -54,7 +54,7 @@ export class NotesService {
     })
   }
 
-  updateNote(noteData: INote) {
+  updateNote(noteData: IUpdateNote) {
     return new Promise((resolve, reject) => {
       this.http.post(environment.hostUrl + '/updateNote', noteData, this.httpOptions).toPromise().then((updatedNote: INote) => {
         let temp = this.getCurrentNotes();

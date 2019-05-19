@@ -78,8 +78,8 @@ module.exports.updateNote = (note) => {
         let date = new Date();
         let tags = convertTagsArrayToString(note.tags);
         dbService.runQueryWithParams({
-            query: 'UPDATE NOTES SET TITLE=$2::text, NOTE=$3::text, TAGS=$4::text, ARCHIVED=$5::boolean, MODIFIED_DATE=$6::date WHERE (ID=$1::int)',
-            params: [note.id, note.title, note.note, tags, note.archived, date]
+            query: 'UPDATE NOTES SET TITLE=$2::text, NOTE=$3::text, TAGS=$4::text, MODIFIED_DATE=$5::date WHERE (ID=$1::int)',
+            params: [note.id, note.title, note.note, tags, date]
         }).then(() => {
             dbService.runQueryWithParams({
                 query: 'SELECT * FROM NOTES WHERE (ID=$1::int)',

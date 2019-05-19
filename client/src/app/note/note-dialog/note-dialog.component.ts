@@ -1,10 +1,11 @@
 import { Component, OnInit, ViewChild, Inject } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { INote } from 'src/app/models/notes.models';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { INote, IUpdateNote } from 'src/app/models/notes.models';
+import { MatDialogRef, MAT_DIALOG_DATA, MatChipInputEvent } from '@angular/material';
 import { NotesService } from 'src/app/services/notes.service';
 import { ErrorService } from 'src/app/services/error.service';
 import { CdkTextareaAutosize } from '@angular/cdk/text-field';
+import { COMMA, ENTER } from '@angular/cdk/keycodes';
 
 @Component({
   selector: 'app-note-dialog',
@@ -17,16 +18,42 @@ export class NoteDialogComponent implements OnInit {
 
   @ViewChild('autosize') autosize: CdkTextareaAutosize;
 
+  readonly separatorKeysCodes: number[] = [ENTER, COMMA];
+  waiting: boolean = false;
+
   noteForm = new FormGroup({
     title: new FormControl('', Validators.required),
-    note: new FormControl('')
+    note: new FormControl(''),
+    tags: new FormControl('')
   });
 
-  waiting: boolean = false;
+  tags: string[] = [];
 
   ngOnInit() {
     this.noteForm.controls['title'].setValue(this.note.title);
     this.noteForm.controls['note'].setValue(this.note.note);
+    this.tags = this.note.tags;
+  }
+
+  addTag(event: MatChipInputEvent): void {
+    const input = event.input;
+    const value = event.value;
+
+    if ((value || '').trim()) {
+      this.tags.push(value.trim());
+    }
+
+    if (input) {
+      input.value = '';
+    }
+  }
+
+  removeTag(tag: string): void {
+    const index = this.tags.indexOf(tag);
+
+    if (index >= 0) {
+      this.tags.splice(index, 1);
+    }
   }
 
   deleteNote() {
@@ -61,11 +88,14 @@ export class NoteDialogComponent implements OnInit {
   }
 
   updateNote() {
-    let tempNote: INote = this.note;
-    tempNote.title = this.noteForm.controls['title'].value;
-    tempNote.note = this.noteForm.controls['note'].value;
+    let updateNote: IUpdateNote = {
+      id: this.note.id,
+      title: this.noteForm.controls['title'].value,
+      note: this.noteForm.controls['note'].value,
+      tags: this.tags
+    }
     this.waiting = true;
-    this.noteService.updateNote(tempNote).then(() => {
+    this.noteService.updateNote(updateNote).then(() => {
       this.waiting = false;
       this.dialogRef.close();
     }).catch((err) => {

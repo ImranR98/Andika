@@ -1,4 +1,4 @@
-<form [formGroup]="noteForm" fxLayout="column" *ngIf="!loading else progressBar;" fxFlex="100%">
+<form [formGroup]="noteForm" fxLayout="column" fxFlex="100%">
   <div fxLayout="column">
     <div fxLayout="row" fxLayoutGap="3em">
       <mat-form-field fxFlex="100%">
@@ -29,14 +29,23 @@
     </div>
 
   </div>
+
   <mat-dialog-content fxLayout="column" fxLayoutGap="1em">
     <textarea matInput cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="5" formControlName="note"
       placeholder="Note" type="text"></textarea>
-      <div *ngIf="note.tags.length > 0 || note.archived" fxLayout="row wrap">
-        <span *ngIf="note.archived">Archived, </span>
-        <span *ngFor="let tag of note.tags">{{tag}}, </span>
-      </div>
+    <mat-form-field>
+      <mat-chip-list #chipList>
+        <mat-chip *ngIf="note.archived" [selectable]="true" [removable]="false">Archived</mat-chip>
+        <mat-chip *ngFor="let tag of tags" [selectable]="true" [removable]="true" (removed)="removeTag(tag)">
+          {{tag}}
+          <mat-icon matChipRemove>cancel</mat-icon>
+        </mat-chip>
+        <input placeholder="Tags" [matChipInputFor]="chipList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+          [matChipInputAddOnBlur]="true" (matChipInputTokenEnd)="addTag($event)">
+      </mat-chip-list>
+    </mat-form-field>
   </mat-dialog-content>
+
   <small>&nbsp;</small>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="1em" fxHide fxShow.lt-sm>
     <button mat-icon-button (click)="updateNote()" [disabled]="waiting" matTooltip="Save"
@@ -61,11 +70,3 @@
     </button>
   </div>
 </form>
-
-<ng-template #progressBar>
-  <mat-card>
-    <div>
-      <mat-progress-bar mode="indeterminate"></mat-progress-bar>
-    </div>
-  </mat-card>
-</ng-template>
