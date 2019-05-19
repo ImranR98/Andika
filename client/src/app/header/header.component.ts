@@ -6,7 +6,7 @@ import { UserService } from '../services/user.service';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss']
 })
-export class HeaderComponent implements OnInit { //TODO: Fix header size in mobile view
+export class HeaderComponent implements OnInit {
   loggedIn: boolean = false;
 
   constructor(private userService: UserService) { }

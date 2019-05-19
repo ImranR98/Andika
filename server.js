@@ -8,7 +8,6 @@ const expressJwt = require('express-jwt');
 
 const clientDir = __dirname + '/client';
 
-const dbService = require('./services/dbService');
 const userService = require('./services/userService');
 const noteService = require('./services/notesService');
 
@@ -94,7 +93,7 @@ app.post('/deleteAccount', checkIfAuthenticated, (req, res) => {
     })
 })
 
-app.post('/getNotes', (req, res) => { //TODO: Add auth to these
+app.post('/getNotes', checkIfAuthenticated, (req, res) => {
     noteService.getNotes(req.body).then((notes) => {
         res.send(notes);
     }).catch((err) => {
@@ -103,7 +102,7 @@ app.post('/getNotes', (req, res) => { //TODO: Add auth to these
     })
 })
 
-app.post('/addNote', (req, res) => {
+app.post('/addNote', checkIfAuthenticated, (req, res) => {
     noteService.addNote(req.body).then((note) => {
         res.send(note);
     }).catch((err) => {
@@ -112,7 +111,7 @@ app.post('/addNote', (req, res) => {
     })
 })
 
-app.post('/updateNote', (req, res) => {
+app.post('/updateNote', checkIfAuthenticated, (req, res) => {
     noteService.updateNote(req.body).then((note) => {
         res.send(note);
     }).catch((err) => {
@@ -121,7 +120,7 @@ app.post('/updateNote', (req, res) => {
     })
 })
 
-app.post('/deleteNote', (req, res) => {
+app.post('/deleteNote', checkIfAuthenticated, (req, res) => {
     noteService.deleteNote(req.body).then(() => {
         res.send();
     }).catch((err) => {
@@ -130,7 +129,7 @@ app.post('/deleteNote', (req, res) => {
     })
 })
 
-app.post('/archiveNote', (req, res) => {
+app.post('/archiveNote', checkIfAuthenticated, (req, res) => {
     noteService.archiveNote(req.body).then(() => {
         res.send();
     }).catch((err) => {
@@ -139,7 +138,7 @@ app.post('/archiveNote', (req, res) => {
     })
 })
 
-app.post('/unArchiveNote', (req, res) => {
+app.post('/unArchiveNote', checkIfAuthenticated, (req, res) => {
     noteService.unArchiveNote(req.body).then(() => {
         res.send();
     }).catch((err) => {

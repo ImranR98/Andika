@@ -60,7 +60,7 @@ module.exports.addNote = (noteData) => {
                     query: 'SELECT * FROM NOTES WHERE (USERID=$1::int AND TITLE=$2::text AND NOTE=$3::text AND TAGS=$4::text AND ARCHIVED=$5::boolean AND CREATED_DATE=$6::date AND MODIFIED_DATE=$6::date)',
                     params: [id, noteData.title, noteData.note, tags, noteData.archived, date]
                 }).then((results) => {
-                    resolve(results.rows[results.rows.length - 1]);
+                    resolve(convertDbNoteToAppNote(results.rows[results.rows.length - 1]));
                 }).catch((err) => {
                     reject(err);
                 })
