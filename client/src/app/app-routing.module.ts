@@ -22,11 +22,6 @@ const routes: Routes = [
     component: HomeComponent
   },
   {
-    path: 'notes',
-    component: NotesComponent,
-    canActivate: [UserService]
-  },
-  {
     path: 'dashboard',
     component: DashboardComponent,
     canActivate: [UserService]

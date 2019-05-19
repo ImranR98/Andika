@@ -7,6 +7,7 @@
         <mat-card>
             <mat-tab-group>
                 <mat-tab label="Login">
+                    <small>&nbsp;</small>
                     <form [formGroup]="loginForm" (ngSubmit)="login()" fxLayout="column" fxLayoutAlign="start start">
                         <mat-form-field>
                             <input matInput formControlName="email" placeholder="Email" type="email" required>
@@ -18,8 +19,9 @@
                     </form>
                 </mat-tab>
                 <mat-tab label="Register">
-                    <form [formGroup]="registerForm"
-                        (ngSubmit)="register()" fxLayout="column" fxLayoutAlign="start start">
+                    <small>&nbsp;</small>
+                    <form [formGroup]="registerForm" (ngSubmit)="register()" fxLayout="column"
+                        fxLayoutAlign="start start">
                         <mat-form-field>
                             <input matInput formControlName="email" placeholder="Email" type="email" required>
                         </mat-form-field>
@@ -44,13 +46,7 @@
     </div>
 
     <div fxLayout="column" fxLayoutGap="1em" *ngIf="user">
-        <mat-card>
-            <mat-card-title>Home</mat-card-title>
-        </mat-card>
-
-        <mat-card>
-            <p>Welcome, {{user.firstName}}</p>
-        </mat-card>
+        <app-notes></app-notes>
     </div>
 </div>
 

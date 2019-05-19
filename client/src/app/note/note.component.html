@@ -1,27 +1,35 @@
 <mat-card *ngIf="note else progressBar;" fxLayout="column" fxFill (click)="openEditor()">
-  <mat-card-title>
-    <div style="overflow: hidden;  white-space: nowrap;  text-overflow: ellipsis;">{{note.title}}</div>
-  </mat-card-title>
-  <mat-card-subtitle>{{viewText}}</mat-card-subtitle>
-  <div fxLayout="row" fxLayoutGap="1em" fxFlex="100%" fxLayoutAlign="end end">
+  <div>
+    <mat-card-title>
+      <div style="overflow: hidden;  white-space: nowrap;  text-overflow: ellipsis;">{{note.title}}</div>
+    </mat-card-title>
+    <mat-card-subtitle>{{viewText}}</mat-card-subtitle>
+  </div>
+  <div fxLayout="column" fxLayoutGap="0.4em" fxFlex="100%" fxLayoutAlign="space-between">
     <div fxLayout="row" fxFlex="100%">
       <mat-chip-list *ngIf="note.tags.length > 0 || note.archived">
         <mat-chip color="primary" selected disabled *ngIf="note.archived">Archived</mat-chip>
         <mat-chip color="accent" selected disabled *ngFor="let tag of note.tags">{{tag}}</mat-chip>
       </mat-chip-list>
     </div>
-    <button mat-icon-button (click)="deleteNote()" [disabled]="waiting" matTooltip="Delete"
-      aria-label="Button that deletes this Note">
-      <mat-icon>delete</mat-icon>
-    </button>
-    <button mat-icon-button (click)="archiveNote()" [disabled]="waiting" *ngIf="!note.archived" matTooltip="Archive"
-      aria-label="Button that archives this Note">
-      <mat-icon>archive</mat-icon>
-    </button>
-    <button mat-icon-button (click)="unArchiveNote()" [disabled]="waiting" *ngIf="note.archived" matTooltip="Unarchive"
-      aria-label="Button that unarchives this Note">
-      <mat-icon>unarchive</mat-icon>
-    </button>
+    <div fxLayout="row" fxLayoutGap="1em" fxFlex="100%" fxLayoutAlign="end end">
+      <div fxLayout="column" fxFlex="100%">
+        <small>Created: {{created}}</small>
+        <small>Modified: {{modified}}</small>
+      </div>
+      <button mat-icon-button (click)="deleteNote()" [disabled]="waiting" matTooltip="Delete"
+        aria-label="Button that deletes this Note">
+        <mat-icon>delete</mat-icon>
+      </button>
+      <button mat-icon-button (click)="archiveNote()" [disabled]="waiting" *ngIf="!note.archived" matTooltip="Archive"
+        aria-label="Button that archives this Note">
+        <mat-icon>archive</mat-icon>
+      </button>
+      <button mat-icon-button (click)="unArchiveNote()" [disabled]="waiting" *ngIf="note.archived"
+        matTooltip="Unarchive" aria-label="Button that unarchives this Note">
+        <mat-icon>unarchive</mat-icon>
+      </button>
+    </div>
   </div>
 </mat-card>
 

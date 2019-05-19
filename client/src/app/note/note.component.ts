@@ -17,6 +17,8 @@ export class NoteComponent implements OnInit {
   waiting: boolean = false;
   viewText = '';
   viewLength = 200;
+  created: any = null;
+  modified: any = null;
 
   constructor(private noteService: NotesService, private errorService: ErrorService, private dialog: MatDialog) { }
 
@@ -27,6 +29,10 @@ export class NoteComponent implements OnInit {
     } else {
       this.viewText = this.note.note;
     }
+    this.created = new Date(this.note.createdDate);
+    this.modified = new Date(this.note.modifiedDate);
+    this.created = this.created.toDateString();
+    this.modified = this.modified.toDateString();
   }
 
   deleteNote() {
