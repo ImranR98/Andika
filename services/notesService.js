@@ -133,3 +133,16 @@ module.exports.unArchiveNote = (noteId) => {
         })
     });
 }
+
+module.exports.deleteAllNotes = (userid) => {
+    return new Promise((resolve, reject) => {
+        dbService.runQueryWithParams({
+            query: 'DELETE FROM NOTES WHERE (USERID=$1::int)',
+            params: [userid]
+        }).then(() => {
+            resolve();
+        }).catch((err) => {
+            reject(err);
+        })
+    });
+}

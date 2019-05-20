@@ -1,6 +1,7 @@
 const bcrypt = require('bcrypt'); //To encrypt and validate passwords
 const nodeMailer = require('nodemailer'); //To send confirmation emails
 const dbService = require('./dbService');
+const noteService = require('./notesService');
 
 module.exports.registerUser = (registerFormInput) => {
     return new Promise((resolve, reject) => {
@@ -127,11 +128,15 @@ module.exports.deleteAccount = (deleteFormInput) => {
                 if (results.rows.length > 0) {
                     bcrypt.compare(deleteFormInput.password, results.rows[0].password).then((res) => {
                         if (res) {
-                            dbService.runQueryWithParams({
-                                query: 'DELETE FROM USERS WHERE ID=$1::integer',
-                                params: [results.rows[0].id]
-                            }).then(() => {
-                                resolve();
+                            noteService.deleteAllNotes(results.rows[0].id).then(() => {
+                                dbService.runQueryWithParams({
+                                    query: 'DELETE FROM USERS WHERE ID=$1::integer',
+                                    params: [results.rows[0].id]
+                                }).then(() => {
+                                    resolve();
+                                }).catch((err) => {
+                                    reject(err);
+                                })
                             }).catch((err) => {
                                 reject(err);
                             })

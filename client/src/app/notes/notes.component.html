@@ -33,6 +33,10 @@
         <app-note [note]="note"></app-note>
       </div>
     </div>
+
+    <mat-card *ngIf="notes.length == 0">
+      <mat-card-subtitle>No Notes here yet, use the button on the bottom right to get started.</mat-card-subtitle>
+    </mat-card>
   </div>
 
   <button *ngIf="!loading" mat-fab color="primary" style="position: fixed; bottom: 1em; right: 1em;" matTooltip="Add"
