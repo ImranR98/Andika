@@ -32,8 +32,19 @@ export class NoteComponent implements OnInit {
     }
     this.created = new Date(this.note.createdDate);
     this.modified = new Date(this.note.modifiedDate);
-    this.created = this.created.toDateString();
-    this.modified = this.modified.toDateString();
+    let today = new Date();
+
+    if (today.toDateString() == this.created.toDateString()) {
+      this.created = 'Today' + ', ' + this.created.getHours() + ':' + this.created.getMinutes();
+    } else {
+      this.created = this.created.toDateString() + ', ' + this.created.getHours() + ':' + this.created.getMinutes();
+    }
+
+    if (today.toDateString() == this.modified.toDateString()) {
+      this.modified = 'Today' + ', ' + this.modified.getHours() + ':' + this.modified.getMinutes();
+    } else {
+      this.modified = this.modified.toDateString() + ', ' + this.modified.getHours() + ':' + this.modified.getMinutes();
+    }
   }
 
   deleteNote() {

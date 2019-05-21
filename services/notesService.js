@@ -53,11 +53,11 @@ module.exports.addNote = (noteData) => {
             let date = new Date();
             let tags = convertTagsArrayToString(noteData.tags);
             dbService.runQueryWithParams({
-                query: 'INSERT INTO NOTES (USERID, TITLE, NOTE, TAGS, ARCHIVED, CREATED_DATE, MODIFIED_DATE) VALUES($1::int, $2::text, $3::text, $4::text, $5::boolean, $6::date, $6::date)',
+                query: 'INSERT INTO NOTES (USERID, TITLE, NOTE, TAGS, ARCHIVED, CREATED_DATE, MODIFIED_DATE) VALUES($1::int, $2::text, $3::text, $4::text, $5::boolean, $6::timestamp, $6::timestamp)',
                 params: [id, noteData.title, noteData.note, tags, noteData.archived, date]
             }).then(() => {
                 dbService.runQueryWithParams({
-                    query: 'SELECT * FROM NOTES WHERE (USERID=$1::int AND TITLE=$2::text AND NOTE=$3::text AND TAGS=$4::text AND ARCHIVED=$5::boolean AND CREATED_DATE=$6::date AND MODIFIED_DATE=$6::date)',
+                    query: 'SELECT * FROM NOTES WHERE (USERID=$1::int AND TITLE=$2::text AND NOTE=$3::text AND TAGS=$4::text AND ARCHIVED=$5::boolean AND CREATED_DATE=$6::timestamp AND MODIFIED_DATE=$6::timestamp)',
                     params: [id, noteData.title, noteData.note, tags, noteData.archived, date]
                 }).then((results) => {
                     resolve(convertDbNoteToAppNote(results.rows[results.rows.length - 1]));
@@ -78,7 +78,7 @@ module.exports.updateNote = (note) => {
         let date = new Date();
         let tags = convertTagsArrayToString(note.tags);
         dbService.runQueryWithParams({
-            query: 'UPDATE NOTES SET TITLE=$2::text, NOTE=$3::text, TAGS=$4::text, MODIFIED_DATE=$5::date WHERE (ID=$1::int)',
+            query: 'UPDATE NOTES SET TITLE=$2::text, NOTE=$3::text, TAGS=$4::text, MODIFIED_DATE=$5::timestamp WHERE (ID=$1::int)',
             params: [note.id, note.title, note.note, tags, date]
         }).then(() => {
             dbService.runQueryWithParams({

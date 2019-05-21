@@ -14,7 +14,7 @@ module.exports.registerUser = (registerFormInput) => {
                     result += characters.charAt(Math.floor(Math.random() * charactersLength));
                 }
                 dbService.runQueryWithParams({
-                    query: 'INSERT INTO USERS (EMAIL, FIRST_NAME, LAST_NAME, PASSWORD, REGISTRATION_STATUS, REGISTRATION_KEY, REGISTRATION_START_DATE, REGISTRATION_COMPLETE_DATE) VALUES($1::text, $2::text, $3::text, $4::text, $5::text, $6::text, $7::date, null)',
+                    query: 'INSERT INTO USERS (EMAIL, FIRST_NAME, LAST_NAME, PASSWORD, REGISTRATION_STATUS, REGISTRATION_KEY, REGISTRATION_START_DATE, REGISTRATION_COMPLETE_DATE) VALUES($1::text, $2::text, $3::text, $4::text, $5::text, $6::text, $7::timestamp, null)',
                     params: [registerFormInput.email, registerFormInput.firstName, registerFormInput.lastName, encryptedPassword, 'PENDING', result, new Date()]
                 }).then(() => {
                     let transporter = nodeMailer.createTransport({
@@ -66,7 +66,7 @@ module.exports.completeRegistration = (key) => {
             }).then((results) => {
                 if (results.rows.length > 0) {
                     dbService.runQueryWithParams({
-                        query: 'UPDATE USERS SET REGISTRATION_STATUS=$1::text, REGISTRATION_COMPLETE_DATE=$2::date',
+                        query: 'UPDATE USERS SET REGISTRATION_STATUS=$1::text, REGISTRATION_COMPLETE_DATE=$2::timestamp',
                         params: ['COMPLETE', new Date()]
                     }).then(() => {
                         resolve();
