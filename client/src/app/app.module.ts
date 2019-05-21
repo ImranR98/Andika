@@ -37,6 +37,7 @@ import {
   MatTabsModule,
   MatDialogModule,
   MatChipsModule,
+  MatTooltipModule,
 } from '@angular/material';
 
 import { HomeComponent } from './home/home.component';
@@ -52,6 +53,7 @@ import { NoteComponent } from './note/note.component';
 import { NoteDialogComponent } from './note/note-dialog/note-dialog.component';
 import { TagComponent } from './tag/tag.component';
 import { AddNoteDialogComponent } from './notes/add-note-dialog/add-note-dialog.component';
+import { DeleteNoteDialogComponent } from './note/delete-note-dialog/delete-note-dialog.component';
 
 @NgModule({
   declarations: [
@@ -66,7 +68,8 @@ import { AddNoteDialogComponent } from './notes/add-note-dialog/add-note-dialog.
     NoteComponent,
     NoteDialogComponent,
     TagComponent,
-    AddNoteDialogComponent
+    AddNoteDialogComponent,
+    DeleteNoteDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -98,7 +101,8 @@ import { AddNoteDialogComponent } from './notes/add-note-dialog/add-note-dialog.
     MatDialogModule,
     ReactiveFormsModule,
     CommonModule,
-    MatChipsModule
+    MatChipsModule,
+    MatTooltipModule
   ],
   providers: [{ provide: UserService, useClass: UserService },
   {
@@ -109,6 +113,6 @@ import { AddNoteDialogComponent } from './notes/add-note-dialog/add-note-dialog.
   }
   ],
   bootstrap: [AppComponent],
-  entryComponents: [DeleteAccountDialogComponent, NoteDialogComponent, AddNoteDialogComponent]
+  entryComponents: [DeleteAccountDialogComponent, NoteDialogComponent, AddNoteDialogComponent, DeleteNoteDialogComponent]
 })
 export class AppModule { }

@@ -4,6 +4,7 @@ import { NotesService } from '../services/notes.service';
 import { ErrorService } from '../services/error.service';
 import { MatDialog } from '@angular/material';
 import { NoteDialogComponent } from './note-dialog/note-dialog.component';
+import { DeleteNoteDialogComponent } from './delete-note-dialog/delete-note-dialog.component';
 
 @Component({
   selector: 'app-note',
@@ -37,11 +38,19 @@ export class NoteComponent implements OnInit {
 
   deleteNote() {
     this.waiting = true;
-    this.noteService.deleteNote(this.note.id).then(() => {
-      this.waiting = false;
-    }).catch((err) => {
-      this.errorService.showError(err);
-      this.waiting = false;
+    this.dialog.open(DeleteNoteDialogComponent, {
+      width: '250px',
+    }).afterClosed().subscribe((val) => {
+      if (val) {
+        this.noteService.deleteNote(this.note.id).then(() => {
+          this.waiting = false;
+        }).catch((err) => {
+          this.errorService.showError(err);
+          this.waiting = false;
+        });
+      } else {
+        this.waiting = false;
+      }
     });
   }
 

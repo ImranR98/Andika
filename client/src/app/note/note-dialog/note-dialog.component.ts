@@ -1,11 +1,12 @@
 import { Component, OnInit, ViewChild, Inject } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { INote, IUpdateNote } from 'src/app/models/notes.models';
-import { MatDialogRef, MAT_DIALOG_DATA, MatChipInputEvent } from '@angular/material';
+import { MatDialogRef, MAT_DIALOG_DATA, MatChipInputEvent, MatDialog } from '@angular/material';
 import { NotesService } from 'src/app/services/notes.service';
 import { ErrorService } from 'src/app/services/error.service';
 import { CdkTextareaAutosize } from '@angular/cdk/text-field';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
+import { DeleteNoteDialogComponent } from '../delete-note-dialog/delete-note-dialog.component';
 
 @Component({
   selector: 'app-note-dialog',
@@ -14,7 +15,7 @@ import { COMMA, ENTER } from '@angular/cdk/keycodes';
 })
 export class NoteDialogComponent implements OnInit {
 
-  constructor(private dialogRef: MatDialogRef<NoteDialogComponent>, private noteService: NotesService, private errorService: ErrorService, @Inject(MAT_DIALOG_DATA) public note: INote) { }
+  constructor(private dialogRef: MatDialogRef<NoteDialogComponent>, private noteService: NotesService, private errorService: ErrorService, @Inject(MAT_DIALOG_DATA) public note: INote, private dialog: MatDialog) { }
 
   @ViewChild('autosize') autosize: CdkTextareaAutosize;
 
@@ -60,12 +61,20 @@ export class NoteDialogComponent implements OnInit {
 
   deleteNote() {
     this.waiting = true;
-    this.noteService.deleteNote(this.note.id).then(() => {
-      this.waiting = false;
-      this.dialogRef.close();
-    }).catch((err) => {
-      this.errorService.showError(err);
-      this.waiting = false;
+    this.dialog.open(DeleteNoteDialogComponent, {
+      width: '250px',
+    }).afterClosed().subscribe((val) => {
+      if (val) {
+        this.noteService.deleteNote(this.note.id).then(() => {
+          this.waiting = false;
+          this.dialogRef.close();
+        }).catch((err) => {
+          this.errorService.showError(err);
+          this.waiting = false;
+        });
+      } else {
+        this.waiting = false;
+      }
     });
   }
 
