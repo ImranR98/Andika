@@ -3,7 +3,7 @@ const nodeMailer = require('nodemailer'); //To send confirmation emails
 const dbService = require('./dbService');
 const noteService = require('./notesService');
 
-module.exports.registerUser = (registerFormInput) => {
+module.exports.registerUser = (registerFormInput, currentDomain) => {
     return new Promise((resolve, reject) => {
         if (registerFormInput.email && registerFormInput.firstName && registerFormInput.lastName && registerFormInput.password) {
             bcrypt.hash(registerFormInput.password, 10).then((encryptedPassword) => {
@@ -30,7 +30,7 @@ module.exports.registerUser = (registerFormInput) => {
                         subject: 'Complete your Registration',
                         html:
                             `<p><b>Click the link below to complete your registration:</b></p>
-                            <a href="${process.env.EMAIL_URL}/home?key=${result}">${process.env.EMAIL_URL}/home?key=${result}</a>`
+                            <a href="http://${currentDomain}/completeRegistration?key=${result}">http://${currentDomain}/completeRegistration?key=${result}</a>`
                     };
                     transporter.sendMail(mailOptions).then((info) => {
                         resolve();
@@ -57,12 +57,12 @@ module.exports.registerUser = (registerFormInput) => {
     });
 }
 
-module.exports.completeRegistration = (key) => {
+module.exports.completeRegistration = (requestQueries) => {
     return new Promise((resolve, reject) => {
-        if (key.key) {
+        if (requestQueries.key) {
             dbService.runQueryWithParams({
                 query: 'SELECT * FROM USERS WHERE (REGISTRATION_KEY=$1::text AND REGISTRATION_STATUS=$2::text)',
-                params: [key.key, 'PENDING']
+                params: [requestQueries.key, 'PENDING']
             }).then((results) => {
                 if (results.rows.length > 0) {
                     dbService.runQueryWithParams({
@@ -74,7 +74,7 @@ module.exports.completeRegistration = (key) => {
                         reject(err);
                     })
                 } else {
-                    reject('Registration complete link is invalid');
+                    reject('Registration completion link is invalid');
                 }
             }).catch((err) => {
                 reject(err);

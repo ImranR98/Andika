@@ -24,7 +24,6 @@ export class UserService implements OnInit {
   
   ngOnInit() { }
 
-  //Function to update User Data
   updateUser(user: IUser) {
     this.userSource.next(user);
   }

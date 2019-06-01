@@ -49,7 +49,7 @@ checkIfAuthenticated = expressJwt({
 //API Routes
 //======================================
 app.post('/register', (req, res) => {
-    userService.registerUser(req.body).then(() => {
+    userService.registerUser(req.body, req.headers.host).then(() => {
         res.send();
     }).catch((err) => {
         console.log(err);
@@ -57,9 +57,9 @@ app.post('/register', (req, res) => {
     })
 });
 
-app.post('/completeRegistration', (req, res) => {
-    userService.completeRegistration(req.body).then(() => {
-        res.send();
+app.get('/completeRegistration', (req, res) => {
+    userService.completeRegistration(req.query).then(() => {
+        res.send('Registration was successful. You can close this page.');
     }).catch((err) => {
         console.log(err);
         res.status(500).send(err);

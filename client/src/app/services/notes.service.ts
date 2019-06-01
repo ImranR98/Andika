@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { BehaviorSubject } from 'rxjs';
 import { UserService } from './user.service';
@@ -11,7 +10,7 @@ import { IAddNote, INote, IUpdateNote } from '../models/notes.models';
 })
 export class NotesService {
 
-  constructor(private http: HttpClient, private router: Router, private userService: UserService) { }
+  constructor(private http: HttpClient, private userService: UserService) { }
 
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
@@ -28,6 +27,14 @@ export class NotesService {
 
   getCurrentNotes() {
     return this.notesSource.value;
+  }
+
+  resetNotesIfNoUser() {
+    this.userService.user.subscribe((user) => {
+      if (!user) {
+        this.updateNotes(null);
+      }
+    })
   }
 
   ifNotes() {

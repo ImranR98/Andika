@@ -25,6 +25,7 @@ export class NotesComponent implements OnInit {
 
   ngOnInit() {
     this.userService.isLoggedIn();
+    this.notesService.resetNotesIfNoUser();
     if (!this.notesService.ifNotes()) {
       this.loading = true;
       this.notesService.getNotes().then(() => {
