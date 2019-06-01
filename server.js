@@ -59,7 +59,7 @@ app.post('/register', (req, res) => {
 
 app.get('/completeRegistration', (req, res) => {
     userService.completeRegistration(req.query).then(() => {
-        res.send('Registration was successful. You can close this page.');
+        res.send('Registration was successful, you can close this page');
     }).catch((err) => {
         console.log(err);
         res.status(500).send(err);
