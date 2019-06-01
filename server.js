@@ -175,5 +175,5 @@ EXPIRES_IN - Number of seconds each session lasts
 /*
 TODO / Plans:
  - Forgot Password
- - (Frontend) Hode archived / Show archived only
+ - (Frontend) Hide archived / Show archived only
 */
