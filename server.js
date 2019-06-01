@@ -167,8 +167,13 @@ DATABASE_URL - DB URL for storing data
 ADMIN_NAME - The name used when sending registration confirmation emails
 ADMIN_EMAIL - The email used when sending registration confirmation emails
 ADMIN_PASSWORD - The password for the above email
-EMAIL_URL - The URL for the application (where register confirmation emails are sent)
 RSA_PRIVATE_KEY - Private key used for session
 RSA_PUBLIC_KEY - Public key used for session
 EXPIRES_IN - Number of seconds each session lasts
+*/
+
+/*
+TODO / Plans:
+ - Forgot Password
+ - (Frontend) Hode archived / Show archived only
 */
