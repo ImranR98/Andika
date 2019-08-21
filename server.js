@@ -173,7 +173,13 @@ EXPIRES_IN - Number of seconds each session lasts
 */
 
 /*
-TODO / Plans:
- - Forgot Password
- - (Frontend) Hide archived / Show archived only
+TODO:
+    Server Side:
+        - Update DB structure/recreate tables, using Eduzone as reference
+        - Get DB commands from Eduzone
+        - Implement Forgot Password and other features from Eduzone
+
+    Frontend:
+        - Archive page, "show archived" checkbox
+        - Show only notes with the same tag when a tag is clicked
 */
