@@ -47,6 +47,9 @@ testem.log
 .DS_Store
 Thumbs.db
 
-#For Google Drive Desktop App
+# For Google Drive Desktop App
 *.drivedownload
 *.driveupload
+
+# Dotenv
+*.env

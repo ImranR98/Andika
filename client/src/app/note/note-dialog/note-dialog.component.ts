@@ -17,7 +17,7 @@ export class NoteDialogComponent implements OnInit {
 
   constructor(private dialogRef: MatDialogRef<NoteDialogComponent>, private noteService: NotesService, private errorService: ErrorService, @Inject(MAT_DIALOG_DATA) public note: INote, private dialog: MatDialog) { }
 
-  @ViewChild('autosize') autosize: CdkTextareaAutosize;
+  @ViewChild('autosize', { static: false }) autosize: CdkTextareaAutosize;
 
   readonly separatorKeysCodes: number[] = [ENTER, COMMA];
   waiting: boolean = false;

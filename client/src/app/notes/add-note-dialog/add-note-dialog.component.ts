@@ -17,7 +17,7 @@ export class AddNoteDialogComponent implements OnInit {
 
   constructor(private dialogRef: MatDialogRef<AddNoteDialogComponent>, private noteService: NotesService, private errorService: ErrorService, private userService: UserService) { }
 
-  @ViewChild('autosize') autosize: CdkTextareaAutosize;
+  @ViewChild('autosize', { static: false }) autosize: CdkTextareaAutosize;
 
   note: IAddNote;
 
