@@ -1,33 +1,29 @@
-<mat-card fxLayout="row">
-    <div fxLayout="column" fxFlex="100%">
-        <div fxLayout="row">
-            <div fxLayout="column" fxFlex="100%">
-                <mat-card-title>Andika</mat-card-title>
-                <mat-card-subtitle>Simple Note taking App</mat-card-subtitle>
+<mat-toolbar fxLayout="row" class="cardBG stdPadding mat-elevation-z1">
+    <div fxLayout="row" fxFlex="100%" fxLayoutAlign="space-between center" fxLayoutGap="1em">
+        <h1>Andika</h1>
+        <div>
+            <div fxLayout="row" fxLayoutGap="1em" fxLayoutAlign="default center" fxHide fxShow.sm fxShow.gt-sm>
+                <button mat-raised-button color="accent" routerLinkActive="active" routerLink="/home"
+                    *ngIf="!loggedIn">Home</button>
+                <button mat-raised-button color="accent" routerLinkActive="active" routerLink="/home"
+                    *ngIf="loggedIn">Notes</button>
+                <button mat-raised-button color="accent" routerLinkActive="active" routerLink="/account"
+                    *ngIf="loggedIn">Account</button>
+                <button mat-raised-button color="accent" routerLinkActive="active" routerLink="/about">About</button>
+                <button mat-raised-button color="accent" (click)="logout()" *ngIf="loggedIn">Log Out</button>
             </div>
+
             <button mat-icon-button routerLinkActive="active" [matMenuTriggerFor]="menu" fxHide fxShow.lt-sm>
                 <mat-icon>more_vert</mat-icon>
             </button>
             <mat-menu #menu="matMenu">
-                <button mat-menu-item routerLink="/dashboard" routerLinkActive="active"
-                    *ngIf="loggedIn">Dashboard</button>
+                <button mat-menu-item routerLink="/home" routerLinkActive="active" *ngIf="!loggedIn">Home</button>
+                <button mat-menu-item routerLink="/home" routerLinkActive="active" *ngIf="loggedIn">Notes</button>
+                <button mat-menu-item routerLink="/account" routerLinkActive="active" *ngIf="loggedIn">Account</button>
                 <button mat-menu-item routerLinkActive="active" routerLink="/about">About</button>
                 <button mat-menu-item routerLinkActive="active" (click)="logout()" *ngIf="loggedIn">Log Out</button>
             </mat-menu>
         </div>
 
-        <div fxLayout="row" fxLayoutGap="1em" fxLayoutAlign="default center" fxHide fxShow.sm fxShow.gt-sm>
-            <button mat-raised-button color="accent" routerLinkActive="active" routerLink="/home">Home</button>
-            <button mat-raised-button color="accent" routerLinkActive="active" routerLink="/dashboard"
-                *ngIf="loggedIn">Dashboard</button>
-            <button mat-raised-button color="accent" routerLinkActive="active" routerLink="/about">About</button>
-            <button mat-raised-button color="accent" (click)="logout()" *ngIf="loggedIn">Log Out</button>
-        </div>
-        <div fxLayout="row" fxLayoutGap="1em" fxLayoutAlign="default center" fxHide fxShow.lt-sm>
-            <button mat-raised-button color="accent" routerLinkActive="active" routerLink="/home"
-                *ngIf="!loggedIn">Login / Register</button>
-            <button mat-raised-button color="accent" routerLinkActive="active" routerLink="/home"
-                *ngIf="loggedIn">Notes</button>
-        </div>
     </div>
-</mat-card>
+</mat-toolbar>

@@ -1,9 +1,5 @@
 <div>
     <div fxLayout="column" fxLayoutGap="1em">
-        <mat-card>
-            <mat-card-title>Home</mat-card-title>
-        </mat-card>
-
         <mat-card *ngIf="!userExists">
             <app-login></app-login>
         </mat-card>

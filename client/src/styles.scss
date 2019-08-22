@@ -33,17 +33,29 @@ $app-theme: mat-dark-theme($app-primary, $app-accent);
 // that you are using.
 @include angular-material-theme($app-theme);
 
+app-header {
+  position: -webkit-sticky /* Safari */;
+  position: sticky;
+  top: 0;
+  z-index: 200;
+}
+
 .active {
   background-color: #69F0AE !important;
   color: #095340 !important;
 }
 
-mat-card {
+mat-card, .cardBG {
   background-color: #37474f !important;
+  color: #FFFFFF !important;
 }
 
 a {
   color: inherit;
+}
+
+.stdPadding {
+  padding: 1em;
 }
 
 .imageFileName {
@@ -54,4 +66,8 @@ a {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+.whiteText {
+  color: #FFFFFF !important;
 }

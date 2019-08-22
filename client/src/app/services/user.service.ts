@@ -124,7 +124,7 @@ export class UserService implements OnInit {
     return valid;
   }
 
-  logout(redirect: boolean = false) {
+  logout(redirect: boolean = true) {
     localStorage.removeItem('jwt_token');
     localStorage.removeItem("jwt_token_decoded");
     localStorage.removeItem("user");

@@ -1,4 +1,18 @@
 <div *ngIf="!loading">
+  <div fxLayout="column" fxLayoutGap="1em">
+    <div *ngIf="!loading && (notesBy1.length > 0 || searchForm.controls['search'].value)">
+      <div fxLayout="row" fxLayoutAlign="start end" fxFlex="100%" class="whiteBG stdPaddingExceptTop">
+        <form [formGroup]="searchForm" fxFlex.lt-sm="100%">
+          <mat-form-field color="primary" class="searchFormField" fxFlex="100%">
+            <input matInput formControlName="search" placeholder="Search" (input)="display()" maxlength="100"
+              class="whiteText">
+          </mat-form-field>
+        </form>
+      </div>
+    </div>
+  </div>
+
+
   <div fxLayout="column" fxLayoutGap="1em" fxHide fxShow.gt-lg="true">
     <div fxLayout="row" fxLayoutGap="1em" *ngFor="let row of notesBy4">
       <div *ngFor="let note of row" fxFlex="25%">
@@ -40,7 +54,8 @@
     aria-label="Button that adds a new Note" (click)="addNote()">
     <mat-icon>add</mat-icon>
   </button>
+</div>
 
-  <div *ngIf="loading">
-    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
-  </div>
+<div *ngIf="loading">
+  <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+</div>

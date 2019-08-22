@@ -21,7 +21,7 @@ const routes: Routes = [
     component: HomeComponent
   },
   {
-    path: 'dashboard',
+    path: 'account',
     component: DashboardComponent,
     canActivate: [UserService]
   },

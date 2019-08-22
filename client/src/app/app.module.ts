@@ -38,6 +38,8 @@ import {
   MatDialogModule,
   MatChipsModule,
   MatTooltipModule,
+  MatExpansionModule,
+  MatToolbarModule,
 } from '@angular/material';
 
 import { HomeComponent } from './home/home.component';
@@ -102,7 +104,9 @@ import { LoginComponent } from './login/login.component';
     ReactiveFormsModule,
     CommonModule,
     MatChipsModule,
-    MatTooltipModule
+    MatTooltipModule,
+    MatExpansionModule,
+    MatToolbarModule
   ],
   providers: [{ provide: UserService, useClass: UserService },
   {

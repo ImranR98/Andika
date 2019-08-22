@@ -118,6 +118,8 @@ THE SOFTWARE.
 
 @angular/material/dialog
 
+@angular/material/expansion
+
 @angular/material/form-field
 
 @angular/material/icon
@@ -129,6 +131,8 @@ THE SOFTWARE.
 @angular/material/snack-bar
 
 @angular/material/tabs
+
+@angular/material/toolbar
 
 @angular/material/tooltip
 
