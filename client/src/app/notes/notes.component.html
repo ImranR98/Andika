@@ -15,7 +15,7 @@
     </div>
   </div>
 
-  <div fxLayout="column" fxLayoutGap="1em" fxHide fxShow.get-lg="true">
+  <div fxLayout="column" fxLayoutGap="1em" fxHide fxShow.gt-lg="true">
       <div fxLayout="row" fxLayoutGap="1em" *ngFor="let row of notesBy5">
         <div *ngFor="let note of row" fxFlex="20%">
           <app-note [note]="note"></app-note>
