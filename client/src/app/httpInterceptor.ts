@@ -12,21 +12,20 @@ export class AuthInterceptor implements HttpInterceptor {
 
     intercept(req: HttpRequest<any>,
         next: HttpHandler): Observable<HttpEvent<any>> {
+        const jwtToken = localStorage.getItem("jwt_token");
+        this.userService = this.injector.get(UserService);
 
-        const idToken = localStorage.getItem("id_token");
+        if (jwtToken) {
+            this.userService.ifLoggedIn(true);
+        }        
 
-        if (idToken) {
-            this.userService = this.injector.get(UserService);
-            if (this.userService.isLoggedIn()) {
-                const cloned = req.clone({
-                    headers: req.headers.set("Authorization",
-                        "Bearer " + idToken)
-                });
-                return next.handle(cloned);
-            }
+        if (this.userService.ifLoggedIn()) {
+            const cloned = req.clone({
+                headers: req.headers.set("Authorization",
+                    "Bearer " + jwtToken)
+            });
+            return next.handle(cloned);
         }
-        else {
-            return next.handle(req);
-        }
+        return next.handle(req);
     }
 }

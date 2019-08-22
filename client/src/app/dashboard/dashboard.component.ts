@@ -13,7 +13,7 @@ export class DashboardComponent implements OnInit {
   constructor(private dialog: MatDialog, private userService: UserService) { }
 
   ngOnInit() {
-    this.userService.isLoggedIn()
+    this.userService.ifLoggedIn()
   }
 
   deleteAccount() {

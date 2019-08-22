@@ -45,3 +45,13 @@ mat-card {
 a {
   color: inherit;
 }
+
+.imageFileName {
+  width: 20vw;
+}
+
+.textOverflow {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

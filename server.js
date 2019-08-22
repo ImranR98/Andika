@@ -14,39 +14,51 @@ const noteService = require('./services/notesService');
 //Set folder where compiled client App is located
 app.use(express.static(clientDir + '/dist/client'));
 
+//Set folder where book images are located
+app.use('/static', express.static(__dirname + '/static'));
+
 //Enables parsing of request bodies
-app.use(bodyParser.json({ extended: true }));
+app.use(bodyParser.json({ extended: true, limit: '10000kb' }));
 
 //Enables client to access the server from localhost, only needed in local development
-let allowCrossDomain = (req, res, next) => {
+let allowCrossDomain = function (req, res, next) {
     let valid = false;
     if (req.header('origin')) {
-        if (req.header('origin').indexOf('http://localhost') !== -1) {
+        if (req.header('origin').indexOf('localhost') !== -1) {
             valid = true;
         }
     }
     if (valid) {
         res.header('Access-Control-Allow-Origin', req.header('origin'));
-        res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
-        res.header('Access-Control-Allow-Headers', 'X-Requested-With, X-HTTP-Method-Override, Content-Type, Accept, Authorization');
-        res.header('Access-Control-Allow-Credentials', true);
+        res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,PATCH,OPTIONS');
+        res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
+        res.header('Access-Control-Allow-Credentials', 'true');
     }
     next();
 }
 app.use(allowCrossDomain);
 
-
+//======================================
 String.prototype.replaceAll = function (search, replacement) {
     var target = this;
     return target.split(search).join(replacement);
 };
 
+//======================================
+let decodeJWTUserId = function (req, res, next) {
+    if (req.jwt) {
+        if (req.jwt.sub) {
+            req.jwt.sub = JSON.parse(req.jwt.sub);
+        }
+    }
+    next();
+}
+
 checkIfAuthenticated = expressJwt({
-    secret: process.env.RSA_PUBLIC_KEY.replaceAll('\\n', '\n')
+    secret: process.env.RSA_PUBLIC_KEY.replaceAll('\\n', '\n'),
+    requestProperty: 'jwt'
 });
 
-
-//API Routes
 //======================================
 app.post('/register', (req, res) => {
     userService.registerUser(req.body, req.headers.host).then(() => {
@@ -71,21 +83,17 @@ app.post('/login', (req, res) => {
         const jwtBearerToken = jwt.sign({}, process.env.RSA_PRIVATE_KEY.replaceAll('\\n', '\n'), {
             algorithm: 'RS256',
             expiresIn: parseInt(process.env.EXPIRES_IN),
-            subject: user.email
+            subject: JSON.stringify(user.userId)
         });
-        res.json({
-            idToken: jwtBearerToken,
-            expiresIn: process.env.EXPIRES_IN,
-            user: user
-        });
+        res.json({ jwtToken: jwtBearerToken, user: user });
     }).catch((err) => {
         console.log(err);
         res.status(500).send(err);
     })
 })
 
-app.post('/deleteAccount', checkIfAuthenticated, (req, res) => {
-    userService.deleteAccount(req.body).then(() => {
+app.post('/deleteAccount', checkIfAuthenticated, decodeJWTUserId, (req, res) => {
+    userService.deleteAccount(req.body, req.jwt.sub).then(() => {
         res.send();
     }).catch((err) => {
         console.log(err);
@@ -93,8 +101,45 @@ app.post('/deleteAccount', checkIfAuthenticated, (req, res) => {
     })
 })
 
-app.post('/getNotes', checkIfAuthenticated, (req, res) => {
-    noteService.getNotes(req.body).then((notes) => {
+app.post('/updateAccount', checkIfAuthenticated, decodeJWTUserId, (req, res) => {
+    userService.updateAccount(req.body, req.jwt.sub).then(() => {
+        res.send();
+    }).catch((err) => {
+        console.log(err);
+        res.status(500).send(err);
+    })
+})
+
+app.post('/updatePassword', checkIfAuthenticated, decodeJWTUserId, (req, res) => {
+    userService.updatePassword(req.body, req.jwt.sub).then(() => {
+        res.send();
+    }).catch((err) => {
+        console.log(err);
+        res.status(500).send(err);
+    })
+})
+
+app.post('/resetPassword', (req, res) => {
+    userService.resetPassword(req.body, req.headers.host).then(() => {
+        res.send();
+    }).catch((err) => {
+        console.log(err);
+        res.status(500).send(err);
+    })
+})
+
+app.get('/completePasswordReset', (req, res) => {
+    userService.completePasswordReset(req.query).then(() => {
+        res.send('Password reset was successful, you can close this page');
+    }).catch((err) => {
+        console.log(err);
+        res.status(500).send(err);
+    })
+})
+
+//======================================
+app.post('/getNotes', checkIfAuthenticated, decodeJWTUserId, (req, res) => {
+    noteService.getNotes(req.jwt.sub).then((notes) => {
         res.send(notes);
     }).catch((err) => {
         console.log(err);
@@ -102,8 +147,8 @@ app.post('/getNotes', checkIfAuthenticated, (req, res) => {
     })
 })
 
-app.post('/addNote', checkIfAuthenticated, (req, res) => {
-    noteService.addNote(req.body).then((note) => {
+app.post('/addNote', checkIfAuthenticated, decodeJWTUserId, (req, res) => {
+    noteService.addNote(req.body, req.jwt.sub).then((note) => {
         res.send(note);
     }).catch((err) => {
         console.log(err);
@@ -111,8 +156,8 @@ app.post('/addNote', checkIfAuthenticated, (req, res) => {
     })
 })
 
-app.post('/updateNote', checkIfAuthenticated, (req, res) => {
-    noteService.updateNote(req.body).then((note) => {
+app.post('/updateNote', checkIfAuthenticated, decodeJWTUserId, (req, res) => {
+    noteService.updateNote(req.body, req.jwt.sub).then((note) => {
         res.send(note);
     }).catch((err) => {
         console.log(err);
@@ -120,8 +165,8 @@ app.post('/updateNote', checkIfAuthenticated, (req, res) => {
     })
 })
 
-app.post('/deleteNote', checkIfAuthenticated, (req, res) => {
-    noteService.deleteNote(req.body).then(() => {
+app.post('/deleteNote', checkIfAuthenticated, decodeJWTUserId, (req, res) => {
+    noteService.deleteNote(req.body, req.jwt.sub).then(() => {
         res.send();
     }).catch((err) => {
         console.log(err);
@@ -129,8 +174,8 @@ app.post('/deleteNote', checkIfAuthenticated, (req, res) => {
     })
 })
 
-app.post('/archiveNote', checkIfAuthenticated, (req, res) => {
-    noteService.archiveNote(req.body).then(() => {
+app.post('/archiveNote', checkIfAuthenticated, decodeJWTUserId, (req, res) => {
+    noteService.archiveNote(req.body, req.jwt.sub).then(() => {
         res.send();
     }).catch((err) => {
         console.log(err);
@@ -138,8 +183,26 @@ app.post('/archiveNote', checkIfAuthenticated, (req, res) => {
     })
 })
 
-app.post('/unArchiveNote', checkIfAuthenticated, (req, res) => {
-    noteService.unArchiveNote(req.body).then(() => {
+app.post('/unArchiveNote', checkIfAuthenticated, decodeJWTUserId, (req, res) => {
+    noteService.unArchiveNote(req.body, req.jwt.sub).then(() => {
+        res.send();
+    }).catch((err) => {
+        console.log(err);
+        res.status(500).send(err);
+    })
+})
+
+app.post('/pinNote', checkIfAuthenticated, decodeJWTUserId, (req, res) => {
+    noteService.pinNote(req.body, req.jwt.sub).then(() => {
+        res.send();
+    }).catch((err) => {
+        console.log(err);
+        res.status(500).send(err);
+    })
+})
+
+app.post('/unPinNote', checkIfAuthenticated, decodeJWTUserId, (req, res) => {
+    noteService.unPinNote(req.body, req.jwt.sub).then(() => {
         res.send();
     }).catch((err) => {
         console.log(err);
@@ -163,13 +226,15 @@ app.listen(HTTP_PORT, function () {
 
 /*
 The following environment variables are required in any environment running this app:
-DATABASE_URL - DB URL for storing data
-ADMIN_NAME - The name used when sending registration confirmation emails
-ADMIN_EMAIL - The email used when sending registration confirmation emails
-ADMIN_PASSWORD - The password for the above email
-RSA_PRIVATE_KEY - Private key used for session
-RSA_PUBLIC_KEY - Public key used for session
-EXPIRES_IN - Number of seconds each session lasts
+DATABASE_URL - DB URL for storing data (must contain the tables outlined below)
+NODEMAILER_NAME - The name used when sending emails using nodemailer
+NODEMAILER_SERVICE - The email service used when sending emails using nodemailer
+NODEMAILER_EMAIL - The email used when sending emails using nodemailer
+NODEMAILER_PASSWORD - The password for the above email address
+CONTACT_EMAIL - The email feedback/contact form input is sent to
+RSA_PRIVATE_KEY - Private key used for encrypting JWT
+RSA_PUBLIC_KEY - Public key corresponding to the above Private key
+EXPIRES_IN - Number of seconds each JWT lasts
 */
 
 /*

@@ -49,11 +49,11 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { AuthInterceptor } from './httpInterceptor';
 import { DeleteAccountDialogComponent } from './dashboard/delete-account-dialog/delete-account-dialog.component';
 import { NotesComponent } from './notes/notes.component';
-import { NoteComponent } from './note/note.component';
-import { NoteDialogComponent } from './note/note-dialog/note-dialog.component';
+import { NoteComponent } from './notes/note/note.component';
+import { NoteDialogComponent } from './notes/note/note-dialog/note-dialog.component';
 import { TagComponent } from './tag/tag.component';
-import { AddNoteDialogComponent } from './notes/add-note-dialog/add-note-dialog.component';
-import { DeleteNoteDialogComponent } from './note/delete-note-dialog/delete-note-dialog.component';
+import { DeleteNoteDialogComponent } from './notes/note/delete-note-dialog/delete-note-dialog.component';
+import { LoginComponent } from './login/login.component';
 
 @NgModule({
   declarations: [
@@ -68,8 +68,8 @@ import { DeleteNoteDialogComponent } from './note/delete-note-dialog/delete-note
     NoteComponent,
     NoteDialogComponent,
     TagComponent,
-    AddNoteDialogComponent,
-    DeleteNoteDialogComponent
+    DeleteNoteDialogComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
@@ -113,6 +113,6 @@ import { DeleteNoteDialogComponent } from './note/delete-note-dialog/delete-note
   }
   ],
   bootstrap: [AppComponent],
-  entryComponents: [DeleteAccountDialogComponent, NoteDialogComponent, AddNoteDialogComponent, DeleteNoteDialogComponent]
+  entryComponents: [DeleteAccountDialogComponent, NoteDialogComponent, DeleteNoteDialogComponent]
 })
 export class AppModule { }

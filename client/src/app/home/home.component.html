@@ -1,59 +1,12 @@
-<div *ngIf="!loading else progressBar;">
-    <div fxLayout="column" fxLayoutGap="1em" *ngIf="!user">
+<div>
+    <div fxLayout="column" fxLayoutGap="1em">
         <mat-card>
-            <mat-card-title>Login / Register</mat-card-title>
+            <mat-card-title>Home</mat-card-title>
         </mat-card>
 
-        <mat-card>
-            <mat-tab-group>
-                <mat-tab label="Login">
-                    <small>&nbsp;</small>
-                    <form [formGroup]="loginForm" (ngSubmit)="login()" fxLayout="column" fxLayoutAlign="start start">
-                        <mat-form-field>
-                            <input matInput formControlName="email" placeholder="Email" type="email" required>
-                        </mat-form-field>
-                        <mat-form-field>
-                            <input matInput formControlName="password" placeholder="Password" type="password" required>
-                        </mat-form-field>
-                        <button mat-raised-button type="submit" color="accent">Login</button>
-                    </form>
-                </mat-tab>
-                <mat-tab label="Register">
-                    <small>&nbsp;</small>
-                    <form [formGroup]="registerForm" (ngSubmit)="register()" fxLayout="column"
-                        fxLayoutAlign="start start">
-                        <mat-form-field>
-                            <input matInput formControlName="email" placeholder="Email" type="email" required>
-                        </mat-form-field>
-                        <mat-form-field>
-                            <input matInput formControlName="firstName" placeholder="First Name" required>
-                        </mat-form-field>
-                        <mat-form-field>
-                            <input matInput formControlName="lastName" placeholder="Last Name" required>
-                        </mat-form-field>
-                        <mat-form-field>
-                            <input matInput formControlName="password" placeholder="Password" type="password" required>
-                        </mat-form-field>
-                        <mat-form-field>
-                            <input matInput formControlName="passwordConfirm" placeholder="Confirm Password"
-                                type="password" required>
-                        </mat-form-field>
-                        <button mat-raised-button type="submit" color="accent">Register</button>
-                    </form>
-                </mat-tab>
-            </mat-tab-group>
+        <mat-card *ngIf="!userExists">
+            <app-login></app-login>
         </mat-card>
-    </div>
-
-    <div fxLayout="column" fxLayoutGap="1em" *ngIf="user">
-        <app-notes></app-notes>
+        <app-notes *ngIf="userExists"></app-notes>
     </div>
 </div>
-
-<ng-template #progressBar>
-    <mat-card>
-        <div>
-            <mat-progress-bar mode="indeterminate"></mat-progress-bar>
-        </div>
-    </mat-card>
-</ng-template>

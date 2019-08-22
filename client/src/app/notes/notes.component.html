@@ -1,41 +1,38 @@
-<div fxLayout="column" fxLayoutGap="1em">
-  <mat-card fxLayout="row" fxLayoutAlign="space-between">
-    <mat-card-title>Notes</mat-card-title>
-  </mat-card>
-
-  <div *ngIf="!loading else progressBar;">
-    <div fxLayout="column" fxLayoutGap="1em" fxHide fxShow.gt-lg="true">
-      <div fxLayout="row" fxLayoutGap="1em" *ngFor="let row of notesBy4">
-        <div *ngFor="let note of row" fxFlex="25%">
-          <app-note [note]="note"></app-note>
-        </div>
-      </div>
-    </div>
-
-    <div fxLayout="column" fxLayoutGap="1em" fxHide fxShow.lg="true">
-      <div fxLayout="row" fxLayoutGap="1em" *ngFor="let row of notesBy3">
-        <div *ngFor="let note of row" fxFlex="32.5%">
-          <app-note [note]="note"></app-note>
-        </div>
-      </div>
-    </div>
-
-    <div fxLayout="column" fxLayoutGap="1em" fxHide fxShow.md="true">
-      <div fxLayout="row" fxLayoutGap="1em" *ngFor="let row of notesBy2">
-        <div *ngFor="let note of row" fxFlex="49.3%">
-          <app-note [note]="note"></app-note>
-        </div>
-      </div>
-    </div>
-
-    <div fxLayout="column" fxLayoutGap="1em" fxHide fxShow.lt-md="true">
-      <div *ngFor="let note of notes">
+<div *ngIf="!loading">
+  <div fxLayout="column" fxLayoutGap="1em" fxHide fxShow.gt-lg="true">
+    <div fxLayout="row" fxLayoutGap="1em" *ngFor="let row of notesBy4">
+      <div *ngFor="let note of row" fxFlex="25%">
         <app-note [note]="note"></app-note>
       </div>
     </div>
+  </div>
 
+  <div fxLayout="column" fxLayoutGap="1em" fxHide fxShow.lg="true">
+    <div fxLayout="row" fxLayoutGap="1em" *ngFor="let row of notesBy3">
+      <div *ngFor="let note of row" fxFlex="32.5%">
+        <app-note [note]="note"></app-note>
+      </div>
+    </div>
+  </div>
+
+  <div fxLayout="column" fxLayoutGap="1em" fxHide fxShow.md="true">
+    <div fxLayout="row" fxLayoutGap="1em" *ngFor="let row of notesBy2">
+      <div *ngFor="let note of row" fxFlex="49.3%">
+        <app-note [note]="note"></app-note>
+      </div>
+    </div>
+  </div>
+
+  <div fxLayout="column" fxLayoutGap="1em" fxHide fxShow.lt-md="true">
+    <div *ngFor="let note of notes">
+      <app-note [note]="note"></app-note>
+    </div>
+  </div>
+
+  <div *ngIf="notes">
     <mat-card *ngIf="notes.length == 0">
-      <mat-card-subtitle>No Notes here yet, use the button on the bottom right to get started.</mat-card-subtitle>
+      <span>No Notes here yet, use the button on the bottom right to get started.
+      </span>
     </mat-card>
   </div>
 
@@ -44,10 +41,6 @@
     <mat-icon>add</mat-icon>
   </button>
 
-  <ng-template #progressBar>
-    <mat-card>
-      <div>
-        <mat-progress-bar mode="indeterminate"></mat-progress-bar>
-      </div>
-    </mat-card>
-  </ng-template>
+  <div *ngIf="loading">
+    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+  </div>

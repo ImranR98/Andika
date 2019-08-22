@@ -12,6 +12,6 @@ export class AppComponent implements OnInit {
   constructor(private userService: UserService) { }
 
   ngOnInit() {
-    this.userService.isLoggedIn();
+    this.userService.ifLoggedIn();
   }
 }

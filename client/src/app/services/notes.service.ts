@@ -4,13 +4,14 @@ import { BehaviorSubject } from 'rxjs';
 import { UserService } from './user.service';
 import { environment } from 'src/environments/environment';
 import { IAddNote, INote, IUpdateNote } from '../models/notes.models';
+import { ErrorService } from './error.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class NotesService {
 
-  constructor(private http: HttpClient, private userService: UserService) { }
+  constructor(private http: HttpClient, private userService: UserService, private errorService: ErrorService) { }
 
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
@@ -52,10 +53,11 @@ export class NotesService {
 
   getNotes() {
     return new Promise((resolve, reject) => {
-      this.http.post(environment.hostUrl + '/getNotes', { email: this.userService.getUser().email }, this.httpOptions).toPromise().then((notes) => {
+      this.http.post(environment.apiUrl + '/getNotes', this.httpOptions).toPromise().then((notes) => {
         this.updateNotes(notes);
         resolve();
       }).catch((err) => {
+        this.errorService.showError(err, () => this.getNotes());
         reject(err);
       })
     })
@@ -63,16 +65,17 @@ export class NotesService {
 
   updateNote(noteData: IUpdateNote) {
     return new Promise((resolve, reject) => {
-      this.http.post(environment.hostUrl + '/updateNote', noteData, this.httpOptions).toPromise().then((updatedNote: INote) => {
+      this.http.post(environment.apiUrl + '/updateNote', noteData, this.httpOptions).toPromise().then((updatedNote: INote) => {
         let temp = this.getCurrentNotes();
         for (let i = 0; i < temp.length; i++) {
-          if (temp[i].id == updatedNote.id) {
+          if (temp[i].noteId == updatedNote.noteId) {
             temp[i] = updatedNote;
           }
         }
         this.updateNotes(temp);
         resolve();
       }).catch((err) => {
+        this.errorService.showError(err, () => this.updateNote(noteData));
         reject(err);
       });
     })
@@ -80,64 +83,104 @@ export class NotesService {
 
   addNote(noteData: IAddNote) {
     return new Promise((resolve, reject) => {
-      this.http.post(environment.hostUrl + '/addNote', noteData, this.httpOptions).toPromise().then((newNote: INote) => {
+      this.http.post(environment.apiUrl + '/addNote', noteData, this.httpOptions).toPromise().then((newNote: INote) => {
         let temp = this.getCurrentNotes();
         temp.push(newNote);
         this.updateNotes(temp);
         resolve();
       }).catch((err) => {
+        this.errorService.showError(err, () => this.addNote(noteData));
         reject(err);
       });
     })
   }
 
-  deleteNote(id) {
+  deleteNote(noteId) {
     return new Promise((resolve, reject) => {
-      this.http.post(environment.hostUrl + '/deleteNote', { id: id }, this.httpOptions).toPromise().then(() => {
+      this.http.post(environment.apiUrl + '/deleteNote', { noteId: noteId }, this.httpOptions).toPromise().then(() => {
         let temp = this.getCurrentNotes();
         let temp2 = [];
         for (let i = 0; i < temp.length; i++) {
-          if (temp[i].id != id) {
+          if (temp[i].noteId != noteId) {
             temp2.push(temp[i]);
           }
         }
         this.updateNotes(temp2);
         resolve();
       }).catch((err) => {
+        this.errorService.showError(err, () => this.deleteNote(noteId));
         reject(err);
       });
     })
   }
 
-  archiveNote(id) {
+  archiveNote(noteId) {
     return new Promise((resolve, reject) => {
-      this.http.post(environment.hostUrl + '/archiveNote', { id: id }, this.httpOptions).toPromise().then(() => {
+      this.http.post(environment.apiUrl + '/archiveNote', { noteId: noteId }, this.httpOptions).toPromise().then(() => {
         let temp = this.getCurrentNotes();
         for (let i = 0; i < temp.length; i++) {
-          if (temp[i].id === id) {
+          if (temp[i].noteId === noteId) {
             temp[i].archived = true;
           }
         }
         this.updateNotes(temp);
         resolve();
       }).catch((err) => {
+        this.errorService.showError(err, () => this.archiveNote(noteId));
         reject(err);
       });
     })
   }
 
-  unArchiveNote(id) {
+  unArchiveNote(noteId) {
     return new Promise((resolve, reject) => {
-      this.http.post(environment.hostUrl + '/unArchiveNote', { id: id }, this.httpOptions).toPromise().then(() => {
+      this.http.post(environment.apiUrl + '/unArchiveNote', { noteId: noteId }, this.httpOptions).toPromise().then(() => {
         let temp = this.getCurrentNotes();
         for (let i = 0; i < temp.length; i++) {
-          if (temp[i].id === id) {
+          if (temp[i].noteId === noteId) {
             temp[i].archived = false;
           }
         }
         this.updateNotes(temp);
         resolve();
       }).catch((err) => {
+        this.errorService.showError(err, () => this.unArchiveNote(noteId));
+        reject(err);
+      });
+    })
+  }
+
+  pinNote(noteId) {
+    return new Promise((resolve, reject) => {
+      this.http.post(environment.apiUrl + '/pinNote', { noteId: noteId }, this.httpOptions).toPromise().then(() => {
+        let temp = this.getCurrentNotes();
+        for (let i = 0; i < temp.length; i++) {
+          if (temp[i].noteId === noteId) {
+            temp[i].pinned = true;
+          }
+        }
+        this.updateNotes(temp);
+        resolve();
+      }).catch((err) => {
+        this.errorService.showError(err, () => this.pinNote(noteId));
+        reject(err);
+      });
+    })
+  }
+
+  unPinNote(noteId) {
+    return new Promise((resolve, reject) => {
+      this.http.post(environment.apiUrl + '/unPinNote', { noteId: noteId }, this.httpOptions).toPromise().then(() => {
+        let temp = this.getCurrentNotes();
+        for (let i = 0; i < temp.length; i++) {
+          if (temp[i].noteId === noteId) {
+            temp[i].pinned = false;
+          }
+        }
+        this.updateNotes(temp);
+        resolve();
+      }).catch((err) => {
+        this.errorService.showError(err, () => this.unPinNote(noteId));
         reject(err);
       });
     })

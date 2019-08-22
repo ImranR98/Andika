@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialogRef } from '@angular/material';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { ILoginUser } from 'src/app/models';
 import { UserService } from 'src/app/services/user.service';
 import { ErrorService } from 'src/app/services/error.service';
+import { ILoginUserFormInput } from 'src/app/models';
 
 @Component({
   selector: 'app-delete-account-dialog',
@@ -23,12 +23,8 @@ export class DeleteAccountDialogComponent implements OnInit {
   ngOnInit() { }
 
   delete() {
-    let deleteAccountFormData: ILoginUser = {
-      email: this.userService.getUser().email,
-      password: this.deleteForm.controls['password'].value
-    }
     this.loading = true;
-    this.userService.deleteAccount(deleteAccountFormData).then(() => {
+    this.userService.deleteAccount(this.deleteForm.controls['password'].value).then(() => {
       this.loading = false;
       this.userService.logout();
       this.dialogRef.close();

@@ -1,7 +1,7 @@
 <mat-card *ngIf="note else progressBar;" fxLayout="column" fxFill (click)="openEditor()">
   <div>
     <mat-card-title>
-      <div style="overflow: hidden;  white-space: nowrap;  text-overflow: ellipsis;">{{note.title}}</div>
+      <div class="textOverflow">{{note.title}}</div>
     </mat-card-title>
     <mat-card-subtitle style="overflow: hidden; text-overflow: ellipsis;">{{viewText}}</mat-card-subtitle>
   </div>

@@ -1,28 +1,35 @@
 export interface INote {
-    id: number;
+    noteId: number;
     title: string;
     note: string;
     tags: string[];
     archived: boolean;
+    pinned: boolean;
     createdDate: Date;
     modifiedDate: Date;
+    imageType: string;
+    imageBase64: string;
 }
 
 export interface IAddNote {
-    email: string;
     title: string;
     note: string;
     tags: string[];
     archived: boolean;
+    pinned: boolean;
+    imageType: string;
+    imageBase64: string;
 }
 
 export interface IUpdateNote {
-    id: number;
+    noteId: number;
     title: string;
     note: string;
     tags: string[];
+    imageType: string;
+    imageBase64: string;
 }
 
 export interface IDeleteNote {
-    id: number;
+    noteId: number;
 }

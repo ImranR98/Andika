@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { INote } from '../models/notes.models';
-import { NotesService } from '../services/notes.service';
-import { ErrorService } from '../services/error.service';
+import { INote } from '../../models/notes.models';
+import { NotesService } from '../../services/notes.service';
+import { ErrorService } from '../../services/error.service';
 import { MatDialog } from '@angular/material';
 import { NoteDialogComponent } from './note-dialog/note-dialog.component';
 import { DeleteNoteDialogComponent } from './delete-note-dialog/delete-note-dialog.component';
@@ -20,6 +20,7 @@ export class NoteComponent implements OnInit {
   viewLength = 200;
   created: any = null;
   modified: any = null;
+  imageSrc: string = '?';
 
   constructor(private noteService: NotesService, private errorService: ErrorService, private dialog: MatDialog) { }
 
@@ -45,6 +46,10 @@ export class NoteComponent implements OnInit {
     } else {
       this.modified = this.modified.toDateString() + ', ' + this.modified.getHours() + ':' + this.modified.getMinutes();
     }
+
+    if (this.note.imageType && this.note.imageBase64) {
+      this.imageSrc = 'data:' + this.note.imageType + ';base64,' + this.note.imageBase64;
+    }
   }
 
   deleteNote() {
@@ -53,7 +58,7 @@ export class NoteComponent implements OnInit {
       width: '250px',
     }).afterClosed().subscribe((val) => {
       if (val) {
-        this.noteService.deleteNote(this.note.id).then(() => {
+        this.noteService.deleteNote(this.note.noteId).then(() => {
           this.waiting = false;
         }).catch((err) => {
           this.errorService.showError(err);
@@ -67,7 +72,7 @@ export class NoteComponent implements OnInit {
 
   archiveNote() {
     this.waiting = true;
-    this.noteService.archiveNote(this.note.id).then(() => {
+    this.noteService.archiveNote(this.note.noteId).then(() => {
       this.waiting = false;
     }).catch((err) => {
       this.errorService.showError(err);
@@ -77,7 +82,7 @@ export class NoteComponent implements OnInit {
 
   unArchiveNote() {
     this.waiting = true;
-    this.noteService.unArchiveNote(this.note.id).then(() => {
+    this.noteService.unArchiveNote(this.note.noteId).then(() => {
       this.waiting = false;
     }).catch((err) => {
       this.errorService.showError(err);
@@ -88,7 +93,10 @@ export class NoteComponent implements OnInit {
   openEditor() {
     if (!this.waiting) {
       this.dialog.open(NoteDialogComponent, {
-        data: this.note,
+        data: {
+          note: this.note,
+          imageSrc: this.imageSrc
+        },
         height: '100vh',
         width: '100vw',
         maxHeight: '100vh',
