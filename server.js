@@ -236,15 +236,3 @@ RSA_PRIVATE_KEY - Private key used for encrypting JWT
 RSA_PUBLIC_KEY - Public key corresponding to the above Private key
 EXPIRES_IN - Number of seconds each JWT lasts
 */
-
-/*
-TODO:
-    Server Side:
-        - Update DB structure/recreate tables, using Eduzone as reference
-        - Get DB commands from Eduzone
-        - Implement Forgot Password and other features from Eduzone
-
-    Frontend:
-        - Archive page, "show archived" checkbox
-        - Show only notes with the same tag when a tag is clicked
-*/

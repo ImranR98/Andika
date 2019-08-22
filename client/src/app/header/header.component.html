@@ -7,6 +7,8 @@
                     *ngIf="!loggedIn">Home</button>
                 <button mat-raised-button color="accent" routerLinkActive="active" routerLink="/home"
                     *ngIf="loggedIn">Notes</button>
+                <button mat-raised-button color="accent" routerLinkActive="active" routerLink="/archived"
+                    *ngIf="loggedIn">Archived</button>
                 <button mat-raised-button color="accent" routerLinkActive="active" routerLink="/account"
                     *ngIf="loggedIn">Account</button>
                 <button mat-raised-button color="accent" routerLinkActive="active" routerLink="/about">About</button>
@@ -19,6 +21,7 @@
             <mat-menu #menu="matMenu">
                 <button mat-menu-item routerLink="/home" routerLinkActive="active" *ngIf="!loggedIn">Home</button>
                 <button mat-menu-item routerLink="/home" routerLinkActive="active" *ngIf="loggedIn">Notes</button>
+                <button mat-menu-item routerLink="/archived" routerLinkActive="active" *ngIf="loggedIn">Archived</button>
                 <button mat-menu-item routerLink="/account" routerLinkActive="active" *ngIf="loggedIn">Account</button>
                 <button mat-menu-item routerLinkActive="active" routerLink="/about">About</button>
                 <button mat-menu-item routerLinkActive="active" (click)="logout()" *ngIf="loggedIn">Log Out</button>

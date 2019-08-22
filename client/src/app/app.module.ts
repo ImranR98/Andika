@@ -56,6 +56,7 @@ import { NoteDialogComponent } from './notes/note/note-dialog/note-dialog.compon
 import { TagComponent } from './tag/tag.component';
 import { DeleteNoteDialogComponent } from './notes/note/delete-note-dialog/delete-note-dialog.component';
 import { LoginComponent } from './login/login.component';
+import { ArchivedComponent } from './archived/archived.component';
 
 @NgModule({
   declarations: [
@@ -71,7 +72,8 @@ import { LoginComponent } from './login/login.component';
     NoteDialogComponent,
     TagComponent,
     DeleteNoteDialogComponent,
-    LoginComponent
+    LoginComponent,
+    ArchivedComponent
   ],
   imports: [
     BrowserModule,

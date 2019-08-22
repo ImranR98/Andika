@@ -22,10 +22,8 @@ export class NotesComponent implements OnInit {
 
   searchForm = new FormGroup({
     search: new FormControl(''),
+    showArchived: new FormControl(false)
   });
-
-  //Component only displays archived when true (currently unused)
-  showArchivedOnly: boolean = false;
 
   user: IUser;
   notes: INote[];
@@ -94,12 +92,18 @@ export class NotesComponent implements OnInit {
     if (notes) {
       this.notesBy1 = [];
       for (let i = 0; i < notes.length; i++) {
-        if (this.archivesPage || this.showArchivedOnly) {
+        if (this.archivesPage) {
           if (notes[i].archived) {
             this.notesBy1.push(notes[i]);
           }
         } else {
-          this.notesBy1.push(notes[i]);
+          if (this.searchForm.controls['showArchived'].value) {
+            this.notesBy1.push(notes[i]);
+          } else {
+            if (!notes[i].archived) {
+              this.notesBy1.push(notes[i]);
+            }
+          }
         }
       }
       this.notesBy2 = [[]];

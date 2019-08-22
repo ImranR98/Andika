@@ -1,19 +1,29 @@
 <div *ngIf="!loading">
   <div fxLayout="column" fxLayoutGap="1em">
-    <div *ngIf="!loading && (notesBy1.length > 0 || searchForm.controls['search'].value)">
+    <div *ngIf="!loading && (((notes.length > 0 && !archivesPage) || (notesBy1.length > 0 && archivesPage)) || searchForm.controls['search'].value)">
       <div fxLayout="row" fxLayoutAlign="start end" fxFlex="100%" class="whiteBG stdPaddingExceptTop">
-        <form [formGroup]="searchForm" fxFlex.lt-sm="100%">
+        <form [formGroup]="searchForm" fxFlex.lt-sm="100%" fxLayout="row" fxLayout.lt-sm="column"
+          fxLayoutAlign="center center" fxLayoutAlign.lt-sm="start" fxLayoutGap="1em" fxLayoutGap.lt-sm="0em">
           <mat-form-field color="primary" class="searchFormField" fxFlex="100%">
             <input matInput formControlName="search" placeholder="Search" (input)="display()" maxlength="100"
               class="whiteText">
           </mat-form-field>
+          <mat-checkbox *ngIf="!archivesPage" formControlName="showArchived" class="whiteText" (change)="display()">Show Archived</mat-checkbox>
+          <br fxHide fxShow.lt-sm="true">
         </form>
       </div>
     </div>
   </div>
 
+  <div fxLayout="column" fxLayoutGap="1em" fxHide fxShow.get-lg="true">
+      <div fxLayout="row" fxLayoutGap="1em" *ngFor="let row of notesBy5">
+        <div *ngFor="let note of row" fxFlex="20%">
+          <app-note [note]="note"></app-note>
+        </div>
+      </div>
+    </div>
 
-  <div fxLayout="column" fxLayoutGap="1em" fxHide fxShow.gt-lg="true">
+  <div fxLayout="column" fxLayoutGap="1em" fxHide fxShow.lg="true">
     <div fxLayout="row" fxLayoutGap="1em" *ngFor="let row of notesBy4">
       <div *ngFor="let note of row" fxFlex="25%">
         <app-note [note]="note"></app-note>
@@ -21,7 +31,7 @@
     </div>
   </div>
 
-  <div fxLayout="column" fxLayoutGap="1em" fxHide fxShow.lg="true">
+  <div fxLayout="column" fxLayoutGap="1em" fxHide fxShow.md="true">
     <div fxLayout="row" fxLayoutGap="1em" *ngFor="let row of notesBy3">
       <div *ngFor="let note of row" fxFlex="32.5%">
         <app-note [note]="note"></app-note>
@@ -29,7 +39,7 @@
     </div>
   </div>
 
-  <div fxLayout="column" fxLayoutGap="1em" fxHide fxShow.md="true">
+  <div fxLayout="column" fxLayoutGap="1em" fxHide fxShow.sm="true">
     <div fxLayout="row" fxLayoutGap="1em" *ngFor="let row of notesBy2">
       <div *ngFor="let note of row" fxFlex="49.3%">
         <app-note [note]="note"></app-note>
@@ -37,20 +47,24 @@
     </div>
   </div>
 
-  <div fxLayout="column" fxLayoutGap="1em" fxHide fxShow.lt-md="true">
+  <div fxLayout="column" fxLayoutGap="1em" fxHide fxShow.lt-sm="true">
     <div *ngFor="let note of notes">
       <app-note [note]="note"></app-note>
     </div>
   </div>
 
   <div *ngIf="notes">
-    <mat-card *ngIf="notes.length == 0">
-      <span>No Notes here yet, use the button on the bottom right to get started.
+    <mat-card *ngIf="notesBy1.length == 0">
+      <span *ngIf="notes.length == 0">No Notes yet, use the button on the bottom right to get started.
+      </span>
+      <span *ngIf="notes.length > 0 && notesBy1.length == 0 && !archivesPage">No notes found.
+      </span>
+      <span *ngIf="notes.length > 0 && notesBy1.length == 0 && archivesPage">No notes archived.
       </span>
     </mat-card>
   </div>
 
-  <button *ngIf="!loading" mat-fab color="primary" style="position: fixed; bottom: 1em; right: 1em;" matTooltip="Add"
+  <button *ngIf="!loading && !archivesPage" mat-fab color="primary" style="position: fixed; bottom: 1em; right: 1em;" matTooltip="Add"
     aria-label="Button that adds a new Note" (click)="addNote()">
     <mat-icon>add</mat-icon>
   </button>

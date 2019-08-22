@@ -73,6 +73,7 @@ export class NotesService {
           }
         }
         this.updateNotes(temp);
+        this.errorService.showSimpleSnackBar('Saved');
         resolve();
       }).catch((err) => {
         this.errorService.showError(err, () => this.updateNote(noteData));
@@ -87,6 +88,7 @@ export class NotesService {
         let temp = this.getCurrentNotes();
         temp.push(newNote);
         this.updateNotes(temp);
+        this.errorService.showSimpleSnackBar('Saved');
         resolve();
       }).catch((err) => {
         this.errorService.showError(err, () => this.addNote(noteData));
@@ -106,6 +108,7 @@ export class NotesService {
           }
         }
         this.updateNotes(temp2);
+        this.errorService.showSimpleSnackBar('Deleted');
         resolve();
       }).catch((err) => {
         this.errorService.showError(err, () => this.deleteNote(noteId));
@@ -124,6 +127,7 @@ export class NotesService {
           }
         }
         this.updateNotes(temp);
+        this.errorService.showSimpleSnackBar('Archived');
         resolve();
       }).catch((err) => {
         this.errorService.showError(err, () => this.archiveNote(noteId));
@@ -142,6 +146,7 @@ export class NotesService {
           }
         }
         this.updateNotes(temp);
+        this.errorService.showSimpleSnackBar('Un-Archived');
         resolve();
       }).catch((err) => {
         this.errorService.showError(err, () => this.unArchiveNote(noteId));
@@ -160,6 +165,7 @@ export class NotesService {
           }
         }
         this.updateNotes(temp);
+        this.errorService.showSimpleSnackBar('Pinned');
         resolve();
       }).catch((err) => {
         this.errorService.showError(err, () => this.pinNote(noteId));
@@ -178,6 +184,7 @@ export class NotesService {
           }
         }
         this.updateNotes(temp);
+        this.errorService.showSimpleSnackBar('Un-Pinned');
         resolve();
       }).catch((err) => {
         this.errorService.showError(err, () => this.unPinNote(noteId));
