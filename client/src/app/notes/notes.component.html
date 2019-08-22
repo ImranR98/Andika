@@ -55,8 +55,10 @@
 
   <div *ngIf="notes">
     <mat-card *ngIf="notesBy1.length == 0">
-      <span *ngIf="notes.length == 0">No Notes yet, use the button on the bottom right to get started.
+      <span *ngIf="notes.length == 0 && !archivesPage">No Notes yet, use the button on the bottom right to get started.
       </span>
+      <span *ngIf="notes.length == 0 && archivesPage">No Notes yet, go to the Notes page to get started.
+        </span>
       <span *ngIf="notes.length > 0 && notesBy1.length == 0 && !archivesPage">No notes found.
       </span>
       <span *ngIf="notes.length > 0 && notesBy1.length == 0 && archivesPage">No notes archived.

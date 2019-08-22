@@ -53,7 +53,6 @@ import { DeleteAccountDialogComponent } from './dashboard/delete-account-dialog/
 import { NotesComponent } from './notes/notes.component';
 import { NoteComponent } from './notes/note/note.component';
 import { NoteDialogComponent } from './notes/note/note-dialog/note-dialog.component';
-import { TagComponent } from './tag/tag.component';
 import { DeleteNoteDialogComponent } from './notes/note/delete-note-dialog/delete-note-dialog.component';
 import { LoginComponent } from './login/login.component';
 import { ArchivedComponent } from './archived/archived.component';
@@ -70,7 +69,6 @@ import { ArchivedComponent } from './archived/archived.component';
     NotesComponent,
     NoteComponent,
     NoteDialogComponent,
-    TagComponent,
     DeleteNoteDialogComponent,
     LoginComponent,
     ArchivedComponent
