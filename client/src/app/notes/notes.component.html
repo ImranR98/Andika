@@ -48,7 +48,7 @@
   </div>
 
   <div fxLayout="column" fxLayoutGap="1em" fxHide fxShow.lt-sm="true">
-    <div *ngFor="let note of notes">
+    <div *ngFor="let note of notesBy1">
       <app-note [note]="note"></app-note>
     </div>
   </div>
