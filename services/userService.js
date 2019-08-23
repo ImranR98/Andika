@@ -1,7 +1,6 @@
 const bcrypt = require('bcrypt'); //To encrypt and validate passwords
 const nodeMailer = require('nodemailer'); //To send confirmation emails
 const dbService = require('./dbService');
-const favoriteService = require('./favoriteService');
 
 convertDBUserToAppUser = (DBUser) => {
     return {
@@ -41,14 +40,12 @@ module.exports.registerUser = (registerFormInput, currentDomain) => {
                                     `<p><b>Click the link below to complete your registration:</b></p>
                             <a href="http://${currentDomain}/completeRegistration?key=${result}">http://${currentDomain}/completeRegistration?key=${result}</a>`
                             };
-
                             if (process.env.NODEMAILER_MAILOPTIONS_AUTH) {
                                 mailOptions.auth = JSON.parse(process.env.NODEMAILER_MAILOPTIONS_AUTH);
                                 if (process.env.NODEMAILER_MAILOPTIONS_AUTH_EXPIRESIN) {
                                     mailOptions.auth.expires = new Date().getTime() + parseInt(process.env.NODEMAILER_MAILOPTIONS_AUTH_EXPIRESIN);
                                 }
                             }
-
                             transporter.sendMail(mailOptions).then((info) => {
                                 resolve();
                             }).catch((err) => {
@@ -206,19 +203,15 @@ module.exports.deleteAccount = (password, userId) => {
                 if (results.rows.length > 0) {
                     bcrypt.compare(password.password, results.rows[0].password).then((res) => {
                         if (res) {
-                            favoriteService.unFavoriteAllProducts(userId).then(() => {
+                            dbService.runQueryWithParams({
+                                query: 'DELETE FROM PASSWORD_RESETS WHERE USER_ID=$1::integer',
+                                params: [userId]
+                            }).then(() => {
                                 dbService.runQueryWithParams({
-                                    query: 'DELETE FROM PASSWORD_RESETS WHERE USER_ID=$1::integer',
+                                    query: 'DELETE FROM USERS WHERE USER_ID=$1::integer',
                                     params: [userId]
                                 }).then(() => {
-                                    dbService.runQueryWithParams({
-                                        query: 'DELETE FROM USERS WHERE USER_ID=$1::integer',
-                                        params: [userId]
-                                    }).then(() => {
-                                        resolve();
-                                    }).catch((err) => {
-                                        reject(err);
-                                    })
+                                    resolve();
                                 }).catch((err) => {
                                     reject(err);
                                 })
@@ -310,14 +303,12 @@ module.exports.resetPassword = (passwordResetFormInput, currentDomain) => {
                                         `<p><b>Click the link below to complete your password reset:</b></p>
                                 <a href="http://${currentDomain}/completePasswordReset?key=${result}">http://${currentDomain}/completePasswordReset?key=${result}</a>`
                                 };
-
                                 if (process.env.NODEMAILER_MAILOPTIONS_AUTH) {
                                     mailOptions.auth = JSON.parse(process.env.NODEMAILER_MAILOPTIONS_AUTH);
                                     if (process.env.NODEMAILER_MAILOPTIONS_AUTH_EXPIRESIN) {
                                         mailOptions.auth.expires = new Date().getTime() + parseInt(process.env.NODEMAILER_MAILOPTIONS_AUTH_EXPIRESIN);
                                     }
                                 }
-
                                 transporter.sendMail(mailOptions).then((info) => {
                                     resolve();
                                 }).catch((err) => {
