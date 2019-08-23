@@ -46,7 +46,6 @@ export class LoginComponent implements OnInit {
     this.loading = true;
     this.userService.login(loginUserData).then(() => {
       this.loading = false;
-      this.errorService.showSimpleSnackBar('Welcome, ' + this.userService.getJWTUser().firstName);
     }).catch((err) => {
       this.loading = false;
     })
@@ -59,7 +58,6 @@ export class LoginComponent implements OnInit {
         this.loading = true;
         this.userService.registerUser(registerUserData).then(() => {
           this.loading = false;
-          this.errorService.showSimpleSnackBar('Check your email for the link to complete registration');
           this.registerForm.reset();
         }).catch((err) => {
           this.loading = false;
@@ -80,7 +78,6 @@ export class LoginComponent implements OnInit {
         this.loading = true;
         this.userService.resetPassword(resetPasswordData).then(() => {
           this.loading = false;
-          this.errorService.showSimpleSnackBar('Check your email for the link to complete password reset');
           this.resetPasswordForm.reset();
         }).catch((err) => {
           this.loading = false;

@@ -34,6 +34,7 @@ export class UserService implements OnInit {
   registerUser(registerFormInput: IRegisterUserFormInput) {
     return new Promise((resolve, reject) => {
       this.http.post(environment.apiUrl + '/register', registerFormInput, this.httpOptions).toPromise().then(() => {
+        this.errorService.showSimpleSnackBar('Check your email for the link to complete registration');
         resolve();
       }).catch((err) => {
         this.errorService.showError(err, () => this.registerUser(registerFormInput));
@@ -45,6 +46,7 @@ export class UserService implements OnInit {
   resetPassword(resetPasswordFormInput: IResetPasswordFormInput) {
     return new Promise((resolve, reject) => {
       this.http.post(environment.apiUrl + '/resetPassword', resetPasswordFormInput, this.httpOptions).toPromise().then(() => {
+        this.errorService.showSimpleSnackBar('Check your email for the link to complete password reset');
         resolve();
       }).catch((err) => {
         this.errorService.showError(err, () => this.resetPassword(resetPasswordFormInput));
@@ -61,6 +63,7 @@ export class UserService implements OnInit {
           let tokenDecoded = jwt_decode(response.jwtToken);
           localStorage.setItem('jwt_token_decoded', JSON.stringify(tokenDecoded));
           this.updateUser(response.user);
+          this.errorService.showSimpleSnackBar('Welcome, ' + this.getJWTUser().firstName);
           resolve();
         } else {
           reject();
@@ -103,6 +106,7 @@ export class UserService implements OnInit {
         userTemp.firstName = updateAccountFormInput.firstName;
         userTemp.lastName = updateAccountFormInput.lastName;
         this.updateUser(userTemp);
+        this.errorService.showSimpleSnackBar('Info Updated');
         resolve();
       }).catch((err) => {
         this.errorService.showError(err, () => this.updateAccount(updateAccountFormInput));
