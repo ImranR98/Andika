@@ -15,17 +15,31 @@
                 <button mat-raised-button color="accent" (click)="logout()" *ngIf="loggedIn">Log Out</button>
             </div>
 
-            <button mat-icon-button routerLinkActive="active" [matMenuTriggerFor]="menu" fxHide fxShow.lt-sm>
-                <mat-icon>more_vert</mat-icon>
-            </button>
-            <mat-menu #menu="matMenu">
-                <button mat-menu-item routerLink="/home" routerLinkActive="active" *ngIf="!loggedIn">Home</button>
-                <button mat-menu-item routerLink="/home" routerLinkActive="active" *ngIf="loggedIn">Notes</button>
-                <button mat-menu-item routerLink="/archived" routerLinkActive="active" *ngIf="loggedIn">Archived</button>
-                <button mat-menu-item routerLink="/account" routerLinkActive="active" *ngIf="loggedIn">Account</button>
-                <button mat-menu-item routerLinkActive="active" routerLink="/about">About</button>
-                <button mat-menu-item routerLinkActive="active" (click)="logout()" *ngIf="loggedIn">Log Out</button>
-            </mat-menu>
+            <div fxLayout="row" fxLayoutAlign="default center" fxHide fxShow.lt-sm style="height: 0.5em !important;">
+                <button mat-icon-button routerLinkActive="activeSmall" routerLink="/home" *ngIf="!loggedIn">
+                    <mat-icon>home</mat-icon>
+                </button>
+                <button mat-icon-button routerLinkActive="activeSmall" routerLink="/home" *ngIf="loggedIn">
+                    <mat-icon>notes</mat-icon>
+                </button>
+                <button mat-icon-button routerLinkActive="activeSmall" routerLink="/archived" *ngIf="loggedIn">
+                    <mat-icon>archive</mat-icon>
+                </button>
+                <button mat-icon-button [matMenuTriggerFor]="menu" fxHide fxShow.lt-sm>
+                    <mat-icon>more_vert</mat-icon>
+                </button>
+                <mat-menu #menu="matMenu">
+                    <button mat-menu-item routerLink="/account" routerLinkActive="activeSmall"
+                        *ngIf="loggedIn">Account</button>
+                    <button mat-menu-item routerLinkActive="activeSmall" routerLink="/about">About</button>
+                    <button mat-menu-item class="redText" (click)="logout()" *ngIf="loggedIn">Log
+                        Out</button>
+                </mat-menu>
+            </div>
+            <!--
+
+-->
+
         </div>
 
     </div>

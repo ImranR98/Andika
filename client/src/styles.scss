@@ -45,8 +45,21 @@ app-header {
   color: #095340 !important;
 }
 
+.activeSmall {
+  color: #69F0AE !important;
+}
+
+.redText {
+  color: rgb(240, 105, 105) !important;
+}
+
 mat-card, .cardBG {
   background-color: #37474f !important;
+  color: #FFFFFF !important;
+}
+
+.darkBG {
+  background-color: rgb(55, 55, 55) !important;
   color: #FFFFFF !important;
 }
 
@@ -60,6 +73,10 @@ mat-toolbar a {
 
 .stdPadding {
   padding: 1em;
+}
+
+.stdMargin {
+  margin: 1em;
 }
 
 .imageFileName {
