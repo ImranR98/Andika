@@ -80,19 +80,6 @@
   <div mat-dialog-content fxLayout="column" fxLayoutGap="1em">
     <textarea matInput cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="5" formControlName="note"
       placeholder="Note" type="text"></textarea>
-  </div>
-
-  <div mat-dialog-actions fxLayout="row">
-    <div fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="1em">
-      <input hidden #fileInput type="file" (input)="selectImage($event)" accept="{{ allowedTypesString }}">
-      <div fxLayout="row" fxLayoutGap="1em" fxLayoutAlign="start center">
-        <span *ngIf="image" class="textOverflow imageFileName">{{image.name}}</span>
-        <button mat-icon-button *ngIf="image" color="warn" (click)="removeImage()" matTooltip="Delete"
-          aria-label="Button that deletes this Product" [disabled]="disableForm">
-          <mat-icon>cancel</mat-icon>
-        </button>
-      </div>
-    </div>
     <mat-form-field fxFlex="100%">
       <mat-chip-list #chipList>
         <div *ngIf="data">
