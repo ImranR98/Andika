@@ -11,16 +11,15 @@ Install Angular and Node.js, and set up a PostgreSQL database.
 A .env file, described below, is needed at the root directory that will contain environment variables. This file contains sensitive data and should not be removed from .gitignore.
 
 ```
-DATABASE_URL=The URL of the Postgres database.
-NODEMAILER_EMAIL=The email address emails from the App will be sent from using nodemailer.
-NODEMAILER_NAME=The name of the sender for above emails.
-NODEMAILER_PASSWORD=The password for the above email address.
-NODEMAILER_HOST=The host name used to configure nodemailer
-NODEMAILER_PORT=Port number for above
-NODEMAILER_SECURE=Nodemailer uses SSL if true (port 465)
-EXPIRES_IN=The number of seconds a client session lasts.
-RSA_PRIVATE_KEY=The private RSA key used to protect client sessions.
-RSA_PUBLIC_KEY=The public key corresponding to the above private key.
+DATABASE_URL - The URL of the Postgres database.
+NODEMAILER_EMAIL - The email address emails from the App will be sent from using nodemailer
+NODEMAILER_NAME - The name of the sender for above emails
+NODEMAILER_TRANSPORT_JSON - The JSON object used to create the NodeMailer transporter
+NODEMAILER_MAILOPTIONS_AUTH - Optional - An auth object used in the mailOptions when sending the email via nodeMailer
+NODEMAILER_MAILOPTIONS_AUTH_EXPIRESIN - Optional - An expires property for the above auth object
+EXPIRES_IN - The number of seconds a client session lasts
+RSA_PRIVATE_KEY - The private RSA key used to protect client sessions
+RSA_PUBLIC_KEY - The public key corresponding to the above private key
 ```
 
 The Database will need specific tables. SQL Commands to create them are listed below:
