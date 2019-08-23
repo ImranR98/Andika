@@ -31,7 +31,12 @@ export class AppComponent implements OnInit {
   }
 
   onSetTheme(theme) {
-    this.overlayContainer.getContainerElement().classList.add(theme);
+    const overlayContainerClasses = this.overlayContainer.getContainerElement().classList;
+    const themeClassesToRemove = Array.from(overlayContainerClasses).filter((item: string) => item.includes('-theme'));
+    if (themeClassesToRemove.length) {
+      overlayContainerClasses.remove(...themeClassesToRemove);
+    }
+    overlayContainerClasses.add(theme);
     this.componentCssClass = theme;
   }
 }

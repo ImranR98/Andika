@@ -13,9 +13,6 @@ $dark-mode-warn: mat-palette($mat-red, 200);
 //Define a theme using the above palettes
 $dark-mode-theme: mat-dark-theme($dark-mode-primary, $dark-mode-accent, $dark-mode-warn);
 
-//Include the theme defined above as the default
-@include angular-material-theme($dark-mode-theme);
-
 //Define another theme and import it in a class (not default)
 $light-mode-primary:  mat-palette($mat-indigo, 500, 200, 700);
 $light-mode-accent: mat-palette($mat-blue-gray, 500, 300, 900);
