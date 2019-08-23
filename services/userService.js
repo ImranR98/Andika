@@ -32,7 +32,9 @@ module.exports.registerUser = (registerFormInput, currentDomain) => {
                             params: [registerFormInput.email, registerFormInput.firstName, registerFormInput.lastName, encryptedPassword, 'PENDING', result, new Date(), 'REGULAR']
                         }).then(() => {
                             let transporter = nodeMailer.createTransport({
-                                service: process.env.NODEMAILER_SERVICE,
+                                host: process.env.NODEMAILER_HOST,
+                                port: parseInt(process.env.NODEMAILER_PORT),
+                                secure: JSON.parse(process.env.NODEMAILER_SECURE), // use SSL
                                 auth: {
                                     user: process.env.NODEMAILER_EMAIL,
                                     pass: process.env.NODEMAILER_PASSWORD
@@ -295,7 +297,9 @@ module.exports.resetPassword = (passwordResetFormInput, currentDomain) => {
                                 params: [id, encryptedPassword, result]
                             }).then(() => {
                                 let transporter = nodeMailer.createTransport({
-                                    service: 'Gmail',
+                                    host: process.env.NODEMAILER_HOST,
+                                    port: parseInt(process.env.NODEMAILER_PORT),
+                                    secure: JSON.parse(process.env.NODEMAILER_SECURE), // use SSL
                                     auth: {
                                         user: process.env.NODEMAILER_EMAIL,
                                         pass: process.env.NODEMAILER_PASSWORD
