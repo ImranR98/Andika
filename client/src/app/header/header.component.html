@@ -1,45 +1,55 @@
-<mat-toolbar fxLayout="row" class="cardBG stdPadding mat-elevation-z1">
+<mat-toolbar fxLayout="row" class="darkBG stdPadding mat-elevation-z1">
     <div fxLayout="row" fxFlex="100%" fxLayoutAlign="space-between center" fxLayoutGap="1em">
         <h1><a routerLink="/">Andika</a></h1>
         <div>
-            <div fxLayout="row" fxLayoutGap="1em" fxLayoutAlign="default center" fxHide fxShow.sm fxShow.gt-sm>
-                <button mat-raised-button color="accent" routerLinkActive="active" routerLink="/home"
-                    *ngIf="!loggedIn">Home</button>
-                <button mat-raised-button color="accent" routerLinkActive="active" routerLink="/home"
-                    *ngIf="loggedIn">Notes</button>
-                <button mat-raised-button color="accent" routerLinkActive="active" routerLink="/archived"
-                    *ngIf="loggedIn">Archived</button>
-                <button mat-raised-button color="accent" routerLinkActive="active" routerLink="/account"
-                    *ngIf="loggedIn">Account</button>
-                <button mat-raised-button color="accent" routerLinkActive="active" routerLink="/about">About</button>
-                <button mat-raised-button color="accent" (click)="logout()" *ngIf="loggedIn">Log Out</button>
+            <div fxLayout="row" fxLayoutAlign="default center" fxHide fxShow.sm fxShow.gt-sm>
+                <div fxLayout="row" fxLayoutGap="1em">
+                    <button mat-raised-button routerLinkActive="active" routerLink="/home"
+                        *ngIf="!loggedIn">Home</button>
+                    <button mat-raised-button routerLinkActive="active" routerLink="/home"
+                        *ngIf="loggedIn">Notes</button>
+                    <button mat-raised-button routerLinkActive="active" routerLink="/archived"
+                        *ngIf="loggedIn">Archived</button>
+                    <button mat-raised-button routerLinkActive="active" routerLink="/account"
+                        *ngIf="loggedIn">Account</button>
+                    <button mat-raised-button (click)="logout()" *ngIf="loggedIn">Log Out</button>
+                    <button mat-icon-button [matMenuTriggerFor]="menu1" matTooltip="More" aria-label="Button that shows more options">
+                            <mat-icon>more_vert</mat-icon>
+                        </button>
+                </div>
+
+                
+                <mat-menu #menu1="matMenu">
+                    <button mat-menu-item (click)="toggleIsDark()" *ngIf="isDark">Light Mode</button>
+                    <button mat-menu-item (click)="toggleIsDark()" *ngIf="!isDark">Dark Mode</button>
+                    <button mat-menu-item routerLinkActive="activeSmall" routerLink="/about">About</button>
+                </mat-menu>
             </div>
 
             <div fxLayout="row" fxLayoutAlign="default center" fxHide fxShow.lt-sm style="height: 0.5em !important;">
-                <button mat-icon-button routerLinkActive="activeSmall" routerLink="/home" *ngIf="!loggedIn">
+                <button mat-icon-button routerLinkActive="activeSmall" routerLink="/home" *ngIf="!loggedIn" matTooltip="Home" aria-label="Button that takes you to the Home Page">
                     <mat-icon>home</mat-icon>
                 </button>
-                <button mat-icon-button routerLinkActive="activeSmall" routerLink="/home" *ngIf="loggedIn">
+                <button mat-icon-button routerLinkActive="activeSmall" routerLink="/home" *ngIf="loggedIn" matTooltip="Notes" aria-label="Button that takes you to your Notes">
                     <mat-icon>notes</mat-icon>
                 </button>
-                <button mat-icon-button routerLinkActive="activeSmall" routerLink="/archived" *ngIf="loggedIn">
+                <button mat-icon-button routerLinkActive="activeSmall" routerLink="/archived" *ngIf="loggedIn" matTooltip="Archive" aria-label="Button that takes you to your Archived Notes">
                     <mat-icon>archive</mat-icon>
                 </button>
-                <button mat-icon-button [matMenuTriggerFor]="menu" fxHide fxShow.lt-sm>
+                <button mat-icon-button routerLinkActive="activeSmall" routerLink="/account" *ngIf="loggedIn" matTooltip="Account" aria-label="Button that takes you to your Account Settings">
+                    <mat-icon>account_circle</mat-icon>
+                </button>
+                <button mat-icon-button [matMenuTriggerFor]="menu2" matTooltip="More" aria-label="Button that shows more options">
                     <mat-icon>more_vert</mat-icon>
                 </button>
-                <mat-menu #menu="matMenu">
-                    <button mat-menu-item routerLink="/account" routerLinkActive="activeSmall"
-                        *ngIf="loggedIn">Account</button>
+                <mat-menu #menu2="matMenu">
                     <button mat-menu-item routerLinkActive="activeSmall" routerLink="/about">About</button>
-                    <button mat-menu-item class="redText" (click)="logout()" *ngIf="loggedIn">Log
+                    <button mat-menu-item (click)="toggleIsDark()" *ngIf="isDark">Light Mode</button>
+                    <button mat-menu-item (click)="toggleIsDark()" *ngIf="!isDark">Dark Mode</button>
+                    <button mat-menu-item (click)="logout()" *ngIf="loggedIn">Log
                         Out</button>
                 </mat-menu>
             </div>
-            <!--
-
--->
-
         </div>
 
     </div>

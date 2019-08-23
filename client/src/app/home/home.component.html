@@ -1,13 +1,14 @@
 <div>
-    <div *ngIf="!userExists" class="cardBG stdPadding">
-        <span fxShow fxHide.lt-sm="true">
-            Welcome! Andika is a simple, open-source note taking web app.
-        </span>
-        <small fxHide fxShow.lt-sm="true">
-            Welcome! Andika is a simple, open-source note taking web app.
-        </small>
-    </div>
-    <mat-card *ngIf="!userExists" class="stdMargin">
+    <mat-card *ngIf="!userExists" class="stdMargin" fxLayout="column" fxLayoutGap="1em">
+        <div *ngIf="!userExists">
+            <span fxShow fxHide.lt-sm="true">
+                Welcome! Andika is a simple, open-source note taking web app.
+            </span>
+            <small fxHide fxShow.lt-sm="true">
+                Welcome! Andika is a simple, open-source note taking web app.
+            </small>
+        </div>
+        <mat-divider [inset]="true"></mat-divider>
         <app-login></app-login>
     </mat-card>
     <div class="stdMargin">

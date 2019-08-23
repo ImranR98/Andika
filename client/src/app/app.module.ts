@@ -49,7 +49,6 @@ import { AboutComponent } from './about/about.component';
 import { UserService } from './services/user.service';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { AuthInterceptor } from './httpInterceptor';
-import { DeleteAccountDialogComponent } from './dashboard/delete-account-dialog/delete-account-dialog.component';
 import { NotesComponent } from './notes/notes.component';
 import { NoteComponent } from './notes/note/note.component';
 import { NoteDialogComponent } from './notes/note/note-dialog/note-dialog.component';
@@ -65,7 +64,6 @@ import { ArchivedComponent } from './archived/archived.component';
     Error404Component,
     AboutComponent,
     DashboardComponent,
-    DeleteAccountDialogComponent,
     NotesComponent,
     NoteComponent,
     NoteDialogComponent,
@@ -117,6 +115,6 @@ import { ArchivedComponent } from './archived/archived.component';
   }
   ],
   bootstrap: [AppComponent],
-  entryComponents: [DeleteAccountDialogComponent, NoteDialogComponent, DeleteNoteDialogComponent]
+  entryComponents: [NoteDialogComponent, DeleteNoteDialogComponent]
 })
 export class AppModule { }

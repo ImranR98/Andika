@@ -97,10 +97,10 @@ export class NoteComponent implements OnInit {
           note: this.note,
           imageSrc: this.imageSrc
         },
-        height: '100vh',
-        width: '100vw',
-        maxHeight: '100vh',
-        maxWidth: '100vw',
+        height: '95vh',
+        width: '95vw',
+        maxHeight: '95vh',
+        maxWidth: '95vw',
       });
     }
   }

@@ -8,8 +8,8 @@
   <div fxLayout="column" fxLayoutGap="0.4em" fxFlex="100%" fxLayoutAlign="space-between">
     <div fxLayout="row" fxFlex="100%">
       <mat-chip-list *ngIf="note.tags.length > 0 || note.archived">
-        <mat-chip color="primary" selected disabled *ngIf="note.archived">Archived</mat-chip>
-        <mat-chip color="accent" selected disabled *ngFor="let tag of note.tags">{{tag}}</mat-chip>
+        <mat-chip color="accent" selected disabled *ngIf="note.archived">Archived</mat-chip>
+        <mat-chip color="primary" selected disabled *ngFor="let tag of note.tags">{{tag}}</mat-chip>
       </mat-chip-list>
     </div>
     <div fxLayout="row" fxLayoutGap="1em" fxFlex="100%" fxLayoutAlign="end end">

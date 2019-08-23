@@ -1,64 +1,81 @@
 <mat-tab-group>
-    <mat-tab label="Login">
-      <small>&nbsp;</small>
-      <form [formGroup]="loginForm" (ngSubmit)="login()" fxLayout="column" fxLayoutAlign="start">
-        <mat-form-field>
+  <mat-tab label="Login">
+    <small>&nbsp;</small>
+    <form [formGroup]="loginForm" (ngSubmit)="login()" fxLayout="column" fxLayoutAlign="start">
+      <div fxLayout="row">
+        <mat-form-field fxFlex.lt-sm="100%">
           <input matInput formControlName="email" placeholder="Email" type="email" required>
         </mat-form-field>
-        <mat-form-field>
+      </div>
+
+      <div fxLayout="row">
+        <mat-form-field fxFlex.lt-sm="100%">
           <input matInput formControlName="password" placeholder="Password" type="password" required>
         </mat-form-field>
-        <div fxLayout="row">
-          <button mat-raised-button type="submit" color="accent" [disabled]="loading || !loginForm.valid">Login</button>
-        </div>
-      </form>
-    </mat-tab>
-    <mat-tab label="Register">
-      <small>&nbsp;</small>
-      <form [formGroup]="registerForm" (ngSubmit)="register()" fxLayout="column" fxLayoutAlign="start">
-        <mat-form-field>
+      </div>
+      <div fxLayout="row">
+        <button mat-raised-button type="submit" color="primary" [disabled]="loading || !loginForm.valid">Login</button>
+      </div>
+    </form>
+  </mat-tab>
+  <mat-tab label="Register">
+    <small>&nbsp;</small>
+    <form [formGroup]="registerForm" (ngSubmit)="register()" fxLayout="column" fxLayoutAlign="start">
+      <div fxLayout="row">
+        <mat-form-field fxFlex.lt-sm="100%">
           <input matInput formControlName="email" placeholder="Email" type="email" required>
         </mat-form-field>
-        <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap="1em" fxLayoutGap.lt-sm="0em">
-          <mat-form-field fxFlex="100%">
-            <input matInput formControlName="firstName" placeholder="First Name" required>
-          </mat-form-field>
-          <mat-form-field fxFlex="100%">
-            <input matInput formControlName="lastName" placeholder="Last Name" required>
-          </mat-form-field>
-        </div>
-        <mat-form-field>
+      </div>
+      <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap="1em" fxLayoutGap.lt-sm="0em">
+        <mat-form-field fxFlex.lt-sm="100%">
+          <input matInput formControlName="firstName" placeholder="First Name" required>
+        </mat-form-field>
+        <mat-form-field fxFlex.lt-sm="100%">
+          <input matInput formControlName="lastName" placeholder="Last Name" required>
+        </mat-form-field>
+      </div>
+      <div fxLayout="row">
+        <mat-form-field fxFlex.lt-sm="100%">
           <input matInput formControlName="password" placeholder="Password" type="password" pattern="^(?=.*\d).{4,30}$"
             required>
-          <mat-hint>4 - 20 characters, at least 1 digit</mat-hint>
+          <mat-hint>4-20 characters, at least 1 digit</mat-hint>
         </mat-form-field>
-        <mat-form-field>
+      </div>
+      <div fxLayout="row">
+        <mat-form-field fxFlex.lt-sm="100%">
           <input matInput formControlName="passwordConfirm" placeholder="Confirm Password" type="password" required>
         </mat-form-field>
-        <div fxLayout="row">
-          <button mat-raised-button type="submit" color="accent"
-            [disabled]="loading || !registerForm.valid">Register</button>
-        </div>
-      </form>
-    </mat-tab>
-    <mat-tab label="Forgot Password">
-      <small>&nbsp;</small>
-      <form [formGroup]="resetPasswordForm" (ngSubmit)="resetPassword()" fxLayout="column" fxLayoutAlign="start">
-        <mat-form-field>
+      </div>
+      <div fxLayout="row">
+        <button mat-raised-button type="submit" color="primary"
+          [disabled]="loading || !registerForm.valid">Register</button>
+      </div>
+    </form>
+  </mat-tab>
+  <mat-tab label="Forgot Password">
+    <small>&nbsp;</small>
+    <form [formGroup]="resetPasswordForm" (ngSubmit)="resetPassword()" fxLayout="column" fxLayoutAlign="start">
+      <div fxLayout="row">
+        <mat-form-field fxFlex.lt-sm="100%">
           <input matInput formControlName="email" placeholder="Email" type="email" required>
         </mat-form-field>
-        <mat-form-field>
+      </div>
+      <div fxLayout="row">
+        <mat-form-field fxFlex.lt-sm="100%">
           <input matInput formControlName="password" placeholder="Password" type="password" pattern="^(?=.*\d).{4,30}$"
             required>
-          <mat-hint>4 - 20 characters, at least 1 digit</mat-hint>
+          <mat-hint>4-20 characters, at least 1 digit</mat-hint>
         </mat-form-field>
-        <mat-form-field>
+      </div>
+      <div fxLayout="row">
+        <mat-form-field fxFlex.lt-sm="100%">
           <input matInput formControlName="passwordConfirm" placeholder="Confirm Password" type="password" required>
         </mat-form-field>
-        <div fxLayout="row">
-          <button mat-raised-button type="submit" color="accent" [disabled]="loading || !resetPasswordForm.valid">Reset
-            Password</button>
-        </div>
-      </form>
-    </mat-tab>
-  </mat-tab-group>
+      </div>
+      <div fxLayout="row">
+        <button mat-raised-button type="submit" color="primary" [disabled]="loading || !resetPasswordForm.valid">Reset
+          Password</button>
+      </div>
+    </form>
+  </mat-tab>
+</mat-tab-group>

@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../services/user.service';
-import { MatDialog } from '@angular/material';
-import { DeleteAccountDialogComponent } from './delete-account-dialog/delete-account-dialog.component';
 import { IUser } from '../models';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ErrorService } from '../services/error.service';
