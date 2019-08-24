@@ -1,14 +1,14 @@
 <div>
-    <mat-card *ngIf="!userExists" class="stdMargin" fxLayout="column" fxLayoutGap="1em">
-        <div *ngIf="!userExists">
+    <mat-card *ngIf="!userExists" class="stdMargin" fxLayout="column">
+        <div fxLayout="column" fxLayoutGap="1em">
             <span fxShow fxHide.lt-sm="true">
                 Welcome! Andika is a simple, open-source note taking web app.
             </span>
             <small fxHide fxShow.lt-sm="true">
                 Welcome! Andika is a simple, open-source note taking web app.
             </small>
+            <mat-divider [inset]="true"></mat-divider>
         </div>
-        <mat-divider [inset]="true"></mat-divider>
         <app-login></app-login>
     </mat-card>
     <div class="stdMargin">
