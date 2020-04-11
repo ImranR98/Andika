@@ -219,19 +219,7 @@ app.get('*', (req, res) => {
 //Set Port
 let HTTP_PORT = process.env.PORT || 8080;
 
-//Start Server
+//Start Server (make sure .env file exists and contains variables listed in README.md)
 app.listen(HTTP_PORT, function () {
     console.log('app listening on: ' + HTTP_PORT)
 });
-
-/*
-DATABASE_URL - DB URL for storing data (must contain the tables outlined below)
-EXPIRES_IN - Number of seconds each JWT lasts
-NODEMAILER_EMAIL - The email used when sending emails using nodemailer (XYZ@XYZ.XYZ below)
-NODEMAILER_MAILOPTIONS_AUTH - Authentication options to use with nodemailer - format: { "user": "XYZ@XYZ.XYZ", "refreshToken": "XYZ", "accessToken": "XYZ" }
-NODEMAILER_MAILOPTIONS_AUTH_EXPIRESIN - How often, in seconds, to refresh the nodemailer auth token
-NODEMAILER_NAME - The name used when sending emails using nodemailer
-NODEMAILER_TRANSPORT_JSON - Transport options for nodemailer - format: { "service": "XYZ", "auth": { "type": "OAuth2", "clientId": "XYZ", "clientSecret": "XYZ" } }
-RSA_PRIVATE_KEY - Private key used for encrypting JWT
-RSA_PUBLIC_KEY - Public key corresponding to the above Private key
-*/
