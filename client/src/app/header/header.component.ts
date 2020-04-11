@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../services/user.service';
-import { ThemeService } from '../services/theme.service';
 
 @Component({
   selector: 'app-header',
@@ -9,9 +8,8 @@ import { ThemeService } from '../services/theme.service';
 })
 export class HeaderComponent implements OnInit {
   loggedIn: boolean = false;
-  isDark: boolean = true;
 
-  constructor(private userService: UserService, private themeService: ThemeService) { }
+  constructor(private userService: UserService) { }
 
   ngOnInit() {
     this.userService.user.subscribe((user) => {
@@ -21,13 +19,6 @@ export class HeaderComponent implements OnInit {
         this.loggedIn = false;
       }
     })
-    this.themeService.isDark.subscribe((isDark) => {
-      this.isDark = isDark;
-    })
-  }
-
-  toggleIsDark() {
-    this.themeService.toggleIsDark();
   }
 
   logout() {

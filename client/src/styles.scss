@@ -19,8 +19,8 @@ $light-mode-accent: mat-palette($mat-blue-gray, 500, 300, 900);
 $light-mode-warn: mat-palette($mat-red);
 $light-mode-theme: mat-light-theme($light-mode-primary, $light-mode-accent, $light-mode-warn);
 
-
-.dark-theme {
+/* Dark mode */
+@media (prefers-color-scheme: dark) {
   @include angular-material-theme($dark-mode-theme);
 
   .bigContainer, .bigContainer2 {
@@ -45,7 +45,8 @@ $light-mode-theme: mat-light-theme($light-mode-primary, $light-mode-accent, $lig
   }
 }
 
-.light-theme {
+/* Light mode */
+@media (prefers-color-scheme: light) {
   @include angular-material-theme($light-mode-theme);
 
   .bigContainer, .bigContainer2 {
@@ -74,10 +75,6 @@ html {
 html, body, .bigContainer {
   height: 100%;
   margin: 0;
-}
-
-.bigContainer, .bigContainer2 {
-  background-color: #000;
 }
 
 app-header {

@@ -20,8 +20,6 @@
 
                 
                 <mat-menu #menu1="matMenu">
-                    <button mat-menu-item (click)="toggleIsDark()" *ngIf="isDark">Light Mode</button>
-                    <button mat-menu-item (click)="toggleIsDark()" *ngIf="!isDark">Dark Mode</button>
                     <button mat-menu-item routerLinkActive="activeSmall" routerLink="/about">About</button>
                 </mat-menu>
             </div>
@@ -44,8 +42,6 @@
                 </button>
                 <mat-menu #menu2="matMenu">
                     <button mat-menu-item routerLinkActive="activeSmall" routerLink="/about">About</button>
-                    <button mat-menu-item (click)="toggleIsDark()" *ngIf="isDark">Light Mode</button>
-                    <button mat-menu-item (click)="toggleIsDark()" *ngIf="!isDark">Dark Mode</button>
                     <button mat-menu-item (click)="logout()" *ngIf="loggedIn">Log
                         Out</button>
                 </mat-menu>
