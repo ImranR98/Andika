@@ -5,7 +5,9 @@ module.exports.runQueryWithParams = (queryWithParams) => {
     return new Promise((resolve, reject) => {
         const client = new Client({
             connectionString: process.env.DATABASE_URL,
-            ssl: true,
+            ssl: {
+                rejectUnauthorized: false
+            }
         });
 
         client.connect();
@@ -25,7 +27,9 @@ module.exports.runSimpleQuery = (query) => {
     return new Promise((resolve, reject) => {
         const client = new Client({
             connectionString: process.env.DATABASE_URL,
-            ssl: true,
+            ssl: {
+                rejectUnauthorized: false
+            }
         });
 
         client.connect();
