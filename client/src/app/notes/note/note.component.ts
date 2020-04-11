@@ -2,7 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { INote } from '../../models/notes.models';
 import { NotesService } from '../../services/notes.service';
 import { ErrorService } from '../../services/error.service';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { NoteDialogComponent } from './note-dialog/note-dialog.component';
 import { DeleteNoteDialogComponent } from './delete-note-dialog/delete-note-dialog.component';
 

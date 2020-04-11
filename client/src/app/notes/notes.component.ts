@@ -2,7 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { UserService } from '../services/user.service';
 import { NotesService } from '../services/notes.service';
 import { INote } from '../models/notes.models';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { FormGroup, FormControl } from '@angular/forms';
 import { IUser } from '../models';
 import { NoteDialogComponent } from './note/note-dialog/note-dialog.component';

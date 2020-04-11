@@ -1,7 +1,8 @@
 import { Component, OnInit, ViewChild, Inject } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { INote, IUpdateNote, IAddNote } from 'src/app/models/notes.models';
-import { MatDialogRef, MAT_DIALOG_DATA, MatChipInputEvent, MatDialog } from '@angular/material';
+import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
+import { MatChipInputEvent } from '@angular/material/chips'
 import { NotesService } from 'src/app/services/notes.service';
 import { ErrorService } from 'src/app/services/error.service';
 import { CdkTextareaAutosize } from '@angular/cdk/text-field';

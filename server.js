@@ -225,14 +225,13 @@ app.listen(HTTP_PORT, function () {
 });
 
 /*
-The following environment variables are required in any environment running this app:
 DATABASE_URL - DB URL for storing data (must contain the tables outlined below)
+EXPIRES_IN - Number of seconds each JWT lasts
+NODEMAILER_EMAIL - The email used when sending emails using nodemailer (XYZ@XYZ.XYZ below)
+NODEMAILER_MAILOPTIONS_AUTH - Authentication options to use with nodemailer - format: { "user": "XYZ@XYZ.XYZ", "refreshToken": "XYZ", "accessToken": "XYZ" }
+NODEMAILER_MAILOPTIONS_AUTH_EXPIRESIN - How often, in seconds, to refresh the nodemailer auth token
 NODEMAILER_NAME - The name used when sending emails using nodemailer
-NODEMAILER_SERVICE - The email service used when sending emails using nodemailer
-NODEMAILER_EMAIL - The email used when sending emails using nodemailer
-NODEMAILER_PASSWORD - The password for the above email address
-CONTACT_EMAIL - The email feedback/contact form input is sent to
+NODEMAILER_TRANSPORT_JSON - Transport options for nodemailer - format: { "service": "XYZ", "auth": { "type": "OAuth2", "clientId": "XYZ", "clientSecret": "XYZ" } }
 RSA_PRIVATE_KEY - Private key used for encrypting JWT
 RSA_PUBLIC_KEY - Public key corresponding to the above Private key
-EXPIRES_IN - Number of seconds each JWT lasts
 */

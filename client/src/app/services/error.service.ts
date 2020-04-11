@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { MatSnackBar } from '@angular/material';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { IAppError, AppError } from '../models';
 import { environment } from 'src/environments/environment';
 import { HttpErrorResponse } from '@angular/common/http';
