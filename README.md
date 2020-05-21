@@ -67,13 +67,7 @@ Note:
  - Valid registration statuses are PENDING and COMPLETE
 
 ## Deployment
-
-Buld the Angular App after making any changes, and build it before running on Node.
-
-## Authors
-
-* **Imran Remtulla** - *Initial work* - [ImranR98](https://github.com/ImranR98)
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
+- Configure a PostgreSQL database with the tables defined above.
+- Copy the DB connection string into a .env file.
+- Fill in the remaining variables in the .env file as described above.
+- Run `npm start` to start the application (runs on port 8080 by default).
