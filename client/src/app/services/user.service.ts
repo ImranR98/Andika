@@ -1,4 +1,4 @@
-import { Injectable, OnInit } from '@angular/core';
+import { Injectable, OnInit, Directive } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { Observable, BehaviorSubject } from 'rxjs';
@@ -8,6 +8,7 @@ import * as moment from 'moment';
 import * as jwt_decode from "jwt-decode";
 import { ErrorService } from './error.service';
 
+@Directive()
 @Injectable({
   providedIn: 'root'
 })
