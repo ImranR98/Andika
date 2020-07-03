@@ -6,16 +6,16 @@ $custom-typography: mat-typography-config($font-family: "'Raleway', sans-serif;"
 @include mat-core($custom-typography);
 
 //Define custom color palettes for the App's primary, accent and warning colors (numbers indicate default, lighter and darker variants)
-$dark-mode-primary:  mat-palette($mat-indigo, 200, 100, 700);
-$dark-mode-accent: mat-palette($mat-gray, 500, 300, 900);
+$dark-mode-primary:  mat-palette($mat-amber);
+$dark-mode-accent: mat-palette($mat-gray);
 $dark-mode-warn: mat-palette($mat-red, 200);
 
 //Define a theme using the above palettes
 $dark-mode-theme: mat-dark-theme($dark-mode-primary, $dark-mode-accent, $dark-mode-warn);
 
 //Define another theme and import it in a class (not default)
-$light-mode-primary:  mat-palette($mat-indigo, 500, 200, 700);
-$light-mode-accent: mat-palette($mat-blue-gray, 500, 300, 900);
+$light-mode-primary: mat-palette($mat-red);
+$light-mode-accent: mat-palette($mat-gray);
 $light-mode-warn: mat-palette($mat-red);
 $light-mode-theme: mat-light-theme($light-mode-primary, $light-mode-accent, $light-mode-warn);
 
@@ -23,25 +23,17 @@ $light-mode-theme: mat-light-theme($light-mode-primary, $light-mode-accent, $lig
 @media (prefers-color-scheme: dark) {
   @include angular-material-theme($dark-mode-theme);
 
-  .bigContainer, .bigContainer2 {
-    background-color: #121212;
+  html {
+    color: #FFFFFF;
+    background-color: #000000
   }
 
-  mat-card, mat-expansion-panel, mat-expansion-panel-header {
-    background-color: mat-color($dark-mode-accent, darker) !important;
+  app-note mat-card {
+    background-color: #1F1F1F !important;
   }
 
   .active {
-    background-color: mat-color($dark-mode-primary) !important;
-    color: #15161C !important;
-  }
-  
-  .activeSmall {
     color: mat-color($dark-mode-primary) !important;
-  }
-  
-  .contrastText {
-    color: #FFFFFF !important;
   }
 }
 
@@ -49,30 +41,25 @@ $light-mode-theme: mat-light-theme($light-mode-primary, $light-mode-accent, $lig
 @media (prefers-color-scheme: light) {
   @include angular-material-theme($light-mode-theme);
 
-  .bigContainer, .bigContainer2 {
-    background-color: mat-color($light-mode-accent, lighter);
+  html {
+    color: #000000;
+    background-color: #FFFFFF
+  }
+
+  app-note mat-card {
+    background-color: #EEEEEE !important;
   }
 
   .active {
-    background-color: mat-color($light-mode-primary) !important;
-    color: #FFFFFF !important;
-  }
-
-  .activeSmall {
     color: mat-color($light-mode-primary) !important;
-  }
-
-  .contrastText {
-    color: rgb(0, 0, 0) !important;
   }
 }
 
 html {
   font-family: Raleway, Roboto, 'Helvetica Neue', sans-serif;
-  background-color: #000;
 }
 
-html, body, .bigContainer {
+html, body {
   height: 100%;
   margin: 0;
 }
@@ -88,8 +75,12 @@ a {
   color: inherit;
 }
 
-mat-toolbar a {
-  text-decoration: none;
+mat-toolbar {
+  padding-top: 0.5em !important;
+  padding-bottom:0.5em !important;
+  a {
+    text-decoration: none;
+  }
 }
 
 .stdPadding {
@@ -98,10 +89,6 @@ mat-toolbar a {
 
 .stdMargin {
   margin: 1em;
-}
-
-.imageFileName {
-  width: 20vw;
 }
 
 .textOverflow {

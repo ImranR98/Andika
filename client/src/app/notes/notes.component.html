@@ -5,8 +5,7 @@
         <form [formGroup]="searchForm" fxFlex.lt-sm="100%" fxLayout="row" fxLayout.lt-sm="column"
           fxLayoutAlign="center center" fxLayoutAlign.lt-sm="start" fxLayoutGap="1em" fxLayoutGap.lt-sm="0em">
           <mat-form-field class="searchFormField" fxFlex="100%">
-            <input matInput formControlName="search" placeholder="Search" (input)="display()" maxlength="100"
-              class="contrastText">
+            <input matInput formControlName="search" placeholder="Search" (input)="display()" maxlength="100">
           </mat-form-field>
           <mat-checkbox *ngIf="!archivesPage" color="primary" formControlName="showArchived" class="contrastText" (change)="display()">Show Archived</mat-checkbox>
           <br fxHide fxShow.lt-sm="true">

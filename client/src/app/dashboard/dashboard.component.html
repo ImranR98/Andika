@@ -1,13 +1,13 @@
 <div fxLayout="column" class="stdMargin">
     <div fxLayout="column" fxLayoutGap="1em">
-        <mat-card fxLayout="column">
-            <div>
+        <div fxLayout="column" fxLayoutGap="1em">
+            <div fxLayout="column">
                 <mat-card-title>{{user.firstName}} {{user.lastName}}</mat-card-title>
                 <mat-card-subtitle>{{user.email}}<span *ngIf="user.userType == 'ADMIN'"> -<b> ADMIN</b></span>
                 </mat-card-subtitle>
             </div>
             <div fxLayout="column" fxLayoutGap="1em">
-                <mat-divider [inset]=true></mat-divider>
+                <mat-divider></mat-divider>
                 <div fxLayout="column">
                     <mat-card-title>Update Info</mat-card-title>
                     <form [formGroup]="userInfoForm" (ngSubmit)="updateUser()" fxLayout="column" fxLayoutAlign="start">
@@ -25,7 +25,7 @@
                         </div>
                     </form>
                 </div>
-                <mat-divider [inset]=true></mat-divider>
+                <mat-divider></mat-divider>
                 <div fxLayout="column">
                     <mat-card-title>Update Password</mat-card-title>
                     <form [formGroup]="passwordForm" (ngSubmit)="updatePassword()" fxLayout="column"
@@ -51,34 +51,25 @@
                         </div>
                     </form>
                 </div>
+                <mat-divider></mat-divider>
+                <div fxLayout="column">
+                    <mat-card-title>Delete Account</mat-card-title>
+                    <form [formGroup]="deleteAccountForm" (ngSubmit)="deleteAccount()" fxLayout="column"
+                        fxLayoutAlign="start">
+                        <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap="1em" fxLayoutGap.lt-sm="0em">
+                            <mat-form-field fxFlex="100%">
+                                <input matInput formControlName="password" placeholder="Current Password"
+                                    type="password" required>
+                            </mat-form-field>
+                        </div>
+                        <div fxLayout="row">
+                            <button mat-raised-button type="submit" color="warn"
+                                [disabled]="loading || !deleteAccountForm.valid"><b>DELETE
+                                    PERMANENTLY</b></button>
+                        </div>
+                    </form>
+                </div>
             </div>
-
-        </mat-card>
-        <div fxLayout="column" fxLayoutGap="1em">
-            <mat-expansion-panel class="stdMargin">
-                <mat-expansion-panel-header>
-                    <mat-panel-title>
-                        <b>Delete Account</b>
-                    </mat-panel-title>
-                </mat-expansion-panel-header>
-                <form [formGroup]="deleteAccountForm" (ngSubmit)="deleteAccount()" fxLayout="column"
-                    fxLayoutAlign="start">
-                    <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap="1em" fxLayoutGap.lt-sm="0em">
-                        <mat-form-field fxFlex="100%">
-                            <input matInput formControlName="password" placeholder="Current Password" type="password"
-                                required>
-                        </mat-form-field>
-                    </div>
-                    <div fxLayout="row">
-                        <button mat-raised-button type="submit" color="warn"
-                            [disabled]="loading || !deleteAccountForm.valid"><b>DELETE
-                                PERMANENTLY</b></button>
-                    </div>
-                </form>
-
-            </mat-expansion-panel>
-
         </div>
     </div>
-
 </div>

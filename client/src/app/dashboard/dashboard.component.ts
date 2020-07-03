@@ -36,12 +36,14 @@ export class DashboardComponent implements OnInit {
   }
 
   deleteAccount() {
-    this.loading = true;
-    this.userService.deleteAccount(this.deleteAccountForm.controls['password'].value).then(() => {
-      this.loading = false;
-    }).catch((err) => {
-      this.loading = false;
-    })
+    if (confirm('Are you sure you want to permanently delete your account?')) {
+      this.loading = true;
+      this.userService.deleteAccount(this.deleteAccountForm.controls['password'].value).then(() => {
+        this.loading = false;
+      }).catch((err) => {
+        this.loading = false;
+      })
+    }
   }
 
   updateUser() {
