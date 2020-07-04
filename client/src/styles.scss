@@ -6,9 +6,9 @@ $custom-typography: mat-typography-config($font-family: "'Raleway', sans-serif;"
 @include mat-core($custom-typography);
 
 //Define custom color palettes for the App's primary, accent and warning colors (numbers indicate default, lighter and darker variants)
-$dark-mode-primary:  mat-palette($mat-amber);
+$dark-mode-primary:  mat-palette($mat-red);
 $dark-mode-accent: mat-palette($mat-gray);
-$dark-mode-warn: mat-palette($mat-red, 200);
+$dark-mode-warn: mat-palette($mat-yellow);
 
 //Define a theme using the above palettes
 $dark-mode-theme: mat-dark-theme($dark-mode-primary, $dark-mode-accent, $dark-mode-warn);
@@ -16,7 +16,7 @@ $dark-mode-theme: mat-dark-theme($dark-mode-primary, $dark-mode-accent, $dark-mo
 //Define another theme and import it in a class (not default)
 $light-mode-primary: mat-palette($mat-red);
 $light-mode-accent: mat-palette($mat-gray);
-$light-mode-warn: mat-palette($mat-red);
+$light-mode-warn: mat-palette($mat-yellow);
 $light-mode-theme: mat-light-theme($light-mode-primary, $light-mode-accent, $light-mode-warn);
 
 /* Dark mode */
@@ -28,11 +28,17 @@ $light-mode-theme: mat-light-theme($light-mode-primary, $light-mode-accent, $lig
     background-color: #000000
   }
 
-  app-note mat-card {
+  app-note mat-card, mat-dialog-container {
     background-color: #1F1F1F !important;
   }
 
+  mat-toolbar {
+    background-color: mat-color($dark-mode-primary) !important;
+    color: #000000 !important;
+  }
+
   .active {
+    background-color: #000000 !important;
     color: mat-color($dark-mode-primary) !important;
   }
 }
@@ -46,11 +52,17 @@ $light-mode-theme: mat-light-theme($light-mode-primary, $light-mode-accent, $lig
     background-color: #FFFFFF
   }
 
-  app-note mat-card {
+  app-note mat-card, mat-dialog-container {
     background-color: #EEEEEE !important;
   }
 
+  mat-toolbar {
+    background-color: mat-color($light-mode-primary) !important;
+    color: #FFFFFF !important;
+  }
+
   .active {
+    background-color: #FFFFFF !important;
     color: mat-color($light-mode-primary) !important;
   }
 }
@@ -95,4 +107,12 @@ mat-toolbar {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+.dialogButtonsDiv {
+  position: fixed !important;
+  top: 1.25em !important;
+  right: 1.75em !important;
+  left: 1.75em !important;
+  z-index: 1000 !important;
 }

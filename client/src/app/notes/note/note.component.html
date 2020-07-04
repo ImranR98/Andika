@@ -17,16 +17,16 @@
         <small>Created: {{created}}</small>
         <small>Modified: {{modified}}</small>
       </div>
-      <button mat-icon-button (click)="deleteNote()" [disabled]="waiting" matTooltip="Delete"
+      <button mat-icon-button (click)="deleteNote()" [disabled]="waiting" [matTooltipShowDelay]="1500" matTooltip="Delete"
         aria-label="Button that deletes this Note">
         <mat-icon>delete</mat-icon>
       </button>
-      <button mat-icon-button (click)="archiveNote()" [disabled]="waiting" *ngIf="!note.archived" matTooltip="Archive"
+      <button mat-icon-button (click)="archiveNote()" [disabled]="waiting" *ngIf="!note.archived" [matTooltipShowDelay]="1500" matTooltip="Archive"
         aria-label="Button that archives this Note">
         <mat-icon>archive</mat-icon>
       </button>
       <button mat-icon-button (click)="unArchiveNote()" [disabled]="waiting" *ngIf="note.archived"
-        matTooltip="Unarchive" aria-label="Button that unarchives this Note">
+        [matTooltipShowDelay]="1500" matTooltip="Unarchive" aria-label="Button that unarchives this Note">
         <mat-icon>unarchive</mat-icon>
       </button>
     </div>

@@ -1,13 +1,13 @@
 <div *ngIf="!loading">
   <div fxLayout="column" fxLayoutGap="1em">
     <div *ngIf="!loading && (((notes.length > 0 && !archivesPage) || (notesBy1.length > 0 && archivesPage)) || searchForm.controls['search'].value)">
-      <div fxLayout="row" fxLayoutAlign="start end" fxFlex="100%" class="whiteBG stdPaddingExceptTop">
+      <div fxLayout="row" fxLayoutAlign="start end" fxFlex="100%">
         <form [formGroup]="searchForm" fxFlex.lt-sm="100%" fxLayout="row" fxLayout.lt-sm="column"
           fxLayoutAlign="center center" fxLayoutAlign.lt-sm="start" fxLayoutGap="1em" fxLayoutGap.lt-sm="0em">
-          <mat-form-field class="searchFormField" fxFlex="100%">
+          <mat-form-field fxFlex="100%">
             <input matInput formControlName="search" placeholder="Search" (input)="display()" maxlength="100">
           </mat-form-field>
-          <mat-checkbox *ngIf="!archivesPage" color="primary" formControlName="showArchived" class="contrastText" (change)="display()">Show Archived</mat-checkbox>
+          <mat-checkbox *ngIf="!archivesPage" color="primary" formControlName="showArchived" (change)="display()">Show Archived</mat-checkbox>
           <br fxHide fxShow.lt-sm="true">
         </form>
       </div>
@@ -65,7 +65,7 @@
     </mat-card>
   </div>
 
-  <button *ngIf="!loading && !archivesPage" mat-fab color="primary" style="position: fixed; bottom: 1em; right: 1em;" matTooltip="Add"
+  <button *ngIf="!loading && !archivesPage" mat-fab color="primary" style="position: fixed; bottom: 1em; right: 1em;" [matTooltipShowDelay]="1500" matTooltip="Add"
     aria-label="Button that adds a new Note" (click)="addNote()">
     <mat-icon>add</mat-icon>
   </button>

@@ -56,7 +56,8 @@ let decodeJWTUserId = function (req, res, next) {
 
 checkIfAuthenticated = expressJwt({
     secret: process.env.RSA_PUBLIC_KEY.replaceAll('\\n', '\n'),
-    requestProperty: 'jwt'
+    requestProperty: 'jwt',
+    algorithms: ['RS256']
 });
 
 //======================================
@@ -221,5 +222,5 @@ let HTTP_PORT = process.env.PORT || 8080;
 
 //Start Server (make sure .env file exists and contains variables listed in README.md)
 app.listen(HTTP_PORT, function () {
-    console.log('app listening on: ' + HTTP_PORT)
+    console.log('Andika listening on: ' + HTTP_PORT)
 });

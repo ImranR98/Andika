@@ -1,97 +1,55 @@
-<form [formGroup]="noteForm" fxLayout="column" fxFill fxLayout="column">
-  <div mat-dialog-title fxLayout="column">
-    <div fxLayout="row" fxLayoutGap="3em" fxHide fxShow.sm fxShow.gt-sm>
-      <mat-form-field fxFlex="100%">
-        <input matInput formControlName="title" placeholder="Title" type="text" required>
-      </mat-form-field>
-      <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="1em" *ngIf="data">
-        <button mat-icon-button (click)="updateNote()" [disabled]="disableForm" matTooltip="Save"
-          aria-label="Button that saves changes to this Note">
-          <mat-icon>save</mat-icon>
-        </button>
-        <button mat-icon-button (click)="deleteNote()" [disabled]="disableForm" matTooltip="Delete"
-          aria-label="Button that deletes this Note">
-          <mat-icon>delete</mat-icon>
-        </button>
-        <button mat-icon-button (click)="archiveNote()" [disabled]="disableForm" matTooltip="Archive"
-          *ngIf="!data.note.archived" aria-label="Button that archives this Note">
-          <mat-icon>archive</mat-icon>
-        </button>
-        <button mat-icon-button (click)="unArchiveNote()" [disabled]="disableForm" matTooltip="Unrchive"
-          *ngIf="data.note.archived" aria-label="Button that unarchives this Note">
-          <mat-icon>unarchive</mat-icon>
-        </button>
-        <button mat-icon-button (click)="close()" [disabled]="disableForm" matTooltip="Close"
-          aria-label="Button that closed this Note without saving changes">
-          <mat-icon>close</mat-icon>
-        </button>
-      </div>
-      <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="1em" *ngIf="!data">
-        <button mat-icon-button (click)="addNote()" [disabled]="disableForm" matTooltip="Save"
-          aria-label="Button that saves changes to this Note">
-          <mat-icon>save</mat-icon>
-        </button>
-        <button mat-icon-button (click)="close()" [disabled]="disableForm" matTooltip="Close"
-          aria-label="Button that closed this Note without saving changes">
-          <mat-icon>close</mat-icon>
-        </button>
-      </div>
-    </div>
-
-    <div fxLayout="column" fxHide fxShow.lt-sm>
-      <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="1em" *ngIf="data">
-        <button mat-icon-button (click)="updateNote()" [disabled]="disableForm" matTooltip="Save"
-          aria-label="Button that saves changes to this Note">
-          <mat-icon>save</mat-icon>
-        </button>
-        <button mat-icon-button (click)="deleteNote()" [disabled]="disableForm" matTooltip="Delete"
-          aria-label="Button that deletes this Note">
-          <mat-icon>delete</mat-icon>
-        </button>
-        <button mat-icon-button (click)="archiveNote()" [disabled]="disableForm" matTooltip="Archive"
-          *ngIf="!data.note.archived" aria-label="Button that archives this Note">
-          <mat-icon>archive</mat-icon>
-        </button>
-        <button mat-icon-button (click)="unArchiveNote()" [disabled]="disableForm" matTooltip="Unrchive"
-          *ngIf="data.note.archived" aria-label="Button that unarchives this Note">
-          <mat-icon>unarchive</mat-icon>
-        </button>
-        <button mat-icon-button (click)="close()" [disabled]="disableForm" matTooltip="Close"
-          aria-label="Button that closed this Note without saving changes">
-          <mat-icon>close</mat-icon>
-        </button>
-      </div>
-      <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="1em" *ngIf="!data">
-        <button mat-icon-button (click)="addNote()" [disabled]="disableForm" matTooltip="Save"
-          aria-label="Button that saves changes to this Note">
-          <mat-icon>save</mat-icon>
-        </button>
-        <button mat-icon-button (click)="close()" [disabled]="disableForm" matTooltip="Close"
-          aria-label="Button that closed this Note without saving changes">
-          <mat-icon>close</mat-icon>
-        </button>
-      </div>
-      <mat-form-field fxFlex="100%">
-        <input matInput formControlName="title" placeholder="Title" type="text" required>
-      </mat-form-field>
-    </div>
+<div mat-dialog-title>&nbsp;</div>
+<div class="dialogButtonsDiv">
+  <div fxLayout="row" fxLayoutAlign="end" fxLayoutAlign.lt-sm="center" fxLayoutGap="1em" *ngIf="data">
+    <button mat-mini-fab color="" (click)="updateNote()" [disabled]="disableForm" [matTooltipShowDelay]="1500"
+      matTooltip="Save" aria-label="Button that saves changes to this Note">
+      <mat-icon>save</mat-icon>
+    </button>
+    <button mat-mini-fab color="" (click)="deleteNote()" [disabled]="disableForm" [matTooltipShowDelay]="1500"
+      matTooltip="Delete" aria-label="Button that deletes this Note">
+      <mat-icon>delete</mat-icon>
+    </button>
+    <button mat-mini-fab color="" (click)="archiveNote()" [disabled]="disableForm" [matTooltipShowDelay]="1500"
+      matTooltip="Archive" *ngIf="!data.note.archived" aria-label="Button that archives this Note">
+      <mat-icon>archive</mat-icon>
+    </button>
+    <button mat-mini-fab color="" (click)="unArchiveNote()" [disabled]="disableForm" [matTooltipShowDelay]="1500"
+      matTooltip="Unrchive" *ngIf="data.note.archived" aria-label="Button that unarchives this Note">
+      <mat-icon>unarchive</mat-icon>
+    </button>
+    <button mat-mini-fab color="" (click)="close()" [disabled]="disableForm" [matTooltipShowDelay]="1500" matTooltip="Close"
+      aria-label="Button that closed this Note without saving changes">
+      <mat-icon>close</mat-icon>
+    </button>
   </div>
-
-  <div mat-dialog-content fxLayout="column" fxLayoutGap="1em">
-    <textarea matInput cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="5" formControlName="note"
-      placeholder="Note" type="text"></textarea>
-    <mat-form-field fxFlex="100%">
-      <mat-chip-list #chipList>
-        <div *ngIf="data">
-          <mat-chip *ngIf="data.note.archived" [selectable]="true" [removable]="false">Archived</mat-chip>
-        </div>
-        <mat-chip *ngFor="let tag of tags" [selectable]="true" [removable]="true" (removed)="removeTag(tag)">
-          {{tag}}
-          <mat-icon matChipRemove>cancel</mat-icon>
-        </mat-chip>
-        <input placeholder="Tags" [matChipInputFor]="chipList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-          [matChipInputAddOnBlur]="true" (matChipInputTokenEnd)="addTag($event)">
-      </mat-chip-list>
-    </mat-form-field>
+  <div fxLayout="row" fxLayoutAlign="end" fxLayoutAlign.lt-sm="center" fxLayoutGap="1em" *ngIf="!data">
+    <button mat-mini-fab color="" (click)="addNote()" [disabled]="disableForm" [matTooltipShowDelay]="1500" matTooltip="Save"
+      aria-label="Button that saves changes to this Note">
+      <mat-icon>save</mat-icon>
+    </button>
+    <button mat-mini-fab color="" (click)="close()" [disabled]="disableForm" [matTooltipShowDelay]="1500" matTooltip="Close"
+      aria-label="Button that closed this Note without saving changes">
+      <mat-icon>close</mat-icon>
+    </button>
   </div>
+</div>
+<form [formGroup]="noteForm" fxLayout="column" fxLayoutGap="1em">
+  <mat-form-field>
+    <input matInput formControlName="title" placeholder="Title" type="text" required>
+  </mat-form-field>
+  <textarea matInput cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="5" formControlName="note"
+    placeholder="Note" type="text"></textarea>
+  <mat-form-field fxFlex="100%">
+    <mat-chip-list #chipList>
+      <div *ngIf="data">
+        <mat-chip *ngIf="data.note.archived" [selectable]="true" [removable]="false">Archived</mat-chip>
+      </div>
+      <mat-chip *ngFor="let tag of tags" [selectable]="true" [removable]="true" (removed)="removeTag(tag)">
+        {{tag}}
+        <mat-icon matChipRemove>cancel</mat-icon>
+      </mat-chip>
+      <input placeholder="Tags" [matChipInputFor]="chipList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+        [matChipInputAddOnBlur]="true" (matChipInputTokenEnd)="addTag($event)">
+    </mat-chip-list>
+  </mat-form-field>
 </form>

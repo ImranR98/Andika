@@ -269,10 +269,9 @@ export class NotesComponent implements OnInit {
   addNote() {
     if (!this.loading) {
       this.dialog.open(NoteDialogComponent, {
-        height: '95vh',
-        width: '95vw',
-        maxHeight: '95vh',
-        maxWidth: '95vw',
+        maxWidth: '100vw',
+        width: '100%',
+        height: '100vh'
       });
     }
   }
