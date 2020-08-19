@@ -34,7 +34,7 @@ export class UserService implements OnInit {
 
   registerUser(registerFormInput: IRegisterUserFormInput) {
     return new Promise((resolve, reject) => {
-      this.http.post(environment.apiUrl + '/register', registerFormInput, this.httpOptions).toPromise().then(() => {
+      this.http.post('/register', registerFormInput, this.httpOptions).toPromise().then(() => {
         this.errorService.showSimpleSnackBar('Check your email for the link to complete registration');
         resolve();
       }).catch((err) => {
@@ -46,7 +46,7 @@ export class UserService implements OnInit {
 
   resetPassword(resetPasswordFormInput: IResetPasswordFormInput) {
     return new Promise((resolve, reject) => {
-      this.http.post(environment.apiUrl + '/resetPassword', resetPasswordFormInput, this.httpOptions).toPromise().then(() => {
+      this.http.post('/resetPassword', resetPasswordFormInput, this.httpOptions).toPromise().then(() => {
         this.errorService.showSimpleSnackBar('Check your email for the link to complete password reset');
         resolve();
       }).catch((err) => {
@@ -58,7 +58,7 @@ export class UserService implements OnInit {
 
   login(loginFormInput: ILoginUserFormInput): any {
     return new Promise((resolve, reject) => {
-      this.http.post(environment.apiUrl + '/login', loginFormInput, this.httpOptions).toPromise().then((response: any) => {
+      this.http.post('/login', loginFormInput, this.httpOptions).toPromise().then((response: any) => {
         if (response.jwtToken && response.user) {
           localStorage.setItem('jwt_token', response.jwtToken);
           let tokenDecoded = jwt_decode(response.jwtToken);
@@ -78,7 +78,7 @@ export class UserService implements OnInit {
 
   deleteAccount(password: string): any {
     return new Promise((resolve, reject) => {
-      this.http.post(environment.apiUrl + '/deleteAccount', { password }, this.httpOptions).toPromise().then(() => {
+      this.http.post('/deleteAccount', { password }, this.httpOptions).toPromise().then(() => {
         this.logout(true);
         resolve();
       }).catch((err) => {
@@ -90,7 +90,7 @@ export class UserService implements OnInit {
 
   updatePassword(updatePasswordFormInput: IPasswordUpdateFormInput): any {
     return new Promise((resolve, reject) => {
-      this.http.post(environment.apiUrl + '/updatePassword', updatePasswordFormInput, this.httpOptions).toPromise().then(() => {
+      this.http.post('/updatePassword', updatePasswordFormInput, this.httpOptions).toPromise().then(() => {
         this.logout(true);
         resolve();
       }).catch((err) => {
@@ -102,7 +102,7 @@ export class UserService implements OnInit {
 
   updateAccount(updateAccountFormInput: IAccountUpdateFormInput): any {
     return new Promise((resolve, reject) => {
-      this.http.post(environment.apiUrl + '/updateAccount', updateAccountFormInput, this.httpOptions).toPromise().then(() => {
+      this.http.post('/updateAccount', updateAccountFormInput, this.httpOptions).toPromise().then(() => {
         let userTemp = this.getJWTUser();
         userTemp.firstName = updateAccountFormInput.firstName;
         userTemp.lastName = updateAccountFormInput.lastName;

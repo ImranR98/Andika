@@ -20,24 +20,6 @@ app.use('/static', express.static(__dirname + '/static'));
 //Enables parsing of request bodies
 app.use(bodyParser.json({ extended: true, limit: '10000kb' }));
 
-//Enables client to access the server from localhost, only needed in local development
-let allowCrossDomain = function (req, res, next) {
-    let valid = false;
-    if (req.header('origin')) {
-        if (req.header('origin').indexOf('localhost') !== -1) {
-            valid = true;
-        }
-    }
-    if (valid) {
-        res.header('Access-Control-Allow-Origin', req.header('origin'));
-        res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,PATCH,OPTIONS');
-        res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
-        res.header('Access-Control-Allow-Credentials', 'true');
-    }
-    next();
-}
-app.use(allowCrossDomain);
-
 //======================================
 String.prototype.replaceAll = function (search, replacement) {
     var target = this;
