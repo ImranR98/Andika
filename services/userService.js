@@ -31,7 +31,7 @@ module.exports.registerUser = (registerFormInput, currentDomain) => {
                             query: 'INSERT INTO USERS (EMAIL, FIRST_NAME, LAST_NAME, PASSWORD, REGISTRATION_STATUS, REGISTRATION_KEY, REGISTRATION_START_DATE, REGISTRATION_COMPLETE_DATE, USER_TYPE) VALUES($1::text, $2::text, $3::text, $4::text, $5::text, $6::text, $7::timestamp, null, $8::text)',
                             params: [registerFormInput.email, registerFormInput.firstName, registerFormInput.lastName, encryptedPassword, 'PENDING', result, new Date(), 'REGULAR']
                         }).then(() => {
-                            let transporter = nodeMailer.createTransport(JSON.parse(process.env.NODEMAILER_TRANSPORT_JSON));
+                            let transporter = nodeMailer.createTransport(process.env.NODEMAILER_TRANSPORT_STRING)
                             let mailOptions = {
                                 from: `"${process.env.NODEMAILER_NAME}" <${process.env.NODEMAILER_EMAIL}>`,
                                 to: [registerFormInput.email],
@@ -40,12 +40,6 @@ module.exports.registerUser = (registerFormInput, currentDomain) => {
                                     `<p><b>Click the link below to complete your registration:</b></p>
                             <a href="http://${currentDomain}/completeRegistration?key=${result}">http://${currentDomain}/completeRegistration?key=${result}</a>`
                             };
-                            if (process.env.NODEMAILER_MAILOPTIONS_AUTH) {
-                                mailOptions.auth = JSON.parse(process.env.NODEMAILER_MAILOPTIONS_AUTH);
-                                if (process.env.NODEMAILER_MAILOPTIONS_AUTH_EXPIRESIN) {
-                                    mailOptions.auth.expires = new Date().getTime() + parseInt(process.env.NODEMAILER_MAILOPTIONS_AUTH_EXPIRESIN);
-                                }
-                            }
                             transporter.sendMail(mailOptions).then((info) => {
                                 resolve();
                             }).catch((err) => {
@@ -294,7 +288,7 @@ module.exports.resetPassword = (passwordResetFormInput, currentDomain) => {
                                 query: 'INSERT INTO PASSWORD_RESETS VALUES($1::int, $2::text, $3::text)',
                                 params: [id, encryptedPassword, result]
                             }).then(() => {
-                                let transporter = nodeMailer.createTransport(JSON.parse(process.env.NODEMAILER_TRANSPORT_JSON));
+                                let transporter = nodeMailer.createTransport(process.env.NODEMAILER_TRANSPORT_STRING);
                                 let mailOptions = {
                                     from: `"${process.env.NODEMAILER_NAME}" <${process.env.NODEMAILER_EMAIL}>`,
                                     to: [passwordResetFormInput.email],
@@ -303,12 +297,6 @@ module.exports.resetPassword = (passwordResetFormInput, currentDomain) => {
                                         `<p><b>Click the link below to complete your password reset:</b></p>
                                 <a href="http://${currentDomain}/completePasswordReset?key=${result}">http://${currentDomain}/completePasswordReset?key=${result}</a>`
                                 };
-                                if (process.env.NODEMAILER_MAILOPTIONS_AUTH) {
-                                    mailOptions.auth = JSON.parse(process.env.NODEMAILER_MAILOPTIONS_AUTH);
-                                    if (process.env.NODEMAILER_MAILOPTIONS_AUTH_EXPIRESIN) {
-                                        mailOptions.auth.expires = new Date().getTime() + parseInt(process.env.NODEMAILER_MAILOPTIONS_AUTH_EXPIRESIN);
-                                    }
-                                }
                                 transporter.sendMail(mailOptions).then((info) => {
                                     resolve();
                                 }).catch((err) => {
