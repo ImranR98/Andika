@@ -43,7 +43,7 @@ checkIfAuthenticated = expressJwt({
 });
 
 //======================================
-app.post('/register', (req, res) => {
+app.post('/api/register', (req, res) => {
     userService.registerUser(req.body, req.headers.host).then(() => {
         res.send();
     }).catch((err) => {
@@ -52,7 +52,7 @@ app.post('/register', (req, res) => {
     })
 });
 
-app.get('/completeRegistration', (req, res) => {
+app.get('/api/completeRegistration', (req, res) => {
     userService.completeRegistration(req.query).then(() => {
         res.send('Registration was successful, you can close this page');
     }).catch((err) => {
@@ -61,7 +61,7 @@ app.get('/completeRegistration', (req, res) => {
     })
 })
 
-app.post('/login', (req, res) => {
+app.post('/api/login', (req, res) => {
     userService.login(req.body).then((user) => {
         const jwtBearerToken = jwt.sign({}, process.env.RSA_PRIVATE_KEY.replaceAll('\\n', '\n'), {
             algorithm: 'RS256',
@@ -75,7 +75,7 @@ app.post('/login', (req, res) => {
     })
 })
 
-app.post('/deleteAccount', checkIfAuthenticated, decodeJWTUserId, (req, res) => {
+app.post('/api/deleteAccount', checkIfAuthenticated, decodeJWTUserId, (req, res) => {
     userService.deleteAccount(req.body, req.jwt.sub).then(() => {
         res.send();
     }).catch((err) => {
@@ -84,7 +84,7 @@ app.post('/deleteAccount', checkIfAuthenticated, decodeJWTUserId, (req, res) => 
     })
 })
 
-app.post('/updateAccount', checkIfAuthenticated, decodeJWTUserId, (req, res) => {
+app.post('/api/updateAccount', checkIfAuthenticated, decodeJWTUserId, (req, res) => {
     userService.updateAccount(req.body, req.jwt.sub).then(() => {
         res.send();
     }).catch((err) => {
@@ -93,7 +93,7 @@ app.post('/updateAccount', checkIfAuthenticated, decodeJWTUserId, (req, res) => 
     })
 })
 
-app.post('/updatePassword', checkIfAuthenticated, decodeJWTUserId, (req, res) => {
+app.post('/api/updatePassword', checkIfAuthenticated, decodeJWTUserId, (req, res) => {
     userService.updatePassword(req.body, req.jwt.sub).then(() => {
         res.send();
     }).catch((err) => {
@@ -102,7 +102,7 @@ app.post('/updatePassword', checkIfAuthenticated, decodeJWTUserId, (req, res) =>
     })
 })
 
-app.post('/resetPassword', (req, res) => {
+app.post('/api/resetPassword', (req, res) => {
     userService.resetPassword(req.body, req.headers.host).then(() => {
         res.send();
     }).catch((err) => {
@@ -111,7 +111,7 @@ app.post('/resetPassword', (req, res) => {
     })
 })
 
-app.get('/completePasswordReset', (req, res) => {
+app.get('/api/completePasswordReset', (req, res) => {
     userService.completePasswordReset(req.query).then(() => {
         res.send('Password reset was successful, you can close this page');
     }).catch((err) => {
@@ -121,7 +121,7 @@ app.get('/completePasswordReset', (req, res) => {
 })
 
 //======================================
-app.post('/getNotes', checkIfAuthenticated, decodeJWTUserId, (req, res) => {
+app.post('/api/getNotes', checkIfAuthenticated, decodeJWTUserId, (req, res) => {
     noteService.getNotes(req.jwt.sub).then((notes) => {
         res.send(notes);
     }).catch((err) => {
@@ -130,7 +130,7 @@ app.post('/getNotes', checkIfAuthenticated, decodeJWTUserId, (req, res) => {
     })
 })
 
-app.post('/addNote', checkIfAuthenticated, decodeJWTUserId, (req, res) => {
+app.post('/api/addNote', checkIfAuthenticated, decodeJWTUserId, (req, res) => {
     noteService.addNote(req.body, req.jwt.sub).then((note) => {
         res.send(note);
     }).catch((err) => {
@@ -139,7 +139,7 @@ app.post('/addNote', checkIfAuthenticated, decodeJWTUserId, (req, res) => {
     })
 })
 
-app.post('/updateNote', checkIfAuthenticated, decodeJWTUserId, (req, res) => {
+app.post('/api/updateNote', checkIfAuthenticated, decodeJWTUserId, (req, res) => {
     noteService.updateNote(req.body, req.jwt.sub).then((note) => {
         res.send(note);
     }).catch((err) => {
@@ -148,7 +148,7 @@ app.post('/updateNote', checkIfAuthenticated, decodeJWTUserId, (req, res) => {
     })
 })
 
-app.post('/deleteNote', checkIfAuthenticated, decodeJWTUserId, (req, res) => {
+app.post('/api/deleteNote', checkIfAuthenticated, decodeJWTUserId, (req, res) => {
     noteService.deleteNote(req.body, req.jwt.sub).then(() => {
         res.send();
     }).catch((err) => {
@@ -157,7 +157,7 @@ app.post('/deleteNote', checkIfAuthenticated, decodeJWTUserId, (req, res) => {
     })
 })
 
-app.post('/archiveNote', checkIfAuthenticated, decodeJWTUserId, (req, res) => {
+app.post('/api/archiveNote', checkIfAuthenticated, decodeJWTUserId, (req, res) => {
     noteService.archiveNote(req.body, req.jwt.sub).then(() => {
         res.send();
     }).catch((err) => {
@@ -166,7 +166,7 @@ app.post('/archiveNote', checkIfAuthenticated, decodeJWTUserId, (req, res) => {
     })
 })
 
-app.post('/unArchiveNote', checkIfAuthenticated, decodeJWTUserId, (req, res) => {
+app.post('/api/unArchiveNote', checkIfAuthenticated, decodeJWTUserId, (req, res) => {
     noteService.unArchiveNote(req.body, req.jwt.sub).then(() => {
         res.send();
     }).catch((err) => {
@@ -175,7 +175,7 @@ app.post('/unArchiveNote', checkIfAuthenticated, decodeJWTUserId, (req, res) => 
     })
 })
 
-app.post('/pinNote', checkIfAuthenticated, decodeJWTUserId, (req, res) => {
+app.post('/api/pinNote', checkIfAuthenticated, decodeJWTUserId, (req, res) => {
     noteService.pinNote(req.body, req.jwt.sub).then(() => {
         res.send();
     }).catch((err) => {
@@ -184,7 +184,7 @@ app.post('/pinNote', checkIfAuthenticated, decodeJWTUserId, (req, res) => {
     })
 })
 
-app.post('/unPinNote', checkIfAuthenticated, decodeJWTUserId, (req, res) => {
+app.post('/api/unPinNote', checkIfAuthenticated, decodeJWTUserId, (req, res) => {
     noteService.unPinNote(req.body, req.jwt.sub).then(() => {
         res.send();
     }).catch((err) => {
