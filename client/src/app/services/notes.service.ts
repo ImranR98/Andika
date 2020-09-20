@@ -53,7 +53,7 @@ export class NotesService {
 
   getNotes() {
     return new Promise((resolve, reject) => {
-      this.http.post('/getNotes', this.httpOptions).toPromise().then((notes) => {
+      this.http.post('/api/getNotes', this.httpOptions).toPromise().then((notes) => {
         this.updateNotes(notes);
         resolve();
       }).catch((err) => {
@@ -65,7 +65,7 @@ export class NotesService {
 
   updateNote(noteData: IUpdateNote) {
     return new Promise((resolve, reject) => {
-      this.http.post('/updateNote', noteData, this.httpOptions).toPromise().then((updatedNote: INote) => {
+      this.http.post('/api/updateNote', noteData, this.httpOptions).toPromise().then((updatedNote: INote) => {
         let temp = this.getCurrentNotes();
         for (let i = 0; i < temp.length; i++) {
           if (temp[i].noteId == updatedNote.noteId) {
@@ -84,7 +84,7 @@ export class NotesService {
 
   addNote(noteData: IAddNote) {
     return new Promise((resolve, reject) => {
-      this.http.post('/addNote', noteData, this.httpOptions).toPromise().then((newNote: INote) => {
+      this.http.post('/api/addNote', noteData, this.httpOptions).toPromise().then((newNote: INote) => {
         let temp = this.getCurrentNotes();
         temp.push(newNote);
         this.updateNotes(temp);
@@ -99,7 +99,7 @@ export class NotesService {
 
   deleteNote(noteId) {
     return new Promise((resolve, reject) => {
-      this.http.post('/deleteNote', { noteId: noteId }, this.httpOptions).toPromise().then(() => {
+      this.http.post('/api/deleteNote', { noteId: noteId }, this.httpOptions).toPromise().then(() => {
         let temp = this.getCurrentNotes();
         let temp2 = [];
         for (let i = 0; i < temp.length; i++) {
@@ -119,7 +119,7 @@ export class NotesService {
 
   archiveNote(noteId) {
     return new Promise((resolve, reject) => {
-      this.http.post('/archiveNote', { noteId: noteId }, this.httpOptions).toPromise().then(() => {
+      this.http.post('/api/archiveNote', { noteId: noteId }, this.httpOptions).toPromise().then(() => {
         let temp = this.getCurrentNotes();
         for (let i = 0; i < temp.length; i++) {
           if (temp[i].noteId === noteId) {
@@ -138,7 +138,7 @@ export class NotesService {
 
   unArchiveNote(noteId) {
     return new Promise((resolve, reject) => {
-      this.http.post('/unArchiveNote', { noteId: noteId }, this.httpOptions).toPromise().then(() => {
+      this.http.post('/api/unArchiveNote', { noteId: noteId }, this.httpOptions).toPromise().then(() => {
         let temp = this.getCurrentNotes();
         for (let i = 0; i < temp.length; i++) {
           if (temp[i].noteId === noteId) {
@@ -157,7 +157,7 @@ export class NotesService {
 
   pinNote(noteId) {
     return new Promise((resolve, reject) => {
-      this.http.post('/pinNote', { noteId: noteId }, this.httpOptions).toPromise().then(() => {
+      this.http.post('/api/pinNote', { noteId: noteId }, this.httpOptions).toPromise().then(() => {
         let temp = this.getCurrentNotes();
         for (let i = 0; i < temp.length; i++) {
           if (temp[i].noteId === noteId) {
@@ -176,7 +176,7 @@ export class NotesService {
 
   unPinNote(noteId) {
     return new Promise((resolve, reject) => {
-      this.http.post('/unPinNote', { noteId: noteId }, this.httpOptions).toPromise().then(() => {
+      this.http.post('/api/unPinNote', { noteId: noteId }, this.httpOptions).toPromise().then(() => {
         let temp = this.getCurrentNotes();
         for (let i = 0; i < temp.length; i++) {
           if (temp[i].noteId === noteId) {

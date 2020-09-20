@@ -16,7 +16,7 @@ $dark-mode-theme: mat-dark-theme($dark-mode-primary, $dark-mode-accent, $dark-mo
 //Define another theme and import it in a class (not default)
 $light-mode-primary: mat-palette($mat-red);
 $light-mode-accent: mat-palette($mat-gray);
-$light-mode-warn: mat-palette($mat-yellow);
+$light-mode-warn: mat-palette($mat-amber, 800);
 $light-mode-theme: mat-light-theme($light-mode-primary, $light-mode-accent, $light-mode-warn);
 
 /* Dark mode */
