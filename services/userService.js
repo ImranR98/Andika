@@ -38,7 +38,7 @@ module.exports.registerUser = (registerFormInput, currentDomain) => {
                                 subject: 'Complete your Registration',
                                 html:
                                     `<p><b>Click the link below to complete your registration:</b></p>
-                            <a href="http://${currentDomain}/completeRegistration?key=${result}">http://${currentDomain}/completeRegistration?key=${result}</a>`
+                            <a href="http://${currentDomain}/api/completeRegistration?key=${result}">http://${currentDomain}/api/completeRegistration?key=${result}</a>`
                             };
                             transporter.sendMail(mailOptions).then((info) => {
                                 resolve();
