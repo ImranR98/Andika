@@ -142,16 +142,16 @@ export class UserService implements OnInit {
   }
 
   getJWTExpiration() {
-    if (JSON.parse(localStorage.getItem("jwt_token_decoded") || '')) {
-      return moment.unix(JSON.parse(localStorage.getItem("jwt_token_decoded") || '').exp);
+    if (JSON.parse(localStorage.getItem("jwt_token_decoded") || 'null')) {
+      return moment.unix(JSON.parse(localStorage.getItem("jwt_token_decoded") || 'null')?.exp);
     } else {
       return null;
     }
   }
 
   getJWTUser(): IUser | null {
-    if (JSON.parse(localStorage.getItem("user") || '')) {
-      return JSON.parse(localStorage.getItem("user") || '');
+    if (JSON.parse(localStorage.getItem("user") || 'null')) {
+      return JSON.parse(localStorage.getItem("user") || 'null');
     } else {
       return null;
     }
