@@ -2,8 +2,8 @@
     <div fxLayout="column" fxLayoutGap="1em">
         <div fxLayout="column" fxLayoutGap="1em">
             <div fxLayout="column">
-                <mat-card-title>{{user.firstName}} {{user.lastName}}</mat-card-title>
-                <mat-card-subtitle>{{user.email}}<span *ngIf="user.userType == 'ADMIN'"> -<b> ADMIN</b></span>
+                <mat-card-title>{{user?.firstName}} {{user?.lastName}}</mat-card-title>
+                <mat-card-subtitle>{{user?.email}}<span *ngIf="user?.userType == 'ADMIN'"> -<b> ADMIN</b></span>
                 </mat-card-subtitle>
             </div>
             <div fxLayout="column" fxLayoutGap="1em">

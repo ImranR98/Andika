@@ -18,7 +18,7 @@ export class NoteDialogComponent implements OnInit {
 
   constructor(private dialogRef: MatDialogRef<NoteDialogComponent>, private noteService: NotesService, private errorService: ErrorService, @Inject(MAT_DIALOG_DATA) public data: { note: INote, imageSrc: string } | null, private dialog: MatDialog) { }
 
-  @ViewChild('autosize', { static: false }) autosize: CdkTextareaAutosize;
+  @ViewChild('autosize', { static: false }) autosize: CdkTextareaAutosize | null = null;
 
   readonly separatorKeysCodes: number[] = [ENTER, COMMA];
   disableForm: boolean = false;
@@ -36,7 +36,7 @@ export class NoteDialogComponent implements OnInit {
   allowedTypesError: string = '';
   fileSizeLimit: number = 5242880;
   fileSizeLimitString: string = '5MB';
-  image: File;
+  image: File | null = null;
 
   ngOnInit() {
     this.generateAllowedTypeStringAndError();
@@ -71,18 +71,19 @@ export class NoteDialogComponent implements OnInit {
 
   selectImage(e: Event) {
     const fileInput: HTMLInputElement = <HTMLInputElement>e.target;
-    let f: File = fileInput.files[0];
+    let f: File | null = null;
+    if (fileInput.files) f = fileInput?.files[0];
 
     //Type, size and filename checking
     let valid: boolean = false;
     let validType: boolean = false;
     for (let i = 0; i < this.allowedTypes.length; i++) {
-      if (f.type.indexOf(this.allowedTypes[i]) != -1) {
+      if (f?.type.indexOf(this.allowedTypes[i]) != -1) {
         validType = true;
       }
     }
     if (validType) {
-      if (f.size <= this.fileSizeLimit) {
+      if (f && f.size <= this.fileSizeLimit) {
         valid = true;
       } else {
         this.errorService.showError(
@@ -149,7 +150,7 @@ export class NoteDialogComponent implements OnInit {
         width: '250px',
       }).afterClosed().subscribe((val) => {
         if (val) {
-          this.noteService.deleteNote(this.data.note.noteId).then(() => {
+          this.noteService.deleteNote(this.data?.note.noteId || 0).then(() => {
             this.disableForm = false;
             this.dialogRef.close();
           }).catch((err) => {
@@ -194,31 +195,33 @@ export class NoteDialogComponent implements OnInit {
         title: this.noteForm.controls['title'].value,
         note: this.noteForm.controls['note'].value,
         tags: this.tags,
-        imageType: null,
-        imageBase64: null
+        imageType: '',
+        imageBase64: ''
       }
       this.disableForm = true;
 
-      this.convertFileToBase64(this.image).then((fileBase64: string) => {
-        if (fileBase64) {
-          tempNote.imageType = this.image.type;
-          tempNote.imageBase64 = fileBase64;
-        } else {
-          tempNote.imageType = null;
-          tempNote.imageBase64 = null;
-        }
-        this.noteService.updateNote(tempNote).then(() => {
-          this.noteForm.reset();
-          this.removeImage();
-          this.disableForm = false;
-          this.dialogRef.close();
+      if (this.image) {
+        this.convertFileToBase64(this.image).then((fileBase64: any) => {
+          if (fileBase64) {
+            tempNote.imageType = this.image?.type || '';
+            tempNote.imageBase64 = fileBase64;
+          } else {
+            tempNote.imageType = '';
+            tempNote.imageBase64 = '';
+          }
+          this.noteService.updateNote(tempNote).then(() => {
+            this.noteForm.reset();
+            this.removeImage();
+            this.disableForm = false;
+            this.dialogRef.close();
+          }).catch((err) => {
+            this.errorService.showError(err);
+            this.disableForm = false;
+          });
         }).catch((err) => {
-          this.errorService.showError(err);
-          this.disableForm = false;
-        });
-      }).catch((err) => {
-        this.errorService.showSimpleSnackBar("Error saving file, please retry.")
-      })
+          this.errorService.showSimpleSnackBar("Error saving file, please retry.")
+        })
+      }
     }
   }
 
@@ -231,30 +234,32 @@ export class NoteDialogComponent implements OnInit {
         tags: this.tags,
         archived: false,
         pinned: false,
-        imageType: null,
-        imageBase64: null
+        imageType: '',
+        imageBase64: ''
       };
 
-      this.convertFileToBase64(this.image).then((fileBase64: string) => {
-        if (fileBase64) {
-          tempNote.imageType = this.image.type;
-          tempNote.imageBase64 = fileBase64;
-        } else {
-          tempNote.imageType = null;
-          tempNote.imageBase64 = null;
-        }
-        this.noteService.addNote(tempNote).then(() => {
-          this.noteForm.reset();
-          this.removeImage();
-          this.disableForm = false;
-          this.dialogRef.close();
+      if (this.image) {
+        this.convertFileToBase64(this.image).then((fileBase64: any) => {
+          if (fileBase64) {
+            tempNote.imageType = this.image?.type || '';
+            tempNote.imageBase64 = fileBase64;
+          } else {
+            tempNote.imageType = '';
+            tempNote.imageBase64 = '';
+          }
+          this.noteService.addNote(tempNote).then(() => {
+            this.noteForm.reset();
+            this.removeImage();
+            this.disableForm = false;
+            this.dialogRef.close();
+          }).catch((err) => {
+            this.errorService.showError(err);
+            this.disableForm = false;
+          });
         }).catch((err) => {
-          this.errorService.showError(err);
-          this.disableForm = false;
-        });
-      }).catch((err) => {
-        this.errorService.showSimpleSnackBar("Error saving file, please retry.")
-      })
+          this.errorService.showSimpleSnackBar("Error saving file, please retry.")
+        })
+      }
     }
   }
 

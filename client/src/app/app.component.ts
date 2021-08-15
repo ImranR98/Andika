@@ -9,7 +9,7 @@ import { OverlayContainer } from '@angular/cdk/overlay';
 })
 export class AppComponent implements OnInit {
   title = 'Andika';
-  @HostBinding('class') componentCssClass;
+  @HostBinding('class') componentCssClass: any;
 
   constructor(private userService: UserService, public overlayContainer: OverlayContainer) { }
 

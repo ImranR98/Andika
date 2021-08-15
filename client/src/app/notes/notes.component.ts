@@ -25,8 +25,8 @@ export class NotesComponent implements OnInit {
     showArchived: new FormControl(false)
   });
 
-  user: IUser;
-  notes: INote[];
+  user: IUser | null = null;
+  notes: INote[] = [];
 
   notesBy1: INote[] = [];
   notesBy2: INote[][] = [[]];
@@ -68,7 +68,7 @@ export class NotesComponent implements OnInit {
 
   //Sets userType to show/hide Admin controls
   subscribeToUser() {
-    this.userService.user.subscribe((user: IUser) => {
+    this.userService.user.subscribe((user: IUser | null) => {
       if (user) {
         this.user = user;
       }
@@ -188,7 +188,7 @@ export class NotesComponent implements OnInit {
         }
       }
 
-      let counts = {};
+      let counts: any = {};
       for (let i = 0; i < resultsAll.length; i++) {
         counts[resultsAll[i].noteId] = 1 + (counts[resultsAll[i].noteId] || 0);
       }
@@ -202,7 +202,7 @@ export class NotesComponent implements OnInit {
 
       let finalResults: INote[] = [];
       countsArray.forEach((el) => {
-        let p: INote = this.findNoteById(el.noteId);
+        let p: INote | undefined = this.findNoteById(el.noteId);
         if (p) {
           finalResults.push(p);
         }

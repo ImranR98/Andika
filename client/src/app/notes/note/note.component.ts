@@ -13,7 +13,7 @@ import { DeleteNoteDialogComponent } from './delete-note-dialog/delete-note-dial
 })
 export class NoteComponent implements OnInit {
 
-  @Input() note: INote;
+  @Input() note: INote | null = null;
 
   waiting: boolean = false;
   viewText = '';
@@ -25,14 +25,14 @@ export class NoteComponent implements OnInit {
   constructor(private noteService: NotesService, private errorService: ErrorService, private dialog: MatDialog) { }
 
   ngOnInit() {
-    if (this.note.note.length > 50) {
+    if (this.note?.note?.length && this.note.note.length > 50) {
       this.viewText = this.note.note.substr(0, this.viewLength - 3);
       this.viewText += '...';
     } else {
-      this.viewText = this.note.note;
+      this.viewText = this.note?.note || '';
     }
-    this.created = new Date(this.note.createdDate);
-    this.modified = new Date(this.note.modifiedDate);
+    this.created = new Date(this.note?.createdDate || '');
+    this.modified = new Date(this.note?.modifiedDate || '');
     let today = new Date();
 
     if (today.toDateString() == this.created.toDateString()) {
@@ -47,7 +47,7 @@ export class NoteComponent implements OnInit {
       this.modified = this.modified.toDateString() + ', ' + this.modified.getHours() + ':' + this.modified.getMinutes();
     }
 
-    if (this.note.imageType && this.note.imageBase64) {
+    if (this.note?.imageType && this.note.imageBase64) {
       this.imageSrc = 'data:' + this.note.imageType + ';base64,' + this.note.imageBase64;
     }
   }
@@ -58,7 +58,7 @@ export class NoteComponent implements OnInit {
       width: '250px',
     }).afterClosed().subscribe((val) => {
       if (val) {
-        this.noteService.deleteNote(this.note.noteId).then(() => {
+        this.noteService.deleteNote(this.note?.noteId || 0).then(() => {
           this.waiting = false;
         }).catch((err) => {
           this.errorService.showError(err);
@@ -72,7 +72,7 @@ export class NoteComponent implements OnInit {
 
   archiveNote() {
     this.waiting = true;
-    this.noteService.archiveNote(this.note.noteId).then(() => {
+    this.noteService.archiveNote(this.note?.noteId || 0).then(() => {
       this.waiting = false;
     }).catch((err) => {
       this.errorService.showError(err);
@@ -82,7 +82,7 @@ export class NoteComponent implements OnInit {
 
   unArchiveNote() {
     this.waiting = true;
-    this.noteService.unArchiveNote(this.note.noteId).then(() => {
+    this.noteService.unArchiveNote(this.note?.noteId || 0).then(() => {
       this.waiting = false;
     }).catch((err) => {
       this.errorService.showError(err);

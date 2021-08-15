@@ -29,7 +29,7 @@ export class LoginComponent implements OnInit {
     passwordConfirm: new FormControl('', Validators.required)
   });
 
-  loading: boolean;
+  loading: boolean = false;
 
   constructor(private errorService: ErrorService, private userService: UserService) { }
 
@@ -46,7 +46,7 @@ export class LoginComponent implements OnInit {
     this.loading = true;
     this.userService.login(loginUserData).then(() => {
       this.loading = false;
-    }).catch((err) => {
+    }).catch((err: any) => {
       this.loading = false;
     })
   }

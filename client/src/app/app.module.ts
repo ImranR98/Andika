@@ -1,16 +1,14 @@
-import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, Injector } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { FlexLayoutModule } from "@angular/flex-layout";
 import { ReactiveFormsModule } from '@angular/forms';
-
-import { CommonModule } from '@angular/common';
 
 import { HomeComponent } from './home/home.component';
 import { HeaderComponent } from './header/header.component';
@@ -52,7 +50,6 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatToolbarModule } from '@angular/material/toolbar';
 
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -70,10 +67,10 @@ import { MatToolbarModule } from '@angular/material/toolbar';
   ],
   imports: [
     BrowserModule,
-    FlexLayoutModule,
     AppRoutingModule,
-    HttpClientModule,
     BrowserAnimationsModule,
+    FlexLayoutModule,
+    HttpClientModule,
     MatButtonModule,
     MatCardModule,
     MatCheckboxModule,
@@ -97,20 +94,19 @@ import { MatToolbarModule } from '@angular/material/toolbar';
     MatTabsModule,
     MatDialogModule,
     ReactiveFormsModule,
-    CommonModule,
     MatChipsModule,
     MatTooltipModule,
     MatExpansionModule,
     MatToolbarModule
   ],
   providers: [{ provide: UserService, useClass: UserService },
-  {
-    provide: HTTP_INTERCEPTORS,
-    useClass: AuthInterceptor,
-    multi: true,
-    deps: [Injector]
-  }
-  ],
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true,
+      deps: [Injector]
+    }
+    ],
   bootstrap: [AppComponent],
   entryComponents: [NoteDialogComponent, DeleteNoteDialogComponent]
 })

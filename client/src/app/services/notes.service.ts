@@ -19,10 +19,10 @@ export class NotesService {
   };
 
   //Make User data into an Observable
-  notesSource = new BehaviorSubject(null);
+  notesSource = new BehaviorSubject<any>(null);
   notes = this.notesSource.asObservable();
 
-  updateNotes(notes) {
+  updateNotes(notes: any) {
     this.notesSource.next(notes);
   }
 
@@ -52,7 +52,7 @@ export class NotesService {
   }
 
   getNotes() {
-    return new Promise((resolve, reject) => {
+    return new Promise<void>((resolve, reject) => {
       this.http.post('/api/getNotes', this.httpOptions).toPromise().then((notes) => {
         this.updateNotes(notes);
         resolve();
@@ -64,8 +64,8 @@ export class NotesService {
   }
 
   updateNote(noteData: IUpdateNote) {
-    return new Promise((resolve, reject) => {
-      this.http.post('/api/updateNote', noteData, this.httpOptions).toPromise().then((updatedNote: INote) => {
+    return new Promise<void>((resolve, reject) => {
+      this.http.post('/api/updateNote', noteData, this.httpOptions).toPromise<any>().then((updatedNote: INote) => {
         let temp = this.getCurrentNotes();
         for (let i = 0; i < temp.length; i++) {
           if (temp[i].noteId == updatedNote.noteId) {
@@ -83,8 +83,8 @@ export class NotesService {
   }
 
   addNote(noteData: IAddNote) {
-    return new Promise((resolve, reject) => {
-      this.http.post('/api/addNote', noteData, this.httpOptions).toPromise().then((newNote: INote) => {
+    return new Promise<void>((resolve, reject) => {
+      this.http.post('/api/addNote', noteData, this.httpOptions).toPromise<any>().then((newNote: INote) => {
         let temp = this.getCurrentNotes();
         temp.push(newNote);
         this.updateNotes(temp);
@@ -97,8 +97,8 @@ export class NotesService {
     })
   }
 
-  deleteNote(noteId) {
-    return new Promise((resolve, reject) => {
+  deleteNote(noteId: number) {
+    return new Promise<void>((resolve, reject) => {
       this.http.post('/api/deleteNote', { noteId: noteId }, this.httpOptions).toPromise().then(() => {
         let temp = this.getCurrentNotes();
         let temp2 = [];
@@ -117,8 +117,8 @@ export class NotesService {
     })
   }
 
-  archiveNote(noteId) {
-    return new Promise((resolve, reject) => {
+  archiveNote(noteId: number) {
+    return new Promise<void>((resolve, reject) => {
       this.http.post('/api/archiveNote', { noteId: noteId }, this.httpOptions).toPromise().then(() => {
         let temp = this.getCurrentNotes();
         for (let i = 0; i < temp.length; i++) {
@@ -136,8 +136,8 @@ export class NotesService {
     })
   }
 
-  unArchiveNote(noteId) {
-    return new Promise((resolve, reject) => {
+  unArchiveNote(noteId: number) {
+    return new Promise<void>((resolve, reject) => {
       this.http.post('/api/unArchiveNote', { noteId: noteId }, this.httpOptions).toPromise().then(() => {
         let temp = this.getCurrentNotes();
         for (let i = 0; i < temp.length; i++) {
@@ -155,8 +155,8 @@ export class NotesService {
     })
   }
 
-  pinNote(noteId) {
-    return new Promise((resolve, reject) => {
+  pinNote(noteId: number) {
+    return new Promise<void>((resolve, reject) => {
       this.http.post('/api/pinNote', { noteId: noteId }, this.httpOptions).toPromise().then(() => {
         let temp = this.getCurrentNotes();
         for (let i = 0; i < temp.length; i++) {
@@ -174,8 +174,8 @@ export class NotesService {
     })
   }
 
-  unPinNote(noteId) {
-    return new Promise((resolve, reject) => {
+  unPinNote(noteId: number) {
+    return new Promise<void>((resolve, reject) => {
       this.http.post('/api/unPinNote', { noteId: noteId }, this.httpOptions).toPromise().then(() => {
         let temp = this.getCurrentNotes();
         for (let i = 0; i < temp.length; i++) {

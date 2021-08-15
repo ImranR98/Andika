@@ -4,7 +4,10 @@ export interface IAppError {
 };
 
 export class AppError implements IAppError {
-    constructor(actionable: boolean = false, message: string = 'Unknown Error') { }
-    message;
-    actionable;
+    constructor(actionable: boolean = false, message: string = 'Unknown Error') {
+        this.message = message
+        this.actionable = actionable
+    }
+    message: string;
+    actionable: boolean;
 }

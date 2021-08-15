@@ -18,7 +18,7 @@ export class HomeComponent implements OnInit {
   }
 
   subscribeToUser() {
-    this.userService.user.subscribe((user: IUser) => {
+    this.userService.user.subscribe((user: IUser | null) => {
       if (user) {
         this.userExists = true;
       } else {

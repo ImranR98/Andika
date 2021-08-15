@@ -5,8 +5,8 @@ import { Observable, BehaviorSubject } from 'rxjs';
 import { ActivatedRouteSnapshot, RouterStateSnapshot, Router } from '@angular/router';
 import { IUser, IRegisterUserFormInput, ILoginUserFormInput, IResetPasswordFormInput, IPasswordUpdateFormInput, IAccountUpdateFormInput } from '../models';
 import * as moment from 'moment';
-import * as jwt_decode from "jwt-decode";
 import { ErrorService } from './error.service';
+import jwtDecode from 'jwt-decode'
 
 @Directive()
 @Injectable({
@@ -22,18 +22,18 @@ export class UserService implements OnInit {
   };
 
   //Make User data into an Observable
-  userSource = new BehaviorSubject(null);
+  userSource = new BehaviorSubject<IUser | null>(null);
   user = this.userSource.asObservable();
 
   ngOnInit() { }
 
-  updateUser(user: IUser) {
+  updateUser(user: IUser | null) {
     this.userSource.next(user);
     localStorage.setItem('user', JSON.stringify(user));
   }
 
   registerUser(registerFormInput: IRegisterUserFormInput) {
-    return new Promise((resolve, reject) => {
+    return new Promise<void>((resolve, reject) => {
       this.http.post('/api/register', registerFormInput, this.httpOptions).toPromise().then(() => {
         this.errorService.showSimpleSnackBar('Check your email for the link to complete registration');
         resolve();
@@ -45,7 +45,7 @@ export class UserService implements OnInit {
   }
 
   resetPassword(resetPasswordFormInput: IResetPasswordFormInput) {
-    return new Promise((resolve, reject) => {
+    return new Promise<void>((resolve, reject) => {
       this.http.post('/api/resetPassword', resetPasswordFormInput, this.httpOptions).toPromise().then(() => {
         this.errorService.showSimpleSnackBar('Check your email for the link to complete password reset');
         resolve();
@@ -57,14 +57,14 @@ export class UserService implements OnInit {
   }
 
   login(loginFormInput: ILoginUserFormInput): any {
-    return new Promise((resolve, reject) => {
+    return new Promise<void>((resolve, reject) => {
       this.http.post('/api/login', loginFormInput, this.httpOptions).toPromise().then((response: any) => {
         if (response.jwtToken && response.user) {
           localStorage.setItem('jwt_token', response.jwtToken);
-          let tokenDecoded = jwt_decode(response.jwtToken);
+          let tokenDecoded = jwtDecode(response.jwtToken);
           localStorage.setItem('jwt_token_decoded', JSON.stringify(tokenDecoded));
           this.updateUser(response.user);
-          this.errorService.showSimpleSnackBar('Welcome, ' + this.getJWTUser().firstName);
+          this.errorService.showSimpleSnackBar('Welcome, ' + this.getJWTUser()?.firstName);
           resolve();
         } else {
           reject();
@@ -77,7 +77,7 @@ export class UserService implements OnInit {
   }
 
   deleteAccount(password: string): any {
-    return new Promise((resolve, reject) => {
+    return new Promise<void>((resolve, reject) => {
       this.http.post('/api/deleteAccount', { password }, this.httpOptions).toPromise().then(() => {
         this.logout(true);
         resolve();
@@ -89,7 +89,7 @@ export class UserService implements OnInit {
   }
 
   updatePassword(updatePasswordFormInput: IPasswordUpdateFormInput): any {
-    return new Promise((resolve, reject) => {
+    return new Promise<void>((resolve, reject) => {
       this.http.post('/api/updatePassword', updatePasswordFormInput, this.httpOptions).toPromise().then(() => {
         this.logout(true);
         resolve();
@@ -101,13 +101,15 @@ export class UserService implements OnInit {
   }
 
   updateAccount(updateAccountFormInput: IAccountUpdateFormInput): any {
-    return new Promise((resolve, reject) => {
+    return new Promise<void>((resolve, reject) => {
       this.http.post('/api/updateAccount', updateAccountFormInput, this.httpOptions).toPromise().then(() => {
         let userTemp = this.getJWTUser();
-        userTemp.firstName = updateAccountFormInput.firstName;
-        userTemp.lastName = updateAccountFormInput.lastName;
-        this.updateUser(userTemp);
-        this.errorService.showSimpleSnackBar('Info Updated');
+        if (userTemp) {
+          userTemp.firstName = updateAccountFormInput.firstName;
+          userTemp.lastName = updateAccountFormInput.lastName;
+          this.updateUser(userTemp);
+          this.errorService.showSimpleSnackBar('Info Updated');
+        }
         resolve();
       }).catch((err) => {
         this.errorService.showError(err, () => this.updateAccount(updateAccountFormInput));
@@ -140,16 +142,16 @@ export class UserService implements OnInit {
   }
 
   getJWTExpiration() {
-    if (JSON.parse(localStorage.getItem("jwt_token_decoded"))) {
-      return moment.unix(JSON.parse(localStorage.getItem("jwt_token_decoded")).exp);
+    if (JSON.parse(localStorage.getItem("jwt_token_decoded") || '')) {
+      return moment.unix(JSON.parse(localStorage.getItem("jwt_token_decoded") || '').exp);
     } else {
       return null;
     }
   }
 
-  getJWTUser(): IUser {
-    if (JSON.parse(localStorage.getItem("user"))) {
-      return JSON.parse(localStorage.getItem("user"));
+  getJWTUser(): IUser | null {
+    if (JSON.parse(localStorage.getItem("user") || '')) {
+      return JSON.parse(localStorage.getItem("user") || '');
     } else {
       return null;
     }

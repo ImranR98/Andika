@@ -13,7 +13,7 @@ export class DashboardComponent implements OnInit {
 
   constructor(private errorService: ErrorService, private userService: UserService) { }
 
-  user: IUser;
+  user: IUser | null = null;
   loading: boolean = false;
 
   userInfoForm = new FormGroup({
@@ -40,7 +40,7 @@ export class DashboardComponent implements OnInit {
       this.loading = true;
       this.userService.deleteAccount(this.deleteAccountForm.controls['password'].value).then(() => {
         this.loading = false;
-      }).catch((err) => {
+      }).catch((err: any) => {
         this.loading = false;
       })
     }
@@ -50,7 +50,7 @@ export class DashboardComponent implements OnInit {
     this.loading = true;
     this.userService.updateAccount(this.userInfoForm.value).then(() => {
       this.loading = false;
-    }).catch((err) => {
+    }).catch((err: any) => {
       this.loading = false;
     })
   }
@@ -60,7 +60,7 @@ export class DashboardComponent implements OnInit {
     if (this.passwordForm.controls['newPassword'].value == this.passwordForm.controls['passwordConfirm'].value) {
       this.userService.updatePassword(this.passwordForm.value).then(() => {
         this.loading = false;
-      }).catch((err) => {
+      }).catch((err: any) => {
         this.loading = false;
       })
     } else {
