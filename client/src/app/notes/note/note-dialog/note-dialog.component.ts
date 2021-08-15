@@ -100,11 +100,12 @@ export class NoteDialogComponent implements OnInit {
     }
   }
 
-  convertFileToBase64 = (file: File) => {
+  convertFileToBase64 = (file: File | null) => {
     return new Promise((resolve, reject) => {
       if (!file) {
         resolve(null);
       }
+      if (!file) throw file
       var reader = new FileReader();
       reader.readAsDataURL(file);
       reader.onloadend = () => {
@@ -200,28 +201,26 @@ export class NoteDialogComponent implements OnInit {
       }
       this.disableForm = true;
 
-      if (this.image) {
-        this.convertFileToBase64(this.image).then((fileBase64: any) => {
-          if (fileBase64) {
-            tempNote.imageType = this.image?.type || '';
-            tempNote.imageBase64 = fileBase64;
-          } else {
-            tempNote.imageType = '';
-            tempNote.imageBase64 = '';
-          }
-          this.noteService.updateNote(tempNote).then(() => {
-            this.noteForm.reset();
-            this.removeImage();
-            this.disableForm = false;
-            this.dialogRef.close();
-          }).catch((err) => {
-            this.errorService.showError(err);
-            this.disableForm = false;
-          });
+      this.convertFileToBase64(this.image).then((fileBase64: any) => {
+        if (fileBase64) {
+          tempNote.imageType = this.image?.type || '';
+          tempNote.imageBase64 = fileBase64;
+        } else {
+          tempNote.imageType = '';
+          tempNote.imageBase64 = '';
+        }
+        this.noteService.updateNote(tempNote).then(() => {
+          this.noteForm.reset();
+          this.removeImage();
+          this.disableForm = false;
+          this.dialogRef.close();
         }).catch((err) => {
-          this.errorService.showSimpleSnackBar("Error saving file, please retry.")
-        })
-      }
+          this.errorService.showError(err);
+          this.disableForm = false;
+        });
+      }).catch((err) => {
+        this.errorService.showSimpleSnackBar("Error saving file, please retry.")
+      })
     }
   }
 
@@ -238,28 +237,26 @@ export class NoteDialogComponent implements OnInit {
         imageBase64: ''
       };
 
-      if (this.image) {
-        this.convertFileToBase64(this.image).then((fileBase64: any) => {
-          if (fileBase64) {
-            tempNote.imageType = this.image?.type || '';
-            tempNote.imageBase64 = fileBase64;
-          } else {
-            tempNote.imageType = '';
-            tempNote.imageBase64 = '';
-          }
-          this.noteService.addNote(tempNote).then(() => {
-            this.noteForm.reset();
-            this.removeImage();
-            this.disableForm = false;
-            this.dialogRef.close();
-          }).catch((err) => {
-            this.errorService.showError(err);
-            this.disableForm = false;
-          });
+      this.convertFileToBase64(this.image).then((fileBase64: any) => {
+        if (fileBase64) {
+          tempNote.imageType = this.image?.type || '';
+          tempNote.imageBase64 = fileBase64;
+        } else {
+          tempNote.imageType = '';
+          tempNote.imageBase64 = '';
+        }
+        this.noteService.addNote(tempNote).then(() => {
+          this.noteForm.reset();
+          this.removeImage();
+          this.disableForm = false;
+          this.dialogRef.close();
         }).catch((err) => {
-          this.errorService.showSimpleSnackBar("Error saving file, please retry.")
-        })
-      }
+          this.errorService.showError(err);
+          this.disableForm = false;
+        });
+      }).catch((err) => {
+        this.errorService.showSimpleSnackBar("Error saving file, please retry.")
+      })
     }
   }
 

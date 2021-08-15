@@ -25,20 +25,20 @@ $light-mode-theme: mat-light-theme($light-mode-primary, $light-mode-accent, $lig
 
   html {
     color: #FFFFFF;
-    background-color: #000000
+    background-color: #161616
   }
 
   app-note mat-card, mat-dialog-container {
-    background-color: #1F1F1F !important;
+    background-color: #252525 !important;
   }
 
   mat-toolbar {
     background-color: mat-color($dark-mode-primary) !important;
-    color: #000000 !important;
+    color: #161616 !important;
   }
 
   .active {
-    background-color: #000000 !important;
+    background-color: #161616 !important;
     color: mat-color($dark-mode-primary) !important;
   }
 }
