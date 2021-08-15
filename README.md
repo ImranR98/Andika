@@ -4,7 +4,7 @@ Simple Note taking Application made with Angular, Node.js and PostgreSQL.
 
 ## Screenshots
 
-<img src="/home/imranr/Main/Code/Archive/Andika/Screenshots/notes.png" alt="notes" style="zoom: 67%;" /><img src="/home/imranr/Main/Code/Archive/Andika/Screenshots/mobiledark.png" alt="mobiledark" style="zoom: 67%;" />
+<img src="./Screenshots/notes.png" alt="notes" style="zoom: 67%;" /><img src="./Screenshots/mobiledark.png" alt="mobiledark" style="zoom: 67%;" />
 
 ## Getting Started
 
