@@ -14,7 +14,7 @@ A .env file, described below, is needed at the root directory that will contain 
 DATABASE_URL - The URL of the Postgres database.
 NODEMAILER_EMAIL - The email address emails from the App will be sent from using nodemailer
 NODEMAILER_NAME - The name of the sender for above emails
-NODEMAILER_TRANSPORT_STRING - The string used to create the NodeMailer transporter, usually something like smtps://<email>:<password>@<smtp-server>
+NODEMAILER_TRANSPORT_JSON - The stringified JSON object used to create the NodeMailer transporter, usually something like {"host":"smtp.example.com","port":587,"secure":true,"auth":{"user":"username","pass":"password"}}
 EXPIRES_IN - The number of seconds a client session lasts
 RSA_PRIVATE_KEY - The private RSA key used to protect client sessions
 RSA_PUBLIC_KEY - The public key corresponding to the above private key

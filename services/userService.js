@@ -31,7 +31,7 @@ module.exports.registerUser = (registerFormInput, currentDomain) => {
                             query: 'INSERT INTO USERS (EMAIL, FIRST_NAME, LAST_NAME, PASSWORD, REGISTRATION_STATUS, REGISTRATION_KEY, REGISTRATION_START_DATE, REGISTRATION_COMPLETE_DATE, USER_TYPE) VALUES($1::text, $2::text, $3::text, $4::text, $5::text, $6::text, $7::timestamp, null, $8::text)',
                             params: [registerFormInput.email, registerFormInput.firstName, registerFormInput.lastName, encryptedPassword, 'PENDING', result, new Date(), 'REGULAR']
                         }).then(() => {
-                            let transporter = nodeMailer.createTransport(process.env.NODEMAILER_TRANSPORT_STRING)
+                            let transporter = nodeMailer.createTransport(JSON.parse(process.env.NODEMAILER_TRANSPORT_JSON))
                             let mailOptions = {
                                 from: `"${process.env.NODEMAILER_NAME}" <${process.env.NODEMAILER_EMAIL}>`,
                                 to: [registerFormInput.email],
@@ -288,7 +288,7 @@ module.exports.resetPassword = (passwordResetFormInput, currentDomain) => {
                                 query: 'INSERT INTO PASSWORD_RESETS VALUES($1::int, $2::text, $3::text)',
                                 params: [id, encryptedPassword, result]
                             }).then(() => {
-                                let transporter = nodeMailer.createTransport(process.env.NODEMAILER_TRANSPORT_STRING);
+                                let transporter = nodeMailer.createTransport(JSON.parse(process.env.NODEMAILER_TRANSPORT_JSON));
                                 let mailOptions = {
                                     from: `"${process.env.NODEMAILER_NAME}" <${process.env.NODEMAILER_EMAIL}>`,
                                     to: [passwordResetFormInput.email],
