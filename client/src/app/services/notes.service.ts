@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, firstValueFrom } from 'rxjs';
 import { UserService } from './user.service';
 import { environment } from 'src/environments/environment';
 import { IAddNote, INote, IUpdateNote } from '../models/notes.models';
@@ -53,7 +53,7 @@ export class NotesService {
 
   getNotes() {
     return new Promise<void>((resolve, reject) => {
-      this.http.post('/api/getNotes', this.httpOptions).toPromise().then((notes) => {
+      firstValueFrom(this.http.post('/api/getNotes', this.httpOptions)).then((notes) => {
         this.updateNotes(notes);
         resolve();
       }).catch((err) => {
@@ -65,7 +65,7 @@ export class NotesService {
 
   updateNote(noteData: IUpdateNote) {
     return new Promise<void>((resolve, reject) => {
-      this.http.post('/api/updateNote', noteData, this.httpOptions).toPromise<any>().then((updatedNote: INote) => {
+      (firstValueFrom(this.http.post('/api/updateNote', noteData, this.httpOptions)) as Promise<INote>).then((updatedNote: INote) => {
         let temp = this.getCurrentNotes();
         for (let i = 0; i < temp.length; i++) {
           if (temp[i].noteId == updatedNote.noteId) {
@@ -84,7 +84,7 @@ export class NotesService {
 
   addNote(noteData: IAddNote) {
     return new Promise<void>((resolve, reject) => {
-      this.http.post('/api/addNote', noteData, this.httpOptions).toPromise<any>().then((newNote: INote) => {
+      (firstValueFrom(this.http.post('/api/addNote', noteData, this.httpOptions)) as Promise<INote>).then((newNote: INote) => {
         let temp = this.getCurrentNotes();
         temp.push(newNote);
         this.updateNotes(temp);
@@ -99,7 +99,7 @@ export class NotesService {
 
   deleteNote(noteId: number) {
     return new Promise<void>((resolve, reject) => {
-      this.http.post('/api/deleteNote', { noteId: noteId }, this.httpOptions).toPromise().then(() => {
+      firstValueFrom(this.http.post('/api/deleteNote', { noteId: noteId }, this.httpOptions)).then(() => {
         let temp = this.getCurrentNotes();
         let temp2 = [];
         for (let i = 0; i < temp.length; i++) {
@@ -119,7 +119,7 @@ export class NotesService {
 
   archiveNote(noteId: number) {
     return new Promise<void>((resolve, reject) => {
-      this.http.post('/api/archiveNote', { noteId: noteId }, this.httpOptions).toPromise().then(() => {
+      firstValueFrom(this.http.post('/api/archiveNote', { noteId: noteId }, this.httpOptions)).then(() => {
         let temp = this.getCurrentNotes();
         for (let i = 0; i < temp.length; i++) {
           if (temp[i].noteId === noteId) {
@@ -138,7 +138,7 @@ export class NotesService {
 
   unArchiveNote(noteId: number) {
     return new Promise<void>((resolve, reject) => {
-      this.http.post('/api/unArchiveNote', { noteId: noteId }, this.httpOptions).toPromise().then(() => {
+      firstValueFrom(this.http.post('/api/unArchiveNote', { noteId: noteId }, this.httpOptions)).then(() => {
         let temp = this.getCurrentNotes();
         for (let i = 0; i < temp.length; i++) {
           if (temp[i].noteId === noteId) {
@@ -157,7 +157,7 @@ export class NotesService {
 
   pinNote(noteId: number) {
     return new Promise<void>((resolve, reject) => {
-      this.http.post('/api/pinNote', { noteId: noteId }, this.httpOptions).toPromise().then(() => {
+      firstValueFrom(this.http.post('/api/pinNote', { noteId: noteId }, this.httpOptions)).then(() => {
         let temp = this.getCurrentNotes();
         for (let i = 0; i < temp.length; i++) {
           if (temp[i].noteId === noteId) {
@@ -176,7 +176,7 @@ export class NotesService {
 
   unPinNote(noteId: number) {
     return new Promise<void>((resolve, reject) => {
-      this.http.post('/api/unPinNote', { noteId: noteId }, this.httpOptions).toPromise().then(() => {
+      firstValueFrom(this.http.post('/api/unPinNote', { noteId: noteId }, this.httpOptions)).then(() => {
         let temp = this.getCurrentNotes();
         for (let i = 0; i < temp.length; i++) {
           if (temp[i].noteId === noteId) {

@@ -1,7 +1,7 @@
 import { Injectable, OnInit, Directive } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
-import { Observable, BehaviorSubject } from 'rxjs';
+import { Observable, BehaviorSubject, firstValueFrom } from 'rxjs';
 import { ActivatedRouteSnapshot, RouterStateSnapshot, Router } from '@angular/router';
 import { IUser, IRegisterUserFormInput, ILoginUserFormInput, IResetPasswordFormInput, IPasswordUpdateFormInput, IAccountUpdateFormInput } from '../models';
 import * as moment from 'moment';
@@ -34,7 +34,7 @@ export class UserService implements OnInit {
 
   registerUser(registerFormInput: IRegisterUserFormInput) {
     return new Promise<void>((resolve, reject) => {
-      this.http.post('/api/register', registerFormInput, this.httpOptions).toPromise().then(() => {
+      firstValueFrom(this.http.post('/api/register', registerFormInput, this.httpOptions)).then(() => {
         this.errorService.showSimpleSnackBar('Check your email for the link to complete registration');
         resolve();
       }).catch((err) => {
@@ -46,7 +46,7 @@ export class UserService implements OnInit {
 
   resetPassword(resetPasswordFormInput: IResetPasswordFormInput) {
     return new Promise<void>((resolve, reject) => {
-      this.http.post('/api/resetPassword', resetPasswordFormInput, this.httpOptions).toPromise().then(() => {
+      firstValueFrom(this.http.post('/api/resetPassword', resetPasswordFormInput, this.httpOptions)).then(() => {
         this.errorService.showSimpleSnackBar('Check your email for the link to complete password reset');
         resolve();
       }).catch((err) => {
@@ -58,7 +58,7 @@ export class UserService implements OnInit {
 
   login(loginFormInput: ILoginUserFormInput): any {
     return new Promise<void>((resolve, reject) => {
-      this.http.post('/api/login', loginFormInput, this.httpOptions).toPromise().then((response: any) => {
+      firstValueFrom(this.http.post('/api/login', loginFormInput, this.httpOptions)).then((response: any) => {
         if (response.jwtToken && response.user) {
           localStorage.setItem('jwt_token', response.jwtToken);
           let tokenDecoded = jwtDecode(response.jwtToken);
@@ -78,7 +78,7 @@ export class UserService implements OnInit {
 
   deleteAccount(password: string): any {
     return new Promise<void>((resolve, reject) => {
-      this.http.post('/api/deleteAccount', { password }, this.httpOptions).toPromise().then(() => {
+      firstValueFrom(this.http.post('/api/deleteAccount', { password }, this.httpOptions)).then(() => {
         this.logout(true);
         resolve();
       }).catch((err) => {
@@ -90,7 +90,7 @@ export class UserService implements OnInit {
 
   updatePassword(updatePasswordFormInput: IPasswordUpdateFormInput): any {
     return new Promise<void>((resolve, reject) => {
-      this.http.post('/api/updatePassword', updatePasswordFormInput, this.httpOptions).toPromise().then(() => {
+      firstValueFrom(this.http.post('/api/updatePassword', updatePasswordFormInput, this.httpOptions)).then(() => {
         this.logout(true);
         resolve();
       }).catch((err) => {
@@ -102,7 +102,7 @@ export class UserService implements OnInit {
 
   updateAccount(updateAccountFormInput: IAccountUpdateFormInput): any {
     return new Promise<void>((resolve, reject) => {
-      this.http.post('/api/updateAccount', updateAccountFormInput, this.httpOptions).toPromise().then(() => {
+      firstValueFrom(this.http.post('/api/updateAccount', updateAccountFormInput, this.httpOptions)).then(() => {
         let userTemp = this.getJWTUser();
         if (userTemp) {
           userTemp.firstName = updateAccountFormInput.firstName;
