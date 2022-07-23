@@ -36,7 +36,7 @@ let decodeJWTUserId = function (req, res, next) {
     next();
 }
 
-checkIfAuthenticated = expressJwt({
+checkIfAuthenticated = expressJwt.expressjwt({
     secret: process.env.RSA_PUBLIC_KEY.replaceAll('\\n', '\n'),
     requestProperty: 'jwt',
     algorithms: ['RS256']

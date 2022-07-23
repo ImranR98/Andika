@@ -3,7 +3,7 @@ import { UserService } from '../services/user.service';
 import { NotesService } from '../services/notes.service';
 import { INote } from '../models/notes.models';
 import { MatDialog } from '@angular/material/dialog';
-import { FormGroup, FormControl } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormControl } from '@angular/forms';
 import { IUser } from '../models';
 import { NoteDialogComponent } from './note/note-dialog/note-dialog.component';
 
@@ -20,9 +20,9 @@ export class NotesComponent implements OnInit {
 
   loading: boolean = false;
 
-  searchForm = new FormGroup({
-    search: new FormControl(''),
-    showArchived: new FormControl(false)
+  searchForm = new UntypedFormGroup({
+    search: new UntypedFormControl(''),
+    showArchived: new UntypedFormControl(false)
   });
 
   user: IUser | null = null;

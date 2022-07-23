@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormControl, Validators } from '@angular/forms';
 import { ErrorService } from '../services/error.service';
 import { UserService } from '../services/user.service';
 import { IRegisterUserFormInput, ILoginUserFormInput } from '../models';
@@ -10,23 +10,23 @@ import { IRegisterUserFormInput, ILoginUserFormInput } from '../models';
   styleUrls: ['./login.component.sass']
 })
 export class LoginComponent implements OnInit {
-  loginForm = new FormGroup({
-    email: new FormControl('', Validators.required),
-    password: new FormControl('', Validators.required)
+  loginForm = new UntypedFormGroup({
+    email: new UntypedFormControl('', Validators.required),
+    password: new UntypedFormControl('', Validators.required)
   });
 
-  registerForm = new FormGroup({
-    email: new FormControl('', Validators.required),
-    firstName: new FormControl('', Validators.required),
-    lastName: new FormControl('', Validators.required),
-    password: new FormControl('', Validators.required),
-    passwordConfirm: new FormControl('', Validators.required)
+  registerForm = new UntypedFormGroup({
+    email: new UntypedFormControl('', Validators.required),
+    firstName: new UntypedFormControl('', Validators.required),
+    lastName: new UntypedFormControl('', Validators.required),
+    password: new UntypedFormControl('', Validators.required),
+    passwordConfirm: new UntypedFormControl('', Validators.required)
   });
 
-  resetPasswordForm = new FormGroup({
-    email: new FormControl('', Validators.required),
-    password: new FormControl('', Validators.required),
-    passwordConfirm: new FormControl('', Validators.required)
+  resetPasswordForm = new UntypedFormGroup({
+    email: new UntypedFormControl('', Validators.required),
+    password: new UntypedFormControl('', Validators.required),
+    passwordConfirm: new UntypedFormControl('', Validators.required)
   });
 
   loading: boolean = false;

@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, Inject } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormControl, Validators } from '@angular/forms';
 import { INote, IUpdateNote, IAddNote } from 'src/app/models/notes.models';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { MatChipInputEvent } from '@angular/material/chips'
@@ -23,10 +23,10 @@ export class NoteDialogComponent implements OnInit {
   readonly separatorKeysCodes: number[] = [ENTER, COMMA];
   disableForm: boolean = false;
 
-  noteForm = new FormGroup({
-    title: new FormControl('', Validators.required),
-    note: new FormControl(''),
-    tags: new FormControl('')
+  noteForm = new UntypedFormGroup({
+    title: new UntypedFormControl('', Validators.required),
+    note: new UntypedFormControl(''),
+    tags: new UntypedFormControl('')
   });
 
   tags: string[] = [];

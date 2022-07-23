@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../services/user.service';
 import { IUser } from '../models';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormControl, Validators } from '@angular/forms';
 import { ErrorService } from '../services/error.service';
 
 @Component({
@@ -16,19 +16,19 @@ export class DashboardComponent implements OnInit {
   user: IUser | null = null;
   loading: boolean = false;
 
-  userInfoForm = new FormGroup({
-    firstName: new FormControl('', Validators.required),
-    lastName: new FormControl('', Validators.required)
+  userInfoForm = new UntypedFormGroup({
+    firstName: new UntypedFormControl('', Validators.required),
+    lastName: new UntypedFormControl('', Validators.required)
   });
 
-  passwordForm = new FormGroup({
-    password: new FormControl('', Validators.required),
-    newPassword: new FormControl('', Validators.required),
-    passwordConfirm: new FormControl('', Validators.required)
+  passwordForm = new UntypedFormGroup({
+    password: new UntypedFormControl('', Validators.required),
+    newPassword: new UntypedFormControl('', Validators.required),
+    passwordConfirm: new UntypedFormControl('', Validators.required)
   });
 
-  deleteAccountForm = new FormGroup({
-    password: new FormControl('', Validators.required)
+  deleteAccountForm = new UntypedFormGroup({
+    password: new UntypedFormControl('', Validators.required)
   });
 
   ngOnInit() {
